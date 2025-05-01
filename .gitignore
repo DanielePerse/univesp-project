@@ -172,3 +172,28 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+#Config file (secrets and string conection)
+config.py
+
+# Bytecode Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.env/
+
+# Arquivos de ambiente (caso use dotenv)
+.env
+
+# Banco de dados SQLite (caso use para testes locais)
+*.sqlite3
+*.db
+
+# Arquivos de log ou debug
+*.log
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
