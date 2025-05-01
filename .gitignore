@@ -184,16 +184,16 @@ __pycache__/
 venv/
 .env/
 
-# Arquivos de ambiente (caso use dotenv)
+# Ambiente file
 .env
 
-# Banco de dados SQLite (caso use para testes locais)
+# bd SQLite
 *.sqlite3
 *.db
 
-# Arquivos de log ou debug
+# file of log or debug
 *.log
 
-# Arquivos do sistema
+# system arquives
 .DS_Store
 Thumbs.db
