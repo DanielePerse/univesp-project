@@ -13,8 +13,8 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        from app.routes import auth_routes, employee_routes, document_routes
-        app.register_blueprint(auth_routes.bp)
+        from app.routes import user_routes, employee_routes, document_routes
+        app.register_blueprint(user_routes.bp)
         app.register_blueprint(employee_routes.bp)
         app.register_blueprint(document_routes.bp)
 
