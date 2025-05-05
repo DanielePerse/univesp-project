@@ -1,10 +1,17 @@
 from flask import Flask
-#from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from config import Config
 
-app = Flask(__name__)
-app.secret_key = 'random_secret_key'
-#app.config.from_object('config.Config')
+db = SQLAlchemy()
 
-#db = SQLAlchemy(app)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    db.init_app(app)
+    CORS(app)
 
-from app import routes
+    from app.routes import bp
+    app.register_blueprint(bp)
+
+    return app

@@ -1,5 +1,8 @@
-from app import app
+from flask import Blueprint
+from app.controllers.employee_controller import create_employee
 
-@app.route('/hello', methods=['GET'])
-def hello():
-    return '', 201
+bp = Blueprint('routes', __name__)
+
+@bp.route('/employee/register_employee', methods=['POST'])
+def register_employee():
+    return create_employee()

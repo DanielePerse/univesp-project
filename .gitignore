@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Bytecode Python
+__pycache__/
+*.py[cod]
+
+# Conection with BD
+config.py
