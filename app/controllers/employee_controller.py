@@ -1,7 +1,8 @@
 from flask import request, jsonify
 from app.services.employee_service import (
     create_employee_with_documents,
-    list_employees_with_document_status
+    list_employees_with_document_status,
+    check_cpf_exists
 )
 
 def create_employee():
@@ -26,3 +27,15 @@ def create_employee():
 def list_employees():
     employees = list_employees_with_document_status()
     return jsonify(employees), 200
+
+def check_employee_cpf():
+    data = request.get_json()
+    cpf = data.get('cpf')
+
+    if not cpf:
+        return jsonify({'message': 'CPF is required'}), 400
+
+    if check_cpf_exists(cpf):
+        return jsonify({'message': 'Employee already registered'}), 409
+    else:
+        return jsonify({'message': 'CPF is available'}), 200

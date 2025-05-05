@@ -7,12 +7,10 @@ from sqlalchemy.orm import joinedload
 
 
 def check_cpf_exists(cpf):
-    return Employee.query.filter_by(cpf=cpf).first() is not None
+    employee = Employee.query.filter_by(cpf=cpf).first()
+    return employee is not None
 
 def create_employee_with_documents(cpf, company_name, employee_name, documents):
-    if check_cpf_exists(cpf):
-        return None, 'Employee with this CPF already exists'
-
     employee = Employee(
         id=str(uuid.uuid4()),
         cpf=cpf,
