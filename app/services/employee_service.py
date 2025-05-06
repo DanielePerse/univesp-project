@@ -57,3 +57,25 @@ def list_employees_with_document_status():
         })
 
     return result
+
+def get_employee_detail(id):
+    employee = Employee.query.options(joinedload(Employee.documents)).filter_by(id=id).first()
+
+    if not employee:
+        return None, 'Employee not found'
+
+    result = {
+        'id': employee.id,
+        'employee_name': employee.employee_name,
+        'company_name': employee.company_name,
+        'cpf': employee.cpf,
+        'documents': [
+            {
+                'id': doc.id,
+                'name': doc.name,
+                'expiration_date': doc.expiration_date.strftime('%Y-%m-%d')
+            } for doc in employee.documents
+        ]
+    }
+
+    return result, None
