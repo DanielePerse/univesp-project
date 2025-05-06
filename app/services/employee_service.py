@@ -10,7 +10,7 @@ def check_cpf_exists(cpf):
     employee = Employee.query.filter_by(cpf=cpf).first()
     return employee is not None
 
-def create_employee_with_documents(cpf, company_name, employee_name, documents):
+def create_employee_with_documents(cpf, employee_name, company_name, documents):
     employee = Employee(
         id=str(uuid.uuid4()),
         cpf=cpf,
