@@ -10,7 +10,7 @@ def check_cpf_exists(cpf):
     employee = Employee.query.filter_by(cpf=cpf).first()
     return employee is not None
 
-def create_employee_with_documents(cpf, company_name, employee_name, documents):
+def create_employee_with_documents(cpf, employee_name, company_name, documents):
     employee = Employee(
         id=str(uuid.uuid4()),
         cpf=cpf,
@@ -57,3 +57,25 @@ def list_employees_with_document_status():
         })
 
     return result
+
+def get_employee_detail(id):
+    employee = Employee.query.options(joinedload(Employee.documents)).filter_by(id=id).first()
+
+    if not employee:
+        return None, 'Employee not found'
+
+    result = {
+        'id': employee.id,
+        'employee_name': employee.employee_name,
+        'company_name': employee.company_name,
+        'cpf': employee.cpf,
+        'documents': [
+            {
+                'id': doc.id,
+                'name': doc.name,
+                'expiration_date': doc.expiration_date.strftime('%Y-%m-%d')
+            } for doc in employee.documents
+        ]
+    }
+
+    return result, None
