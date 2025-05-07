@@ -3,7 +3,8 @@ from app.controllers.employee_controller import (
     create_employee,
     list_employees,
     check_employee_cpf,
-    get_employee_detail_by_id
+    get_employee_detail_by_id,
+    update_employee_data
 )
 
 bp = Blueprint('routes', __name__)
@@ -24,6 +25,6 @@ def checkRegister():
 def registerDetail(id):
     return get_employee_detail_by_id(id)
 
-# @bp.route('/employee/<employee_id>', methods=['PUT'])
-# def registerUpdate():
-#     return update_employee_data()
+@bp.route('/employee/<id>', methods=['PUT'])
+def registerUpdate(id):
+    return update_employee_data(id)

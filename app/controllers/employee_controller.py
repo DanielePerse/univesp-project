@@ -3,7 +3,8 @@ from app.services.employee_service import (
     create_employee_with_documents,
     list_employees_with_document_status,
     check_cpf_exists,
-    get_employee_detail
+    get_employee_detail,
+    update_employee
 )
 
 def create_employee():
@@ -48,3 +49,12 @@ def get_employee_detail_by_id(id):
         return jsonify({'message': error}), 404
 
     return jsonify(employee_data), 200
+
+def update_employee_data(id):
+    data = request.get_json()
+    updated, error = update_employee(id, data)
+
+    if error:
+        return jsonify({'message': error}), 404
+
+    return jsonify({'message': 'Employee updated successfully'}, updated), 200
