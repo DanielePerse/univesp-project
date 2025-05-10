@@ -11,9 +11,8 @@ def create_employee():
     data = request.get_json()
 
     cpf = data.get('cpf')
-    employee_name = data.get('employeeName')
-    company_name = data.get('companyName')
-    #user_id = data.get('userId')  # Quem está criando
+    employee_name = data.get('employee_name')
+    company_name = data.get('company_name')
     documents = data.get('documents', [])
 
     if not all([cpf, company_name, employee_name]):

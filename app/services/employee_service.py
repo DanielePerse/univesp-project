@@ -15,7 +15,6 @@ def create_employee_with_documents(cpf, employee_name, company_name, documents):
         cpf=cpf,
         company_name=company_name,
         employee_name=employee_name,
-        #user=user_id,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
@@ -28,7 +27,7 @@ def create_employee_with_documents(cpf, employee_name, company_name, documents):
             id=str(uuid.uuid4()),
             employee_id=employee.id,
             name=doc['name'],
-            expiration_date=datetime.strptime(doc['expirationDate'], '%Y-%m-%d'),
+            expiration_date=datetime.strptime(doc['expiration_date'], '%Y-%m-%d'),
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow()
         )
