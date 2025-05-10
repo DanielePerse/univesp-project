@@ -11,8 +11,8 @@ def create_employee():
     data = request.get_json()
 
     cpf = data.get('cpf')
-    employee_name = data.get('employeeName')
-    company_name = data.get('companyName')
+    employee_name = data.get('employee_name')
+    company_name = data.get('company_name')
     #user_id = data.get('userId')  # Quem está criando
     documents = data.get('documents', [])
 
