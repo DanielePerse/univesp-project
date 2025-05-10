@@ -17,18 +17,22 @@ def register_employee():
     return create_employee()
 
 @bp.route('/employee/list', methods=['GET'])
+@token_required
 def list():
     return list_employees()
 
 @bp.route('/employee/check_register', methods=['GET'])
+@token_required
 def checkRegister():
     return check_employee_cpf()
 
 @bp.route('/employee/<id>', methods=['GET'])
+@token_required
 def registerDetail(id):
     return get_employee_detail_by_id(id)
 
 @bp.route('/employee/<id>', methods=['PUT'])
+@token_required
 def registerUpdate(id):
     return update_employee_data(id)
 
