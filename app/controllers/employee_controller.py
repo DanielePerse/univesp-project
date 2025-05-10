@@ -13,7 +13,6 @@ def create_employee():
     cpf = data.get('cpf')
     employee_name = data.get('employee_name')
     company_name = data.get('company_name')
-    #user_id = data.get('userId')  # Quem está criando
     documents = data.get('documents', [])
 
     if not all([cpf, company_name, employee_name]):

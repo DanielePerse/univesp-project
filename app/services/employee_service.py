@@ -15,7 +15,6 @@ def create_employee_with_documents(cpf, employee_name, company_name, documents):
         cpf=cpf,
         company_name=company_name,
         employee_name=employee_name,
-        #user=user_id,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
