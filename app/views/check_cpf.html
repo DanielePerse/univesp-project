@@ -12,17 +12,18 @@
 </head>
 
 <body>
-    <!-- EXEMPLO DE TAG PARA USO DO CÓDIGO PYTHON
-    <py-script>print("teste python")</py-script>
-    -->
     <header>
         <div style="display: inline-block; margin-top: 5px;"><img src="image/logo.png" style="height: 35px; width: 35px;"></div>
         <div style= "margin-left: 10px; margin-top: 0px; display: inline-block;"><h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1></div>
     </header>
     <main>
         <section>
-            <button class="button_option"><strong>Cadastrar</strong></button>
-            <button class="button_option" style="margin-left: 90px"><strong>Consultar</strong></button>
+            <form class="form_cpf">
+            <label><strong>CPF:</strong>
+                <input for="CPF" placeholder="Digite o CPF" style="width: 425px; height: 30px; font-size: 25px;">
+            </label>
+            <button style="margin-left: 425px; margin-top: 40px;">Validar</button>
+            </form>
         </section>
     </main>
 
