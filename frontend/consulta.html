@@ -14,6 +14,8 @@
         <tr>
           <th>Nome</th>
           <th>CPF</th>
+          <th>Empresa</th>
+          <th>Status do Documento</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -29,7 +31,7 @@
 
     async function fetchEmployees() {
       try {
-        const response = await fetch('http://localhost:5000/api/employees', {
+        const response = await fetch('http://localhost:5000/employee/list', {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -49,9 +51,11 @@
           const row = document.createElement('tr');
 
           row.innerHTML = `
-            <td>${emp.name}</td>
+            <td>${emp.employee_name}</td>
             <td>${emp.cpf}</td>
-            <td><button onclick="consultarFuncionario('${emp.id}')">Consultar</button></td>
+            <td>${emp.company_name}</td>
+            <td>${emp.status === 'expired' ? 'Vencido' : 'Válido'}</td>
+            <td><button onclick="consultarFuncionario('${emp.id}')">Ver Detalhes</button></td>
           `;
 
           tbody.appendChild(row);
