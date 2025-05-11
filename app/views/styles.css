@@ -30,6 +30,16 @@ main {
   h2 {
     color: #333;
   }
+
+  #titulo_tela{
+    color:white;
+    font-weight: bold;
+    text-align: center;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    background-color: #4CAF50;
+    
+  }
   
   section {
     margin-bottom: 2rem;
@@ -42,6 +52,20 @@ main {
   
   input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  input[type="date"]{
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .input_register{
     padding: 0.5rem;
     margin-top: 0.5rem;
     border: 1px solid #ccc;
@@ -89,7 +113,7 @@ main {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     background-color: #318834;
     color: #FFF;
