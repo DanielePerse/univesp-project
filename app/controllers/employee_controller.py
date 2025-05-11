@@ -29,10 +29,7 @@ def list_employees():
     employees = list_employees_with_document_status()
     return jsonify(employees), 200
 
-def check_employee_cpf():
-    data = request.get_json()
-    cpf = data.get('cpf')
-
+def check_employee_cpf(cpf):
     if not cpf:
         return jsonify({'message': 'CPF is required'}), 400
 

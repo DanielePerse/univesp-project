@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consulta de Funcionários</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Funcionários Cadastrados</h2>
+    <table id="employee-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Empresa</th>
+          <th>Status do Documento</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="employee-body">
+        <!-- Funcionários serão inseridos aqui -->
+      </tbody>
+    </table>
+    <button onclick="voltarHome()">Voltar para Home</button>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+
+    async function fetchEmployees() {
+      try {
+        const response = await fetch('http://localhost:5000/employee/list', {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(data.message || "Erro ao buscar funcionários.");
+          return;
+        }
+
+        const tbody = document.getElementById('employee-body');
+        tbody.innerHTML = '';
+
+        data.forEach(emp => {
+          const row = document.createElement('tr');
+
+          row.innerHTML = `
+            <td>${emp.employee_name}</td>
+            <td>${emp.cpf}</td>
+            <td>${emp.company_name}</td>
+            <td>${emp.status === 'expired' ? 'Vencido' : 'Válido'}</td>
+            <td><button onclick="consultarFuncionario('${emp.id}')">Ver Detalhes</button></td>
+          `;
+
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        alert("Erro ao conectar com o servidor.");
+      }
+    }
+
+    function consultarFuncionario(id) {
+      localStorage.setItem("employee_id", id);
+      window.location.href = "detalhes.html";
+    }
+
+    function voltarHome() {
+      window.location.href = "home.html";
+    }
+
+    fetchEmployees();
+  </script>
+</body>
+</html>

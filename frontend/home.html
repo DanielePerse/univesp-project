@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Bem-vindo</h2>
+    <div class="card-container">
+      <button class="card-button" onclick="goToCadastro()">Cadastrar</button>
+      <button class="card-button" onclick="goToConsulta()">Consultar</button>
+    </div>
+    <button class="logout-button" onclick="logout()">Sair</button>
+  </div>
+
+  <script src="./js/utils.js"></script>
+  <script>
+    checkAuth();
+
+    function goToCadastro() {
+      window.location.href = "verifica_cpf.html";
+    }
+
+    function goToConsulta() {
+      window.location.href = "consulta.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
