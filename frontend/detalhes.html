@@ -3,74 +3,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Consulta de Funcionários</title>
+  <title>Detalhes do Funcionário</title>
   <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
   <div class="container">
-    <h2>Funcionários Cadastrados</h2>
-    <table id="employee-table">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>CPF</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="employee-body">
-        <!-- Funcionários serão inseridos aqui -->
-      </tbody>
-    </table>
-    <button onclick="voltarHome()">Voltar para Home</button>
+    <h2>Detalhes do Funcionário</h2>
+    <form id="edit-form">
+      <label for="cpf">CPF</label>
+      <input type="text" id="cpf" required />
+
+      <label for="employee_name">Nome</label>
+      <input type="text" id="employee_name" required />
+
+      <label for="company_name">Nome da empresa</label>
+      <input type="text" id="company_name" required />
+
+      <div id="documents-container">
+        <!-- Documentos virão aqui -->
+      </div>
+
+      <button type="button" id="add-document">+ Adicionar outro documento</button>
+      <button type="submit">Salvar</button>
+    </form>
+
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <p>Funcionário atualizado com sucesso!</p>
+        <button onclick="voltarParaConsulta()">Voltar para listagem</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
+    const employeeId = localStorage.getItem("employee_id");
+    const documentsContainer = document.getElementById("documents-container");
 
-    async function fetchEmployees() {
+    function createDocumentInput(doc = {}) {
+      const div = document.createElement("div");
+      div.classList.add("document-entry");
+      div.innerHTML = `
+        <input type="hidden" class="document-id" value="${doc.id || ''}" />
+        <label>Nome do Documento</label>
+        <input type="text" class="document-name" value="${doc.name || ''}" required />
+        <label>Data de Vencimento</label>
+        <input type="date" class="document-expiration" value="${doc.expiration_date || ''}" required />
+      `;
+      documentsContainer.appendChild(div);
+    }
+
+    async function carregarDados() {
       try {
-        const response = await fetch('http://localhost:5000/employee', {
+        const response = await fetch(`http://localhost:5000/employee/${employeeId}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
         });
 
         const data = await response.json();
-
         if (!response.ok) {
-          alert(data.message || "Erro ao buscar funcionários.");
+          alert(data.message || "Erro ao buscar dados do funcionário.");
           return;
         }
 
-        const tbody = document.getElementById('employee-body');
-        tbody.innerHTML = '';
+        document.getElementById("cpf").value = data.cpf;
+        document.getElementById("employee_name").value = data.employee_name;
+        document.getElementById("company_name").value = data.company_name;
 
-        data.forEach(emp => {
-          const row = document.createElement('tr');
-
-          row.innerHTML = `
-            <td>${emp.name}</td>
-            <td>${emp.cpf}</td>
-            <td><button onclick="consultarFuncionario('${emp.id}')">Consultar</button></td>
-          `;
-
-          tbody.appendChild(row);
-        });
+        data.documents.forEach(doc => createDocumentInput(doc));
       } catch (err) {
         alert("Erro ao conectar com o servidor.");
       }
     }
 
-    function consultarFuncionario(id) {
-      localStorage.setItem("employee_id", id);
-      window.location.href = "detalhes.html";
+    document.getElementById("add-document").addEventListener("click", () => {
+      createDocumentInput();
+    });
+
+    document.getElementById("edit-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const cpf = document.getElementById("cpf").value;
+      const employee_name = document.getElementById("employee_name").value;
+      const company_name = document.getElementById("company_name").value;
+
+      const documents = Array.from(document.querySelectorAll(".document-entry")).map(entry => {
+        return {
+          id: entry.querySelector(".document-id").value || undefined,
+          name: entry.querySelector(".document-name").value,
+          expiration_date: entry.querySelector(".document-expiration").value
+        };
+      });
+
+      const payload = {
+        cpf,
+        employee_name,
+        company_name,
+        documents
+      };
+
+      try {
+        const response = await fetch(`http://localhost:5000/employee/${employeeId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById("modal").classList.remove("hidden");
+        } else {
+          alert(data.message || "Erro ao atualizar funcionário.");
+        }
+      } catch (err) {
+        alert("Erro ao conectar com o servidor.");
+      }
+    });
+
+    function voltarParaConsulta() {
+      window.location.href = "consulta.html";
     }
 
-    function voltarHome() {
-      window.location.href = "home.html";
-    }
-
-    fetchEmployees();
+    carregarDados();
   </script>
 </body>
 </html>
