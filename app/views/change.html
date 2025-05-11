@@ -18,18 +18,21 @@
     </header>    
         <main style="padding-top: 2px;">
             <section>
-                <h2 id="titulo_tela">CADASTRO DE FUNCIONÁRIO</h2>
-                <label><strong>Foto:</strong>
-                    <input type="file">
+                <h2 id="titulo_tela">FUNCIONÁRIO</h2>
+                <div style="float: left; margin-right: 30px;">
+                    <img class="img_func" src="image_func/Jose das Couves.png">
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <label style="margin: 0;"><strong>CPF:</strong></label>
+                    <p style="margin: 0 0 0 10px;">111.222.333-45</p>
+                </div>
+                <div><label><strong>Funcionário:</strong>
+                    <input type="text" placeholder="Digite o nome da funcionário" style="width: 350px;">
                 </label>
-                <label><strong>CPF:</strong>
-                  <input class="input_register" placeholder="Digite o CPF">
-                </label>
-                <label><strong>Funcionário:</strong>
-                    <input type="text" placeholder="Digite o nome da funcionário">
-                </label>
-                <label><strong>Empresa:</strong>
-                  <input type="text" placeholder="Digite o nome da empresa">
+                </div>
+                <div>
+                    <label><strong>Empresa:</strong>
+                    <input type="text" placeholder="Digite o nome da empresa">
                 </label>
                 <label><strong>Cadastro de documentos:</strong>
                     <input style="width: 350px;" type="text" placeholder="Digite o nome do documento">
@@ -43,7 +46,9 @@
                     <input style="width: 350px;" type="text" placeholder="Digite o nome do documento">
                     <input type="date" placeholder="Data de validade">
                 </label>
-                <button style="width: 100%;">Salvar</button>
+                <button>Salvar Alterações</button>
+                <button style="background-color:crimson;">Excluir</button>
+                </div>
               </section>
         </main>
       
@@ -51,8 +56,3 @@
             <p><strong>Criado por: </strong> Cristina, Daniele e Raphael</p>
         </footer>
 </body>
-
-
-
-
-</html>

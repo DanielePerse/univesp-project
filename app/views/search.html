@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="wdith=device-width, initial-scale=1.0">
+    <title>iVenceu!</title>
+    <link rel="icon" type="image/png" href="image/faveicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+</head>
+
+<body>
+    <header>
+        <div style="display: inline-block; margin-top: 5px;"><img src="image/logo.png" style="height: 35px; width: 35px;"></div>
+        <div style= "margin-left: 10px; margin-top: 0px; display: inline-block;"><h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1></div>
+    </header>
+    <main class="main_search" style="padding-top: 2px;"> 
+        <section>
+            <h2 id="titulo_tela">CONSULTAR</h2>
+            <input style="width: 45%;" type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento">
+            <button style="width: 100px;">Buscar</button>
+            <table>
+                <tr>
+                    <th>Empresa</th>
+                    <th>Funcionário</th>
+                    <th class="collum_status">Status Documento</th>
+                </tr>
+                <tr>
+                    <td>Security S.A.</td>
+                    <td>Jose das Couves</td>
+                    <td class="collum_status"><a href="XXXXXXXXXXXX" style="color: red;"><strong>Vencido</strong></a></td>
+                </tr>
+                <tr>
+                    <td>Security S.A.</td>
+                    <td>Maria das Couves</td>
+                    <td class="collum_status"><a href="XXXXXXXXXXXX" style="font-weight:normal">Vigente</a></td>
+                </tr>
+            </table>
+            
+        </section>
+    </main>
+    <footer>
+        <p><strong>Criado por: </strong> Cristina, Daniele e Raphael</p>
+    </footer>
+</body>
