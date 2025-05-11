@@ -21,10 +21,10 @@ def register_employee():
 def list():
     return list_employees()
 
-@bp.route('/employee/check_register', methods=['GET'])
+@bp.route('/employee/check_register/<cpf>', methods=['GET'])
 @token_required
-def checkRegister():
-    return check_employee_cpf()
+def checkRegister(cpf):
+    return check_employee_cpf(cpf)
 
 @bp.route('/employee/<id>', methods=['GET'])
 @token_required
