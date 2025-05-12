@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>iVenceu!</title>
+  <link rel="icon" type="image/png" href="./image/faveicon.png">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header>
+    <div style="display: inline-block; margin-top: 5px;"><img src="./image/logo.png" style="height: 35px; width: 35px;"></div>
+    <div style= "margin-left: 10px; margin-top: 0px; display: inline-block;"><h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1></div>
+  </header>
+
+  <main>
+    <form id="login-form">
+      <label for="email">Email:
+        <input type="email" id="email" placeholder="Digite seu email" required />
+      </label>
+      <label for="password">Senha:
+        <input type="password" id="password" placeholder="Digite sua senha" required />
+      </label>
+      <button type="submit">Entrar</button>
+    </form>
+    <div id="error-msg" class="error-msg"></div>
+  </main>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const errorMsg = document.getElementById('error-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch("http://localhost:5000/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem("token", data.token);
+          window.location.href = "home.html";
+        } else {
+          errorMsg.textContent = data.message || "Erro ao fazer login.";
+        }
+      } catch (err) {
+        errorMsg.textContent = "Erro na conexão com o servidor.";
+      }
+    });
+  </script>
+
+  <footer>
+    <p><strong>Criado por: </strong> Cristina, Daniele e Raphael</p>
+  </footer>
+</body>
+</html>

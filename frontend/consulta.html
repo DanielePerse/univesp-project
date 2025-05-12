@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consulta de Funcionários</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header>
+    <div style="display: inline-block; margin-top: 5px;">
+      <img src="./image/logo.png" style="height: 35px; width: 35px;">
+    </div>
+    <div style="margin-left: 10px; margin-top: 0px; display: inline-block;">
+      <h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1>
+    </div>
+  </header>
+
+  <main class="main_search" style="padding-top: 2px;">
+    <section>
+      <h2 id="titulo_tela">CONSULTAR FUNCIONÁRIOS</h2>
+      <input style="width: 45%;" type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento">
+      <button style="width: 100px;">Buscar</button>
+
+      <table id="employee-table" class="styled-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Empresa</th>
+            <th>Status do Documento</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="employee-body">
+          <!-- Funcionários serão inseridos aqui -->
+        </tbody>
+      </table>
+
+      <div style="margin-top: 20px;">
+        <button onclick="voltarHome()" class="button-secondary">Voltar para Home</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Criado por: </strong> Cristina, Daniele e Raphael</p>
+  </footer>
+
+  <script>
+    const token = localStorage.getItem('token');
+
+    async function fetchEmployees() {
+      try {
+        const response = await fetch('http://localhost:5000/employee/list', {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(data.message || "Erro ao buscar funcionários.");
+          return;
+        }
+
+        const tbody = document.getElementById('employee-body');
+        tbody.innerHTML = '';
+
+        data.forEach(emp => {
+          const row = document.createElement('tr');
+          const statusStyle = emp.status === 'expired' ? 'style="color: red;"' : '';
+          const statusText = emp.status === 'expired' ? 'Vencido' : 'Vigente';
+
+          row.innerHTML = `
+            <td>${emp.employee_name}</td>
+            <td>${emp.cpf}</td>
+            <td>${emp.company_name}</td>
+            <td ${statusStyle}><strong>${statusText}</strong></td>
+            <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table">Ver Detalhes</button></td>
+          `;
+
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        alert("Erro ao conectar com o servidor.");
+      }
+    }
+
+    function consultarFuncionario(id) {
+      localStorage.setItem("employee_id", id);
+      window.location.href = "detalhes.html";
+    }
+
+    function voltarHome() {
+      window.location.href = "home.html";
+    }
+
+    fetchEmployees();
+  </script>
+</body>
+</html>
