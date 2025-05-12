@@ -24,19 +24,26 @@
 
       <form id="edit-form" style="display: flex; flex-direction: column; gap: 12px;">
 
-        <div style="display: flex; gap: 20px;">
-          <label><strong>CPF:</strong>
-            <input type="text" id="cpf" placeholder="Digite o CPF" required />
-          </label>
-
-          <label><strong>Funcionário:</strong>
-            <input type="text" id="employee_name" placeholder="Digite o nome do funcionário" required />
-          </label>
+        <div style="display: flex; gap: 30px; align-items: flex-start;">
+          <img class="img_func" src="./image_func/Jose das Couves.png" alt="Foto do Funcionário" style="width: 180px; height: auto; border-radius: 8px;">
+        
+          <div style="display: flex; flex-direction: column; gap: 12px; flex: 1;">
+            <!-- Aqui ficam os campos do formulário -->
+            <div style="display: flex; gap: 20px;">
+              <label><strong>CPF:</strong>
+                <input type="text" id="cpf" placeholder="Digite o CPF" required />
+              </label>
+        
+              <label><strong>Funcionário:</strong>
+                <input type="text" id="employee_name" placeholder="Digite o nome do funcionário" required />
+              </label>
+            </div>
+        
+            <label><strong>Empresa:</strong>
+              <input type="text" id="company_name" placeholder="Digite o nome da empresa" required />
+            </label>
+          </div>
         </div>
-
-        <label><strong>Empresa:</strong>
-          <input type="text" id="company_name" placeholder="Digite o nome da empresa" required />
-        </label>
 
         <div id="documents-container">
           <!-- Campos de documentos serão inseridos dinamicamente aqui -->
