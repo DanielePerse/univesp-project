@@ -176,6 +176,3 @@ cython_debug/
 # Bytecode Python
 __pycache__/
 *.py[cod]
-
-# Conection with BD
-config.py
