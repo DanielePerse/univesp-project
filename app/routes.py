@@ -11,6 +11,10 @@ from app.utils.auth import token_required
 
 bp = Blueprint('routes', __name__)
 
+@bp.route('/')
+def index():
+    return bp.send_static_file('login.html')
+
 @bp.route('/employee/register_employee', methods=['POST'])
 @token_required
 def register_employee():
