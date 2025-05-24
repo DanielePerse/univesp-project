@@ -11,7 +11,7 @@ from app.utils.auth import token_required
 
 bp = Blueprint('routes', __name__)
 
-@bp.route('/')
+@bp.route('/login')
 def index():
     return bp.send_static_file('login.html')
 
