@@ -1,184 +1,142 @@
-# Univesp Project
+# iVenceu - Sistema de Controle de Documentos SST
 
-Sistema de gerenciamento de funcionários e documentos desenvolvido com Flask e PostgreSQL.
+Sistema web para gerenciamento de funcionários e controle de vencimentos de documentos de Segurança e Saúde no Trabalho.
 
-## 🚀 Executando com Docker (Recomendado)
+## 📋 Pré-requisitos
 
-### Pré-requisitos
-- Docker
-- Docker Compose
+- **Python 3.12+** - [Download aqui](https://www.python.org/downloads/)
+- **Docker & Docker Compose** - [Instalar Docker](https://docs.docker.com/get-docker/)
+- **DBeaver** (opcional) - [Interface gráfica para uso do banco de dados](https://dbeaver.io/download/)
 
-### Iniciar aplicação
+## ⚡ Início Rápido
+
+### 🐳 Com Docker (Recomendado)
 ```bash
-# Clonar o repositório
-git clone <repository-url>
-cd univesp-project
-
-# Subir aplicação e banco de dados
+# Já dentro da pasta do projeto
 docker-compose up --build
-
-# Ou executar em background
-docker-compose up -d --build
 ```
+**Acesse**: http://localhost:5000
 
-### Acessar aplicação
-- **Frontend/API**: http://localhost:5000
-- **Banco PostgreSQL**: localhost:5432
-  - Database: `univesp`
-  - Username: `postgres`
-  - Password: `postgres`
+### 🐍 Desenvolvimento Local
 
-### Parar aplicação
+#### 1. Preparar Ambiente Python
 ```bash
-# Parar containers
-docker-compose down
+# Criar ambiente virtual
+python3 -m venv .venv
 
-# Parar e remover volumes (limpa banco)
-docker-compose down -v
-```
+# Ativar ambiente virtual
+source .venv/bin/activate  # Linux/Mac
+# ou
+.venv\Scripts\activate     # Windows
 
-## 🔧 Desenvolvimento Local (Sem Docker)
-
-### Pré-requisitos
-- Python 3.12+
-- PostgreSQL
-
-### Configuração
-```bash
 # Instalar dependências
-pip3 install -r requirements.txt
+pip install -r requirements.txt
+```
 
-# Configurar variáveis de ambiente
-export FLASK_APP=run.py
-export FLASK_ENV=development
+#### 2. Configurar Banco PostgreSQL
+```bash
+# Subir apenas o banco via Docker
+docker-compose up db -d
+
+# Ou configurar PostgreSQL local
 export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/univesp
+```
 
-# Executar migrations
-flask db init
-flask db migrate -m "Initial migration"
+#### 3. Executar Migrations e Subir Backend
+```bash
 flask db upgrade
+python run.py
+```
+**Backend rodando em**: http://localhost:5000
 
-# Subir backend
-flask run
+#### 4. Acessar Frontend
+O frontend está integrado ao backend. Acesse diretamente:
+**http://localhost:5000** (página de login)
+
+## 🎯 Funcionalidades
+
+- ✅ **Login/Autenticação** - Sistema de usuários com JWT
+- ✅ **Cadastro de Funcionários** - CPF, nome, empresa
+- ✅ **Gestão de Documentos** - Nome, data de vencimento
+- ✅ **Consulta e Listagem** - Visualização de todos os funcionários
+- ✅ **Edição/Atualização** - Modificar dados e documentos
+- ✅ **Validação de CPF** - Verificação antes do cadastro
+- ✅ **Status de Vencimento** - Controle visual de documentos vencidos
+
+## 🏗️ Arquitetura
+
+```
+app/
+├── controllers/    # Lógica de negócio (API endpoints)
+├── models/        # Modelos do banco (User, Employee, Document)
+├── services/      # Serviços de negócio
+├── templates/     # Templates HTML (Frontend)
+├── static/        # CSS, JS, imagens
+└── utils/         # Utilitários (autenticação, etc)
 ```
 
-### Frontend
-```bash
-# Entrar na pasta frontend
-cd app/frontend
+## 🛠️ Tecnologias
 
-# Subir servidor estático
-python3 -m http.server 8000
+- **Backend**: Flask, SQLAlchemy, Flask-Migrate
+- **Frontend**: HTML, CSS, JavaScript
+- **Banco de Dados**: PostgreSQL
+- **Auth**: JWT (JSON Web Tokens)
+- **Deploy**: Docker, Docker Compose
+
+## 🗄️ Acessar Banco de Dados (DBeaver)
+
+### Configuração de Conexão:
+- **Host**: localhost
+- **Porta**: 5432
+- **Database**: univesp
+- **Username**: postgres
+- **Password**: postgres
+
+### Tabelas do Sistema:
+- `users` - Usuários do sistema
+- `employees` - Funcionários cadastrados
+- `documents` - Documentos dos funcionários
+
+## 🧪 Executar Testes
+
+### Executar todos os testes:
+```bash
+python -m unittest discover tests -v
 ```
 
-## 📊 Banco de Dados
-
-### Modelos
-- **User**: Usuários do sistema (autenticação)
-- **Employee**: Funcionários da empresa
-- **Document**: Documentos dos funcionários
-
-### Migrations
-As migrations são executadas automaticamente no Docker. Para desenvolvimento local:
-
+### Executar testes específicos:
 ```bash
-# Gerar nova migration
-flask db migrate -m "Descrição da mudança"
-
-# Aplicar migrations
-flask db upgrade
-
-# Reverter migration
-flask db downgrade
+python tests/test_models.py     # Testes básicos (CPF, senha, UUID, datas)
+python tests/test_services.py   # Testes de lógica de negócio
+python tests/test_utils.py      # Testes utilitários (JWT, paginação, etc)
 ```
 
-### Scripts úteis
+### Estrutura de Testes:
+```
+tests/
+├── test_models.py      # Funções básicas e validações
+├── test_services.py    # Lógica de negócio sem banco
+├── test_utils.py       # Utilitários e helpers
+└── __init__.py         # Inicialização
+```
+
+**Cobertura**: 14 testes unitários sem dependências externas.
+
+## 📝 Scripts Úteis
+
 ```bash
-# Resetar banco de dados
+# Resetar banco
 docker-compose exec app python manage.py reset-db
-
-# Inserir dados de exemplo
-docker-compose exec app python manage.py seed-db
-
-# Executar migrations manualmente (se necessário)
-docker-compose run --rm app flask db upgrade
-
-# Verificar status das migrations
-docker-compose run --rm app flask db current
-
-# Listar tabelas no banco
-docker-compose exec db psql -U postgres -d univesp -c "\dt"
-```
-
-## 🛠️ Estrutura do Projeto
-
-```
-univesp-project/
-├── app/
-│   ├── controllers/     # Controladores da API
-│   ├── models/         # Modelos do banco de dados
-│   ├── services/       # Lógica de negócio
-│   ├── utils/          # Utilitários (auth, etc)
-│   └── frontend/       # Arquivos estáticos
-├── migrations/         # Migrations do banco
-├── config.py          # Configurações da aplicação
-├── docker-compose.yaml # Orquestração dos containers
-├── Dockerfile.yaml    # Imagem da aplicação
-├── requirements.txt   # Dependências Python
-└── run.py            # Ponto de entrada da aplicação
-```
-
-## 🔍 Troubleshooting
-
-### Erro de conexão com banco
-```bash
-# Verificar se containers estão rodando
-docker-compose ps
 
 # Ver logs
 docker-compose logs -f
 
-# Reiniciar apenas o banco
-docker-compose restart db
-```
+# Parar aplicação
+docker-compose down
 
-### Problemas com migrations
-```bash
-# Limpar e recriar migrations
-docker-compose down -v
-docker-compose up --build
-```
-
-### Tabelas não aparecem no DBeaver
-Se você executou apenas `docker-compose up db` e as tabelas não aparecem:
-
-```bash
-# Opção 1: Executar migrations manualmente
-docker-compose run --rm app flask db upgrade
-
-# Opção 2: Subir aplicação completa (recomendado)
-docker-compose up --build
-```
-
-**Verificar tabelas criadas:**
-```bash
-# Listar tabelas no banco
+# Ver tabelas criadas
 docker-compose exec db psql -U postgres -d univesp -c "\dt"
 ```
 
-**No DBeaver:**
-- Pressione F5 para refresh
-- Expanda o schema `public`
-- Verifique se está conectado no database `univesp`
-
-**Tabelas esperadas:**
-- `users` - Usuários do sistema
-- `employees` - Funcionários da empresa  
-- `documents` - Documentos dos funcionários
-- `alembic_version` - Controle de migrations
-
-## 🌐 Acesso ao Frontend
-
-Após subir a aplicação, acesse:
-- **API/Backend**: http://localhost:5000
-- **Frontend**: http://localhost:8000/login.html (se rodando servidor estático separado)
+---
+**Desenvolvido por**: Grupo 005 (Sala 002 - Disciplina PJI240 - UNIVESP - Projeto Integrador II 2025) 
