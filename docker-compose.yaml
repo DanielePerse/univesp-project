@@ -15,7 +15,7 @@ services:
       - FLASK_APP=run.py
       - FLASK_ENV=development
     depends_on:
-      - db
+      - localhost
   localhost:
     image: postgres:13
     ports:
