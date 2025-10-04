@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>iVenceu!</title>
-  <link rel="icon" type="image/png" href="./image/faveicon.png">
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/faveicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
   <header>
-    <div style="display: inline-block; margin-top: 5px;"><img src="./image/logo.png" style="height: 35px; width: 35px;"></div>
+    <div style="display: inline-block; margin-top: 5px;"><img src="{{ url_for('static', filename='images/logo.png') }}" style="height: 35px; width: 35px;"></div>
     <div style= "margin-left: 10px; margin-top: 0px; display: inline-block;"><h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1></div>
   </header>
 
@@ -37,7 +37,7 @@
       const password = document.getElementById('password').value;
 
       try {
-        const response = await fetch("http://localhost:5000/auth/login", {
+        const response = await fetch("/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -49,7 +49,7 @@
 
         if (response.ok) {
           localStorage.setItem("token", data.token);
-          window.location.href = "home.html";
+          window.location.href = "/home";
         } else {
           errorMsg.textContent = data.message || "Erro ao fazer login.";
         }

@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Consulta de Funcionários</title>
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
   <header>
     <div style="display: inline-block; margin-top: 5px;">
-      <img src="./image/logo.png" style="height: 35px; width: 35px;">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" style="height: 35px; width: 35px;">
     </div>
     <div style="margin-left: 10px; margin-top: 0px; display: inline-block;">
       <h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1>
@@ -52,7 +52,7 @@
 
     async function fetchEmployees() {
       try {
-        const response = await fetch('http://localhost:5000/employee/list', {
+        const response = await fetch('/employee/list', {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -90,11 +90,11 @@
 
     function consultarFuncionario(id) {
       localStorage.setItem("employee_id", id);
-      window.location.href = "detalhes.html";
+      window.location.href = "/detalhes";
     }
 
     function voltarHome() {
-      window.location.href = "home.html";
+      window.location.href = "/home";
     }
 
     fetchEmployees();
