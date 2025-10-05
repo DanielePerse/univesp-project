@@ -176,3 +176,25 @@ cython_debug/
 # Bytecode Python
 __pycache__/
 *.py[cod]
+
+# Flask/Docker específico
+instance/
+.webassets-cache
+*.log
+
+# Pytest
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.tmp
+*.swp
+*.swo
+.DS_Store
+
+# Migrations versions (manter estrutura, ignorar versões específicas)
+migrations/versions/*.py
+!migrations/versions/.gitkeep

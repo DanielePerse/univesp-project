@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 from app.controllers.employee_controller import (
     create_employee,
     list_employees,
@@ -11,10 +11,32 @@ from app.utils.auth import token_required
 
 bp = Blueprint('routes', __name__)
 
+# Rotas para páginas HTML
 @bp.route('/')
 def index():
-    return bp.send_static_file('login.html')
+    return render_template('login.html')
 
+@bp.route('/home')
+def home():
+    return render_template('home.html')
+
+@bp.route('/cadastro')
+def cadastro():
+    return render_template('cadastro.html')
+
+@bp.route('/consulta')
+def consulta():
+    return render_template('consulta.html')
+
+@bp.route('/detalhes')
+def detalhes():
+    return render_template('detalhes.html')
+
+@bp.route('/verifica_cpf')
+def verifica_cpf():
+    return render_template('verifica_cpf.html')
+
+# Rotas da API
 @bp.route('/employee/register_employee', methods=['POST'])
 @token_required
 def register_employee():
