@@ -100,7 +100,6 @@ python run.py
 ### Frontend
 - **HTML5/CSS3** - Interface web responsiva
 - **JavaScript** - Interatividade do frontend
-- **Bootstrap** (se aplicável) - Framework CSS
 
 ### Banco de Dados
 - **PostgreSQL 13** - Banco principal
@@ -127,33 +126,11 @@ Password: postgres
 - **`documents`** - Documentos SST (nome, data vencimento, funcionário)
 - **`alembic_version`** - Controle de migrations
 
-### Comandos SQL Úteis
-```sql
--- Ver todas as tabelas
-\dt
-
--- Ver estrutura de uma tabela
-\d employees
-
--- Contar registros
-SELECT COUNT(*) FROM employees;
-```
-
 ## 🧪 Testes e Desenvolvimento
 
 ```bash
-# Executar testes (se disponível)
+# Executar todos os testes
 python -m unittest discover tests -v
-
-# Modo debug com hot-reload
-export FLASK_ENV=development
-python run.py
-
-# Verificar logs da aplicação
-docker-compose logs -f app
-
-# Verificar logs do banco
-docker-compose logs -f db
 ```
 
 ## 📝 Comandos Úteis
@@ -195,74 +172,6 @@ flask db migrate -m "Descrição da mudança"
 
 # Aplicar migrations pendentes
 flask db upgrade
-```
-
-### Desenvolvimento
-```bash
-# Instalar nova dependência
-pip install nome-do-pacote
-pip freeze > requirements.txt
-
-# Verificar estrutura do projeto
-tree -I '__pycache__|*.pyc|.git'
-
-# Verificar portas em uso
-netstat -tulpn | grep :5000
-```
-
-## 🚨 Troubleshooting
-
-### Problemas Comuns
-
-**Erro de conexão com banco:**
-```bash
-# Verificar se o PostgreSQL está rodando
-docker-compose ps
-
-# Reiniciar apenas o banco
-docker-compose restart db
-```
-
-**Erro de migrations:**
-```bash
-# Limpar migrations e recriar
-rm -rf migrations/
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
-```
-
-**Porta 5000 ocupada:**
-```bash
-# Encontrar processo usando a porta
-lsof -i :5000
-
-# Matar processo (substitua PID)
-kill -9 <PID>
-```
-
-**Problemas de permissão:**
-```bash
-# Dar permissão aos scripts
-chmod +x entrypoint.sh migrate.sh
-```
-
-## 📚 Estrutura do Projeto
-
-```
-univesp-project/
-├── app/
-│   ├── controllers/     # Controladores (lógica de negócio)
-│   ├── models/         # Modelos do banco de dados
-│   ├── services/       # Serviços auxiliares
-│   ├── frontend/       # Arquivos HTML/CSS/JS
-│   └── __init__.py     # Factory da aplicação
-├── migrations/         # Migrations do banco
-├── docker-compose.yaml # Configuração Docker
-├── requirements.txt    # Dependências Python
-├── config.py          # Configurações da aplicação
-├── manage.py          # Scripts de gerenciamento
-└── run.py            # Ponto de entrada da aplicação
 ```
 
 ---
