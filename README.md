@@ -16,7 +16,7 @@ Desenvolvido como projeto integrador da Universidade Virtual do Estado de São P
 
 ```bash
 # 1. Clonar o repositório
-git clone <url-do-repositorio>
+git clone git@github.com:DanielePerse/univesp-project.git
 cd univesp-project
 
 # 2. Subir aplicação completa
@@ -34,6 +34,9 @@ A aplicação estará disponível em **http://localhost:5000** com hot-reload at
 #### 1. Preparar Ambiente Python
 ```bash
 # Criar e ativar ambiente virtual
+git clone git@github.com:DanielePerse/univesp-project.git
+cd univesp-project
+
 python3 -m venv .venv
 source .venv/bin/activate  # Linux/Mac
 # .venv\Scripts\activate   # Windows
@@ -45,7 +48,7 @@ pip install -r requirements.txt
 #### 2. Configurar Banco PostgreSQL
 ```bash
 # Opção A: Usar apenas o banco do Docker
-docker-compose up db -d
+docker-compose up db
 
 # Opção B: PostgreSQL local (se instalado)
 # Criar banco: createdb univesp
