@@ -1,11 +1,31 @@
 @charset "utf-8";
 
-*{font-family: Calibri}
+* {font-family: Calibri;}
 
 body {
     background-color: lightgrey;
     margin: 0;
     padding: 0;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;   
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    z-index: -1;
 }
 
 header {
@@ -25,73 +45,186 @@ main {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-
-.main_search{
-  max-width: 1000px;
-  margin: 50px auto;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-  
-  h2 {
-    color: #333;
-  }
 
-  #titulo_tela{
-    color:white;
+.main_search {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Seção do logo padronizada */
+.logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.logo-section img {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 8px;
+}
+
+.logo-section h1 {
+    font-size: 1.6rem;
+    margin: 5px 0;
+    color: #333;
+}
+
+.logo-section p {
+    color: #666;
+    font-size: 0.85rem;
+    margin: 3px 0;
+}
+
+/* Form groups padronizados */
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Ajuste para body garantir que não haja scroll */
+body {
+    background-color: lightgrey;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.main_search {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333;
+}
+
+#titulo_tela {
+    color: white;
     font-weight: bold;
     text-align: center;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
     background-color: #4CAF50;
-    
-  }
-  
-  section {
+}
+
+section {
     margin-bottom: 2rem;
-  }
-  
-  label {
+}
+
+label {
     display: block;
     margin-top: 1rem;
-  }
-  
-  input[type="text"], input[type="email"], input[type="password"] {
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], .input_register {
     width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
+    padding: 6px;
+    margin-top: 3px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
 
-  input[type="date"]{
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .input_register{
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
+button {
+    margin-top: 12px;
+    padding: 8px 16px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-  }
+    font-size: 14px;
+    width: 100%;
+}
 
-  .button_option{
+button:hover {
+    background-color: #45a049;
+}
+
+/* Footer padronizado */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.75rem;
+    color: #666;
+    text-align: left;
+    z-index: 100;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+footer p {
+    margin: 0;
+    padding: 0;
+    line-height: 24px;
+}
+
+/* Ajuste nos containers para não conflitar com o footer */
+.form-container {
+    max-width: 480px;
+    width: 90%;
+    margin: 20px auto 60px auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    min-height: calc(100vh - 180px);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Container para páginas de consulta/listagem */
+.page-container {
+    max-width: 900px;
+    width: 95%;
+    margin: 20px auto 60px auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    min-height: calc(100vh - 180px);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.button_option {
     width: 200px;
     height: 150px;
     margin-left: auto;
@@ -100,12 +233,11 @@ main {
     border-radius: 10px;
     color: white;
     font-size: 30px;
-    
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #09470c;
-  }
+}
 
 #tela_login {
     width: 500px;
@@ -113,156 +245,146 @@ main {
     background-color: white;
     display: flex;
     border: 2px solid gray;
-    margin:30px auto;
-    
+    margin: 30px auto;
 }
 
 .img_func {
-  width: 180px;
-  height: auto;
-  border-radius: 8px;
+    width: 180px;
+    height: auto;
+    border-radius: 8px;
 }
 
-
-.form_cpf{
-  font-size: 30px;
+.form_cpf {
+    font-size: 30px;
 }
 
-table{
-  margin-top: 20px;
-  width: 100%;
-  border-collapse: collapse;
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
 }
+
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
+
 th {
-  background-color: #f2f2f2;
-  text-align: center;
+    background-color: #f2f2f2;
+    text-align: center;
 }
-.collum_status{
-  max-width: 25px;
-  text-align: center;
+
+.collum_status {
+    max-width: 25px;
+    text-align: center;
 }
 
 #add-document {
-  background-color: #e0f7f0;        
-  color: #006644;                   
-  border: 1px solid #00a86b;        
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  margin: 16px 0;
-  transition: background-color 0.3s ease;
+    background-color: #e0f7f0;        
+    color: #006644;                   
+    border: 1px solid #00a86b;        
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 16px 0;
+    transition: background-color 0.3s ease;
 }
 
 #add-document:hover {
-  background-color: #c3efdf;
+    background-color: #c3efdf;
 }
 
 footer {
     position: fixed;
     bottom: 0;
-    background-color: #318834;
-    color: #FFF;
+    background: none;
+    color: #000 !important;
     width: 100%;
-    height: 50px;    
-    text-align: center;
+    height: 50px;
+    text-align: left;
     line-height: 20px;
+    padding-left: 40px;
 }
 
-.button_cpf {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  padding: 10px 20px;
-  width: auto;
-  height: auto;
-  cursor: pointer;
+.button_cpf, .button_form, .button_add_doc {
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
-/* Botão de ação normal (ex: Cadastrar, Voltar) */
-.button_form {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+.button_cpf, .button_form {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
 }
 
 .button_form:hover {
-  background-color: #388e3c;
+    background-color: #388e3c;
 }
 
-/* Botão de adicionar documento */
 .button_add_doc {
-  padding: 10px 20px;
-  font-size: 14px;
-  background-color: #e0f7f0;
-  color: #006644;
-  border: 1px solid #00a86b;
-  border-radius: 8px;
-  cursor: pointer;
+    background-color: #e0f7f0;
+    color: #006644;
+    border: 1px solid #00a86b;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
 }
 
 .button_add_doc:hover {
-  background-color: #c3efdf;
+    background-color: #c3efdf;
 }
 
-
-/* Modal styles para iVenceu */
+/* Modal */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* fundo escurecido */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
-  background-color: #fefefe;
-  padding: 30px 40px;
-  border-radius: 16px;
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  border: 2px solid #00a86b; /* verde iVenceu */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fefefe;
+    padding: 30px 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    border: 2px solid #00a86b;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .modal-content p {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
 }
 
 .modal-content button {
-  background-color: #00a86b;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    background-color: #00a86b;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .modal-content button:hover {
-  background-color: #008f5a;
+    background-color: #008f5a;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }

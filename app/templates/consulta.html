@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Consulta de Funcionários</title>
+  <title>iVenceu! - Consulta de Funcionários</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <header>
-    <div style="display: inline-block; margin-top: 5px;">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" style="height: 35px; width: 35px;">
+  <div class="page-container">
+    <div class="logo-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu">
+      <h1>IVENCEU!</h1>
+      <p>Controle de Vencimentos de Documentos de SST</p>
     </div>
-    <div style="margin-left: 10px; margin-top: 0px; display: inline-block;">
-      <h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1>
+    
+    <h2 style="color: white; background-color: #4CAF50; padding: 10px; text-align: center; border-radius: 6px; margin: 20px 0;">Consultar Funcionários</h2>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <input style="flex: 1; padding: 10px;" type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento">
+      <button style="width: auto; padding: 10px 20px;">Buscar</button>
     </div>
-  </header>
-
-  <main class="main_search" style="padding-top: 2px;">
-    <section>
-      <h2 id="titulo_tela">CONSULTAR FUNCIONÁRIOS</h2>
-      <input style="width: 45%;" type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento">
-      <button style="width: 100px;">Buscar</button>
 
       <table id="employee-table" class="styled-table">
         <thead>
@@ -37,22 +37,22 @@
         </tbody>
       </table>
 
-      <div style="margin-top: 20px;">
-        <button onclick="voltarHome()" class="button-secondary">Voltar para Home</button>
+      <div style="margin-top: 20px; text-align: center;">
+        <button onclick="window.location.href='/home'" style="background: #6c757d; width: auto; padding: 10px 20px;">Voltar para Home</button>
       </div>
-    </section>
-  </main>
+    </div>
 
-  <footer>
-    <p><strong>Criado por: </strong> Cristina, Daniele e Raphael</p>
-  </footer>
+    <footer style="padding: 20px; text-align: center; font-size: 0.9rem; color: #666;">
+      <p>Desenvolvido por Grupo PI II</p>
+    </footer>
+  </div>
 
   <script>
     const token = localStorage.getItem('token');
 
     async function fetchEmployees() {
       try {
-        const response = await fetch('/employee/list', {
+        const response = await fetch('http://localhost:5000/employee/list', {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -90,14 +90,18 @@
 
     function consultarFuncionario(id) {
       localStorage.setItem("employee_id", id);
-      window.location.href = "/detalhes";
+      window.location.href = "/detalhes/" + id;
     }
 
     function voltarHome() {
-      window.location.href = "/home";
+      window.location.href = "templates/home.html";
     }
 
     fetchEmployees();
   </script>
+
+  <footer>
+    <p>Desenvolvido por: Grupo PI II</p>
+  </footer>
 </body>
 </html>
