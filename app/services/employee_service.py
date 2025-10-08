@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 from app import db
 from app.models.employee import Employee
@@ -40,12 +40,26 @@ def create_employee_with_documents(cpf, employee_name, company_name, documents, 
 def list_employees_with_document_status():
     employees = Employee.query.options(joinedload(Employee.documents)).all()
     result = []
+    
+    today = datetime.utcnow().date()
+    expiring_threshold = today + timedelta(days=30)
 
     for emp in employees:
         documents = emp.documents
-        has_expired = any(doc.expiration_date < datetime.utcnow().date() for doc in documents)
-
-        status = 'expired' if has_expired else 'valid'
+        
+        # Verifica se há documentos vencidos (prioridade alta)
+        has_expired = any(doc.expiration_date < today for doc in documents)
+        
+        # Verifica se há documentos que estão para vencer nos próximos 30 dias (prioridade média)
+        has_expiring = any(today <= doc.expiration_date <= expiring_threshold for doc in documents)
+        
+        # Define o status baseado na prioridade: expired > expiring > valid
+        if has_expired:
+            status = 'expired'
+        elif has_expiring:
+            status = 'expiring'
+        else:
+            status = 'valid'
 
         result.append({
             'id': emp.id,
