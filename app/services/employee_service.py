@@ -9,12 +9,13 @@ def check_cpf_exists(cpf):
     employee = Employee.query.filter_by(cpf=cpf).first()
     return employee is not None
 
-def create_employee_with_documents(cpf, employee_name, company_name, documents):
+def create_employee_with_documents(cpf, employee_name, company_name, documents, address=None):
     employee = Employee(
         id=str(uuid.uuid4()),
         cpf=cpf,
         company_name=company_name,
         employee_name=employee_name,
+        address=address,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
@@ -67,6 +68,7 @@ def get_employee_detail(id):
         'employee_name': employee.employee_name,
         'company_name': employee.company_name,
         'cpf': employee.cpf,
+        'address': employee.address,
         'documents': [
             {
                 'id': doc.id,
@@ -86,6 +88,8 @@ def update_employee(id, data):
     # Atualiza os dados do empregado
     employee.employee_name = data.get('employee_name', employee.employee_name)
     employee.company_name = data.get('company_name', employee.company_name)
+    if 'address' in data:
+        employee.address = data.get('address')
     employee.updated_at = datetime.utcnow()
 
     # Atualiza ou adiciona documentos
@@ -121,12 +125,12 @@ def update_employee(id, data):
                 return None, 'Missing name or expirationDate for new document'
 
     db.session.commit()
-    
     employee_data = {
     'id': employee.id,
     'employee_name': employee.employee_name,
     'company_name': employee.company_name,
     'cpf': employee.cpf,
+    'address': employee.address,
     'documents': [
         {
             'id': doc.id,
