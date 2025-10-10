@@ -20,7 +20,7 @@
         <label for="cpf">CPF</label>
         <input type="text" id="cpf" required placeholder="000.000.000-00" class="input_register" />
         <div style="margin-top: 5px;">
-          <a href="/verifica_cpf" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
+          <a href="#" id="verificar-cpf-link" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
             🔍 Verificar se CPF já está cadastrado
           </a>
         </div>
@@ -137,6 +137,35 @@
       modal.classList.add("hidden");
       window.location.href = "/home";
     });
+
+    // Funcionalidade de verificar CPF
+    document.getElementById('verificar-cpf-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      const cpfInput = document.getElementById('cpf');
+      const cpfValue = cpfInput.value.trim();
+      
+      if (!cpfValue) {
+        alert('Por favor, digite um CPF para verificar.');
+        cpfInput.focus();
+        return;
+      }
+      
+      // Salva o CPF no localStorage para uso na página de verificação
+      localStorage.setItem('cpf_para_verificar', cpfValue);
+      // Salva a URL atual para retorno
+      localStorage.setItem('origem_verificacao', window.location.pathname);
+      
+      window.location.href = '/verifica_cpf';
+    });
+
+    // Verifica se retornou da verificação de CPF
+    window.onload = function() {
+      const cpfVerificado = localStorage.getItem('cpf_verificado');
+      if (cpfVerificado) {
+        document.getElementById('cpf').value = cpfVerificado;
+        localStorage.removeItem('cpf_verificado');
+      }
+    };
   </script>
 </body>
 </html>
