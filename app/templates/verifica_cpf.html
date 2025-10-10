@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>iVenceu! - Verificar CPF</title>
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}"/>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
-
 <body>
   <div class="form-container">
     <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
       <h1>IVENCEU!</h1>
       <p>Verificação de CPF</p>
     </div>
-    
+
     <form id="cpf-form">
       <div class="form-group">
-        <label for="cpf"><strong>CPF:</strong></label>
-        <input type="text" id="cpf" placeholder="Digite o CPF" required>
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" placeholder="Digite o CPF" required class="input_register">
       </div>
-      <button type="submit">Validar</button>
+      <button type="submit" class="button_form">Validar</button>
     </form>
 
-    <div id="message" style="margin-top: 20px; font-weight: bold; color: red; text-align: center;"></div>
+    <div id="message" class="info-msg" style="margin-top: 20px; font-weight: bold;"></div>
 
-      <div style="margin-top: 40px;">
-        <button class="logout-button" onclick="goBack()">Voltar para Home</button>
-      </div>
-    </section>
-  </main> 
-  
+    <div class="form-actions" style="margin-top: 20px;">
+      <button class="button_form" onclick="goBack()">Voltar para Home</button>
+    </div>
+  </div>
+
+  <!-- Marca d'água -->
+  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+    Desenvolvido por Grupo PI II
+  </div>
+
   <script>
     const form = document.getElementById('cpf-form');
     const messageDiv = document.getElementById('message');
@@ -44,7 +46,7 @@
       const token = localStorage.getItem('token');
 
       try {
-        const response = await fetch(`http://localhost:5000/employee/check_register/${cpf}`, {
+        const response = await fetch(`/employee/check_register/${cpf}`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`
@@ -56,14 +58,17 @@
         if (response.ok) {
           // CPF não encontrado, redireciona para o cadastro
           localStorage.setItem("cpf", cpf);
-          window.location.href = "cadastro.html";
+          window.location.href = "/cadastro";
         } else if (response.status === 409) {
           messageDiv.textContent = "Este CPF já está cadastrado!";
+          messageDiv.style.color = "red";
         } else {
           messageDiv.textContent = data.message || "Erro ao verificar CPF.";
+          messageDiv.style.color = "red";
         }
       } catch (err) {
         messageDiv.textContent = "Erro na conexão com o servidor.";
+        messageDiv.style.color = "red";
       }
     });
 
@@ -71,9 +76,5 @@
       window.location.href = "/home";
     }
   </script>
-
-  <footer>
-    <p>Desenvolvido por: Grupo PI II</p>
-  </footer>
 </body>
 </html>

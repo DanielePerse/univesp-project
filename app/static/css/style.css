@@ -1,31 +1,11 @@
 @charset "utf-8";
 
-* {font-family: Calibri;}
+*{font-family: Calibri}
 
 body {
     background-color: lightgrey;
     margin: 0;
     padding: 0;
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;   
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.2;
-    z-index: -1;
 }
 
 header {
@@ -47,8 +27,8 @@ main {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.main_search {
-    max-width: 1000px;
+.form-container {
+    max-width: 500px;
     margin: 50px auto;
     padding: 2rem;
     background-color: white;
@@ -56,78 +36,139 @@ main {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Seção do logo padronizada */
 .logo-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
     text-align: center;
-}
-
-.logo-section img {
-    width: 45px;
-    height: 45px;
-    margin-bottom: 8px;
+    margin-bottom: 30px;
 }
 
 .logo-section h1 {
-    font-size: 1.6rem;
-    margin: 5px 0;
-    color: #333;
+    color: #4CAF50;
+    margin: 10px 0 5px 0;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .logo-section p {
     color: #666;
-    font-size: 0.85rem;
-    margin: 3px 0;
+    margin: 0;
+    font-size: 1rem;
 }
 
-/* Form groups padronizados */
 .form-group {
-    margin-bottom: 12px;
+    margin-bottom: 1rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 0.5rem;
     color: #333;
     font-weight: 500;
-    font-size: 14px;
 }
 
-/* Ajuste para body garantir que não haja scroll */
-body {
-    background-color: lightgrey;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    height: 100vh;
-    overflow-x: hidden;
+.form-actions {
+    margin-top: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 20px;
-    box-sizing: border-box;
+    gap: 10px;
+    justify-content: center;
 }
 
-.main_search {
+.main_search{
     max-width: 1000px;
     margin: 50px auto;
     padding: 2rem;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.styled-table thead tr {
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.button-table {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.button-table:hover {
+    background-color: #388e3c;
+}
+
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.info-msg {
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.error-msg {
+    color: #d32f2f;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
 h2 {
     color: #333;
 }
 
-#titulo_tela {
-    color: white;
+#titulo_tela{
+    color:white;
     font-weight: bold;
     text-align: center;
     border-top: 1px solid gray;
@@ -144,87 +185,39 @@ label {
     margin-top: 1rem;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="date"], .input_register {
+input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
-    padding: 6px;
-    margin-top: 3px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
     border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+input[type="date"]{
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input_register{
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
-    margin-top: 12px;
-    padding: 8px 16px;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
-    width: 100%;
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
-/* Footer padronizado */
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 8px 20px;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-top: 1px solid #e0e0e0;
-    font-size: 0.75rem;
-    color: #666;
-    text-align: left;
-    z-index: 100;
-    box-sizing: border-box;
-    height: 40px;
-}
-
-footer p {
-    margin: 0;
-    padding: 0;
-    line-height: 24px;
-}
-
-/* Ajuste nos containers para não conflitar com o footer */
-.form-container {
-    max-width: 480px;
-    width: 90%;
-    margin: 20px auto 60px auto;
-    padding: 1.5rem;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    min-height: calc(100vh - 180px);
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-/* Container para páginas de consulta/listagem */
-.page-container {
-    max-width: 900px;
-    width: 95%;
-    margin: 20px auto 60px auto;
-    padding: 1.5rem;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    min-height: calc(100vh - 180px);
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-}
-
-.button_option {
+.button_option{
     width: 200px;
     height: 150px;
     margin-left: auto;
@@ -245,7 +238,7 @@ button:hover {
     background-color: white;
     display: flex;
     border: 2px solid gray;
-    margin: 30px auto;
+    margin:30px auto;
 }
 
 .img_func {
@@ -254,27 +247,24 @@ button:hover {
     border-radius: 8px;
 }
 
-.form_cpf {
+.form_cpf{
     font-size: 30px;
 }
 
-table {
+table{
     margin-top: 20px;
     width: 100%;
     border-collapse: collapse;
 }
-
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
 }
-
 th {
     background-color: #f2f2f2;
     text-align: center;
 }
-
-.collum_status {
+.collum_status{
     max-width: 25px;
     text-align: center;
 }
@@ -298,54 +288,64 @@ th {
 footer {
     position: fixed;
     bottom: 0;
-    background: none;
-    color: #000 !important;
+    background-color: #318834;
+    color: #FFF;
     width: 100%;
-    height: 50px;
-    text-align: left;
+    height: 50px;    
+    text-align: center;
     line-height: 20px;
-    padding-left: 40px;
 }
 
-.button_cpf, .button_form, .button_add_doc {
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 16px;
-}
-
-.button_cpf, .button_form {
+.button_cpf {
     background-color: #4CAF50;
     color: white;
     border: none;
+    border-radius: 6px;
+    font-size: 16px;
     padding: 10px 20px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+/* Botão de ação normal (ex: Cadastrar, Voltar) */
+.button_form {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .button_form:hover {
     background-color: #388e3c;
 }
 
+/* Botão de adicionar documento */
 .button_add_doc {
+    padding: 10px 20px;
+    font-size: 14px;
     background-color: #e0f7f0;
     color: #006644;
     border: 1px solid #00a86b;
-    padding: 10px 20px;
-    font-size: 14px;
     border-radius: 8px;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
 .button_add_doc:hover {
     background-color: #c3efdf;
 }
 
-/* Modal */
+/* Modal styles para iVenceu */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6); /* fundo escurecido */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -359,8 +359,8 @@ footer {
     text-align: center;
     max-width: 400px;
     width: 90%;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    border: 2px solid #00a86b;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 2px solid #00a86b; /* verde iVenceu */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

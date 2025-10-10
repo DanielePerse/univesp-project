@@ -8,26 +8,26 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="page-container">
+  <div class="form-container">
     <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
       <h1>IVENCEU!</h1>
-      <p>Controle de Vencimentos de Documentos de SST</p>
-    </div>
-    
-    <h2 style="color: white; background-color: #4CAF50; padding: 10px; text-align: center; border-radius: 6px; margin: 20px 0;">Consultar Funcionários</h2>
-    
-    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-      <input style="flex: 1; padding: 10px;" type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento">
-      <button style="width: auto; padding: 10px 20px;">Buscar</button>
+      <p>Consultar Funcionários</p>
     </div>
 
+    <div class="search-section" style="margin-bottom: 20px;">
+      <input type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento" style="width: 70%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+      <button style="width: 25%; padding: 10px; margin-left: 10px;" class="button_form">Buscar</button>
+    </div>
+
+    <div class="table-container">
       <table id="employee-table" class="styled-table">
         <thead>
           <tr>
             <th>Nome</th>
             <th>CPF</th>
             <th>Empresa</th>
+            <th>Endereço</th>
             <th>Status do Documento</th>
             <th>Ações</th>
           </tr>
@@ -36,15 +36,16 @@
           <!-- Funcionários serão inseridos aqui -->
         </tbody>
       </table>
-
-      <div style="margin-top: 20px; text-align: center;">
-        <button onclick="window.location.href='/home'" style="background: #6c757d; width: auto; padding: 10px 20px;">Voltar para Home</button>
-      </div>
     </div>
 
-    <footer style="padding: 20px; text-align: center; font-size: 0.9rem; color: #666;">
-      <p>Desenvolvido por Grupo PI II</p>
-    </footer>
+    <div class="form-actions" style="margin-top: 20px;">
+      <button onclick="voltarHome()" class="button_form">Voltar para Home</button>
+    </div>
+  </div>
+
+  <!-- Marca d'água -->
+  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+    Desenvolvido por Grupo PI II
   </div>
 
   <script>
@@ -52,7 +53,7 @@
 
     async function fetchEmployees() {
       try {
-        const response = await fetch('http://localhost:5000/employee/list', {
+        const response = await fetch('/employee/list', {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -77,6 +78,7 @@
             <td>${emp.employee_name}</td>
             <td>${emp.cpf}</td>
             <td>${emp.company_name}</td>
+            <td>${emp.address || 'Não informado'}</td>
             <td ${statusStyle}><strong>${statusText}</strong></td>
             <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table">Ver Detalhes</button></td>
           `;
@@ -90,18 +92,14 @@
 
     function consultarFuncionario(id) {
       localStorage.setItem("employee_id", id);
-      window.location.href = "/detalhes/" + id;
+      window.location.href = "/detalhes";
     }
 
     function voltarHome() {
-      window.location.href = "templates/home.html";
+      window.location.href = "/home";
     }
 
     fetchEmployees();
   </script>
-
-  <footer>
-    <p>Desenvolvido por: Grupo PI II</p>
-  </footer>
 </body>
 </html>

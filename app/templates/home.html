@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>iVenceu!</title>
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
-
 <body>
   <div class="form-container">
     <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
       <h1>IVENCEU!</h1>
       <p>Controle de Vencimentos de Documentos de SST</p>
     </div>
@@ -30,13 +28,12 @@
     </div>
   </div>
 
-  <footer>
+  <!-- Marca d'água -->
+  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
     Desenvolvido por Grupo PI II
-  </footer>
+  </div>
 
-  <!-- JS utilitário -->
   <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-
   <script>
     checkAuth();
 
@@ -49,14 +46,9 @@
     }
     
     function logout() {
-    localStorage.removeItem("token");
-    window.location.href = "/";
-  }
-
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    }
   </script>
-
-  <footer>
-    <p>Desenvolvido por: Grupo PI II</p>
-  </footer>
 </body>
 </html>
