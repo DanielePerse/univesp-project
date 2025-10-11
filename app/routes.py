@@ -28,13 +28,17 @@ def cadastro():
 def consulta():
     return render_template('consulta.html')
 
-@bp.route('/detalhes')
-def detalhes():
-    return render_template('detalhes.html')
+@bp.route('/detalhes/<id>')
+def detalhes_funcionario(id):
+    return render_template('detalhes.html', employee_id=id)
 
 @bp.route('/verifica_cpf')
 def verifica_cpf():
     return render_template('verifica_cpf.html')
+
+@bp.route('/cadastro_usuario')
+def cadastro_usuario():
+    return render_template('cadastro_usuario.html')
 
 # Rotas da API
 @bp.route('/employee/register_employee', methods=['POST'])

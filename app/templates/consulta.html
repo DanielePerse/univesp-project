@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Consulta de Funcionários</title>
+  <title>iVenceu! - Consulta de Funcionários</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <header>
-    <div style="display: inline-block; margin-top: 5px;">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" style="height: 35px; width: 35px;">
+  <div class="form-container wide">
+    <div class="logo-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+      <h1>IVENCEU!</h1>
+      <p>Consultar Funcionários</p>
     </div>
-    <div style="margin-left: 10px; margin-top: 0px; display: inline-block;">
-      <h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1>
+
+    <div class="search-section" style="margin-bottom: 20px;">
+      <input type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento" style="width: 70%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+      <button style="width: 25%; padding: 10px; margin-left: 10px;" class="button_form">Buscar</button>
     </div>
-  </header>
 
-  <main class="main_search" style="padding-top: 2px;">
-    <section>
-      <h2 id="titulo_tela">CONSULTAR FUNCIONÁRIOS</h2>
-      <input style="width: 45%;" type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento">
-      <button style="width: 100px;">Buscar</button>
-
+    <div class="table-container">
       <table id="employee-table" class="styled-table">
         <thead>
           <tr>
@@ -36,16 +35,17 @@
           <!-- Funcionários serão inseridos aqui -->
         </tbody>
       </table>
+    </div>
 
-      <div style="margin-top: 20px;">
-        <button onclick="voltarHome()" class="button-secondary">Voltar para Home</button>
-      </div>
-    </section>
-  </main>
+    <div class="form-actions" style="margin-top: 20px;">
+      <button onclick="voltarHome()" class="button_form">Voltar para Home</button>
+    </div>
+  </div>
 
-  <footer>
-    <p><strong>Criado por: </strong> Cristina, Daniele e Raphael</p>
-  </footer>
+  <!-- Marca d'água -->
+  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+    Desenvolvido por Grupo PI II
+  </div>
 
   <script>
     const token = localStorage.getItem('token');
@@ -89,8 +89,7 @@
     }
 
     function consultarFuncionario(id) {
-      localStorage.setItem("employee_id", id);
-      window.location.href = "/detalhes";
+      window.location.href = `/detalhes/${id}`;
     }
 
     function voltarHome() {

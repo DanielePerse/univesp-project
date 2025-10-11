@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Usuário - iVenceu!</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="form-container">
+    <div class="logo-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+      <h1>IVENCEU!</h1>
+      <p>Cadastro de Usuário</p>
+    </div>
+    
+    <form id="register-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Digite seu email" required class="input_register" />
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha" required class="input_register" />
+      </div>
+      <button type="submit" class="button_form">Cadastrar</button>
+    </form>
+    
+    <div id="register-msg" class="error-msg"></div>
+    
+    <div class="form-actions" style="margin-top: 20px;">
+      <a href="/" style="color: #4CAF50; text-decoration: none;">Voltar para o login</a>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById('register-form');
+    const msg = document.getElementById('register-msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      try {
+        const response = await fetch("/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          msg.style.color = 'green';
+          msg.textContent = "Usuário cadastrado com sucesso! Faça login.";
+        } else {
+          msg.style.color = 'red';
+          msg.textContent = data.message || "Erro ao cadastrar usuário.";
+        }
+      } catch (err) {
+        msg.style.color = 'red';
+        msg.textContent = "Erro na conexão com o servidor.";
+      }
+    });
+  </script>
+  
+  <!-- Marca d'água -->
+  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+    Desenvolvido por Grupo PI II
+  </div>
+</body>
+</html>

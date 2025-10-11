@@ -25,63 +25,200 @@ main {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
+}
+
+.form-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container.wide {
+    max-width: 800px;
+}
+
+.logo-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-section h1 {
+    color: #4CAF50;
+    margin: 10px 0 5px 0;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.logo-section p {
+    color: #666;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
 
 .main_search{
-  max-width: 1000px;
-  margin: 50px auto;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-  
-  h2 {
-    color: #333;
-  }
 
-  #titulo_tela{
+.table-container {
+    overflow-x: auto;
+    overflow-y: visible;
+    margin: 20px 0;
+    max-height: 500px;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.styled-table thead tr {
+    background-color: #4CAF50 !important;
+    color: white;
+    text-align: left;
+}
+
+.styled-table th {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.button-table {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.button-table:hover {
+    background-color: #388e3c;
+}
+
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-section input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.info-msg {
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.error-msg {
+    color: #d32f2f;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+h2 {
+    color: #333;
+}
+
+#titulo_tela{
     color:white;
     font-weight: bold;
     text-align: center;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
     background-color: #4CAF50;
-    
-  }
-  
-  section {
+}
+
+section {
     margin-bottom: 2rem;
-  }
-  
-  label {
+}
+
+label {
     display: block;
     margin-top: 1rem;
-  }
-  
-  input[type="text"], input[type="email"], input[type="password"] {
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
     width: 100%;
     padding: 0.5rem;
     margin-top: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
+}
 
-  input[type="date"]{
+input[type="date"]{
     padding: 0.5rem;
     margin-top: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
+}
 
-  .input_register{
+.input_register{
     padding: 0.5rem;
     margin-top: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  button {
+}
+
+button {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     background-color: #4CAF50;
@@ -89,9 +226,9 @@ main {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
 
-  .button_option{
+.button_option{
     width: 200px;
     height: 150px;
     margin-left: auto;
@@ -100,12 +237,11 @@ main {
     border-radius: 10px;
     color: white;
     font-size: 30px;
-    
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #09470c;
-  }
+}
 
 #tela_login {
     width: 500px;
@@ -114,52 +250,49 @@ main {
     display: flex;
     border: 2px solid gray;
     margin:30px auto;
-    
 }
 
 .img_func {
-  width: 180px;
-  height: auto;
-  border-radius: 8px;
+    width: 180px;
+    height: auto;
+    border-radius: 8px;
 }
 
-
 .form_cpf{
-  font-size: 30px;
+    font-size: 30px;
 }
 
 table{
-  margin-top: 20px;
-  width: 100%;
-  border-collapse: collapse;
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
 }
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 th {
-  background-color: #f2f2f2;
-  text-align: center;
+    text-align: center;
 }
 .collum_status{
-  max-width: 25px;
-  text-align: center;
+    max-width: 25px;
+    text-align: center;
 }
 
 #add-document {
-  background-color: #e0f7f0;        
-  color: #006644;                   
-  border: 1px solid #00a86b;        
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  margin: 16px 0;
-  transition: background-color 0.3s ease;
+    background-color: #e0f7f0;        
+    color: #006644;                   
+    border: 1px solid #00a86b;        
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 16px 0;
+    transition: background-color 0.3s ease;
 }
 
 #add-document:hover {
-  background-color: #c3efdf;
+    background-color: #c3efdf;
 }
 
 footer {
@@ -174,95 +307,94 @@ footer {
 }
 
 .button_cpf {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  padding: 10px 20px;
-  width: auto;
-  height: auto;
-  cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 10px 20px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
 }
 
 /* Botão de ação normal (ex: Cadastrar, Voltar) */
 .button_form {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .button_form:hover {
-  background-color: #388e3c;
+    background-color: #388e3c;
 }
 
 /* Botão de adicionar documento */
 .button_add_doc {
-  padding: 10px 20px;
-  font-size: 14px;
-  background-color: #e0f7f0;
-  color: #006644;
-  border: 1px solid #00a86b;
-  border-radius: 8px;
-  cursor: pointer;
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #e0f7f0;
+    color: #006644;
+    border: 1px solid #00a86b;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 .button_add_doc:hover {
-  background-color: #c3efdf;
+    background-color: #c3efdf;
 }
-
 
 /* Modal styles para iVenceu */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* fundo escurecido */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* fundo escurecido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
-  background-color: #fefefe;
-  padding: 30px 40px;
-  border-radius: 16px;
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  border: 2px solid #00a86b; /* verde iVenceu */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fefefe;
+    padding: 30px 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 2px solid #00a86b; /* verde iVenceu */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .modal-content p {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
 }
 
 .modal-content button {
-  background-color: #00a86b;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    background-color: #00a86b;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .modal-content button:hover {
-  background-color: #008f5a;
+    background-color: #008f5a;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
