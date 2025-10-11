@@ -15,11 +15,6 @@
       <p>Consultar Funcionários</p>
     </div>
 
-    <div class="search-section" style="margin-bottom: 20px;">
-      <input type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento" style="width: 70%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-      <button style="width: 25%; padding: 10px; margin-left: 10px;" class="button_form">Buscar</button>
-    </div>
-
     <div class="table-container">
       <table id="employee-table" class="styled-table">
         <thead>
@@ -70,8 +65,28 @@
 
         data.forEach(emp => {
           const row = document.createElement('tr');
-          const statusStyle = emp.status === 'expired' ? 'style="color: red;"' : '';
-          const statusText = emp.status === 'expired' ? 'Vencido' : 'Vigente';
+          
+          // Define cor e texto baseado no status
+          let statusStyle = '';
+          let statusText = '';
+          
+          switch(emp.status) {
+            case 'expired':
+              statusStyle = 'style="color: red;"';
+              statusText = 'Vencido';
+              break;
+            case 'expiring':
+              statusStyle = 'style="color: orange;"';
+              statusText = 'Próximo a vencer';
+              break;
+            case 'valid':
+              statusStyle = 'style="color: green;"';
+              statusText = 'Vigente';
+              break;
+            default:
+              statusStyle = '';
+              statusText = 'Desconhecido';
+          }
 
           row.innerHTML = `
             <td>${emp.employee_name}</td>

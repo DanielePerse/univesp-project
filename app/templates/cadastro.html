@@ -50,10 +50,10 @@
 
       <div class="form-actions" style="margin-top: 20px; display: flex; gap: 10px;">
         <button type="submit" class="button_form">Cadastrar</button>
-        <button type="button" class="button_form" onclick="window.location.href='/home'">Voltar para Home</button>
-      </div>
-    </form>
-  </div>
+        <button type="button" class="button_form" onclick="goBack()" style="margin-left: 10px;">Voltar para Home</button>
+      </form>
+    </section>
+  </main>
 
   <div id="modal" class="modal hidden">
     <div class="modal-content">
@@ -128,10 +128,9 @@
       }
     });
 
-    document.getElementById('voltar-btn').addEventListener('click', () => {
-      modal.classList.add("hidden");
+    function goBack() {
       window.location.href = "/home";
-    });
+    }
 
     // Funcionalidade de verificar CPF
     document.getElementById('verificar-cpf-link').addEventListener('click', async (e) => {
@@ -183,6 +182,7 @@
       const statusDiv = document.getElementById('cpf-status');
       statusDiv.style.display = 'none';
     });
+
   </script>
 </body>
 </html>
