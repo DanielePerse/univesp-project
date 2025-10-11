@@ -36,10 +36,6 @@
         <input type="text" id="company_name" required class="input_register" />
       </div>
 
-      <div class="form-group">
-        <label for="address">Endereço</label>
-        <input type="text" id="address" required class="input_register" placeholder="Endereço completo" />
-      </div>
 
       <div id="documents-container">
         <p><strong>Cadastro de documentos:</strong></p>
@@ -95,7 +91,6 @@
       const cpf = document.getElementById('cpf').value;
       const employee_name = document.getElementById('employee_name').value;
       const company_name = document.getElementById('company_name').value;
-      const address = document.getElementById('address').value;
       const token = localStorage.getItem('token');
 
       const documents = Array.from(document.querySelectorAll('.document-entry')).map(entry => {
@@ -108,7 +103,6 @@
         cpf,
         employee_name,
         company_name,
-        address,
         documents
       };
 
