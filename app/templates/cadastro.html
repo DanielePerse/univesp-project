@@ -43,7 +43,7 @@
         <button type="button" id="add-document" class="button_add_doc" style="margin-top: 10px;">+ Adicionar outro documento</button><br><br>
 
         <button type="submit" class="button_form">Cadastrar</button>
-        <button type="button" class="button_form" onclick="window.location.href='home.html'" style="margin-left: 10px;">Voltar para Home</button>
+        <button type="button" class="button_form" onclick="goBack()" style="margin-left: 10px;">Voltar para Home</button>
       </form>
     </section>
   </main>
@@ -118,10 +118,9 @@
       }
     });
 
-    document.getElementById('voltar-btn').addEventListener('click', () => {
-      modal.classList.add("hidden");
+    function goBack() {
       window.location.href = "/home";
-    });
+    }
   </script>
 </body>
 </html>

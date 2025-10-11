@@ -19,8 +19,6 @@
   <main class="main_search" style="padding-top: 2px;">
     <section>
       <h2 id="titulo_tela">CONSULTAR FUNCIONÁRIOS</h2>
-      <input style="width: 45%;" type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento">
-      <button style="width: 100px;">Buscar</button>
 
       <table id="employee-table" class="styled-table">
         <thead>
@@ -70,8 +68,28 @@
 
         data.forEach(emp => {
           const row = document.createElement('tr');
-          const statusStyle = emp.status === 'expired' ? 'style="color: red;"' : '';
-          const statusText = emp.status === 'expired' ? 'Vencido' : 'Vigente';
+          
+          // Define cor e texto baseado no status
+          let statusStyle = '';
+          let statusText = '';
+          
+          switch(emp.status) {
+            case 'expired':
+              statusStyle = 'style="color: red;"';
+              statusText = 'Vencido';
+              break;
+            case 'expiring':
+              statusStyle = 'style="color: orange;"';
+              statusText = 'Próximo a vencer';
+              break;
+            case 'valid':
+              statusStyle = 'style="color: green;"';
+              statusText = 'Vigente';
+              break;
+            default:
+              statusStyle = '';
+              statusText = 'Desconhecido';
+          }
 
           row.innerHTML = `
             <td>${emp.employee_name}</td>
