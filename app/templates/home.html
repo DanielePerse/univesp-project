@@ -1,56 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>iVenceu!</title>
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/faveicon.png') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
-
 <body>
-  <header>
-    <div style="display: inline-block; margin-top: 5px;">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" style="height: 35px; width: 35px;">
+  <div class="form-container">
+    <div class="logo-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+      <h1>IVENCEU!</h1>
+      <p>Controle de Vencimentos de Documentos de SST</p>
     </div>
-    <div style="margin-left: 10px; margin-top: 0px; display: inline-block;">
-      <h1><strong>iVenceu</strong> - controle de vencimentos de documentos de SST</h1>
+    
+    <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
+      <button onclick="goToCadastro()" style="padding: 15px; font-size: 1rem;">
+        📝 Cadastrar Funcionário
+      </button>
+      <button onclick="goToConsulta()" style="padding: 15px; font-size: 1rem;">
+        🔍 Consultar Funcionários
+      </button>
+      <button onclick="logout()" style="background: #dc3545; padding: 15px; font-size: 1rem; margin-top: 15px;">
+        🚪 Sair
+      </button>
     </div>
-  </header>
+  </div>
 
-  <main>
-    <section style="text-align: center; margin-top: 50px;">
-      <button class="button_option" onclick="goToCadastro()"><strong>Cadastrar</strong></button>
-      <button class="button_option" style="margin-left: 90px;" onclick="goToConsulta()"><strong>Consultar</strong></button>
-    </section>
-
-    <section style="text-align: center; margin-top: 40px;">
-      <button class="logout-button" onclick="logout()">Sair</button>
-    </section>
-  </main>
-
-  <footer>
-    <p><strong>Criado por:</strong> Cristina, Daniele e Raphael</p>
-  </footer>
+  <!-- Marca d'água -->
+  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+    Desenvolvido por Grupo PI II
+  </div>
 
   <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
   <script>
     checkAuth();
 
     function goToCadastro() {
-      window.location.href = "/verifica_cpf";
+      window.location.href = "/cadastro";
     }
 
     function goToConsulta() {
       window.location.href = "/consulta";
     }
-
+    
     function logout() {
       localStorage.removeItem("token");
       window.location.href = "/";
     }
   </script>
 </body>
-
 </html>
