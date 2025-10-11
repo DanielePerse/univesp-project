@@ -28,13 +28,9 @@ def cadastro():
 def consulta():
     return render_template('consulta.html')
 
-@bp.route('/detalhes')
-def detalhes():
-    return render_template('detalhes.html')
-
 @bp.route('/detalhes/<id>')
 def detalhes_funcionario(id):
-    return render_template('detalhes.html')
+    return render_template('detalhes.html', employee_id=id)
 
 @bp.route('/verifica_cpf')
 def verifica_cpf():

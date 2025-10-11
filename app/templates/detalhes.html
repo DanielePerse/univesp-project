@@ -64,7 +64,7 @@
 
   <script>
     const token = localStorage.getItem("token");
-    const employeeId = localStorage.getItem("employee_id");
+    const employeeId = "{{ employee_id }}";
     const documentsContainer = document.getElementById("documents-container");
 
     function createDocumentInput(doc = {}) {
