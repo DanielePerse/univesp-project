@@ -23,6 +23,7 @@
           <a href="#" id="verificar-cpf-link" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
             🔍 Verificar se CPF já está cadastrado
           </a>
+          <div id="cpf-status" style="margin-top: 5px; font-size: 12px; font-weight: 500; display: none;"></div>
         </div>
       </div>
 
@@ -133,10 +134,11 @@
     });
 
     // Funcionalidade de verificar CPF
-    document.getElementById('verificar-cpf-link').addEventListener('click', (e) => {
+    document.getElementById('verificar-cpf-link').addEventListener('click', async (e) => {
       e.preventDefault();
       const cpfInput = document.getElementById('cpf');
       const cpfValue = cpfInput.value.trim();
+      const statusDiv = document.getElementById('cpf-status');
       
       if (!cpfValue) {
         alert('Por favor, digite um CPF para verificar.');
@@ -144,22 +146,43 @@
         return;
       }
       
-      // Salva o CPF no localStorage para uso na página de verificação
-      localStorage.setItem('cpf_para_verificar', cpfValue);
-      // Salva a URL atual para retorno
-      localStorage.setItem('origem_verificacao', window.location.pathname);
+      // Mostra loading
+      statusDiv.style.display = 'block';
+      statusDiv.style.color = '#666';
+      statusDiv.textContent = '🔄 Verificando CPF...';
       
-      window.location.href = '/verifica_cpf';
-    });
-
-    // Verifica se retornou da verificação de CPF
-    window.onload = function() {
-      const cpfVerificado = localStorage.getItem('cpf_verificado');
-      if (cpfVerificado) {
-        document.getElementById('cpf').value = cpfVerificado;
-        localStorage.removeItem('cpf_verificado');
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`/employee/check_register/${encodeURIComponent(cpfValue)}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (response.status === 200) {
+          // CPF disponível (não cadastrado)
+          statusDiv.style.color = '#28a745'; // verde
+          statusDiv.textContent = '✅ CPF ainda não possui cadastro';
+        } else if (response.status === 409) {
+          // CPF já cadastrado
+          statusDiv.style.color = '#dc3545'; // vermelho
+          statusDiv.textContent = '❌ CPF já possui cadastro';
+        } else {
+          statusDiv.style.color = '#dc3545';
+          statusDiv.textContent = '❌ Erro ao verificar CPF';
+        }
+      } catch (error) {
+        statusDiv.style.color = '#dc3545';
+        statusDiv.textContent = '❌ Erro ao conectar com o servidor';
       }
-    };
+    });
+    
+    // Limpa o status quando o CPF é alterado
+    document.getElementById('cpf').addEventListener('input', () => {
+      const statusDiv = document.getElementById('cpf-status');
+      statusDiv.style.display = 'none';
+    });
   </script>
 </body>
 </html>
