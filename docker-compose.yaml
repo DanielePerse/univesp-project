@@ -1,8 +1,9 @@
+version: '3'
 services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.yaml
     volumes:
       - .:/app
     working_dir: /app
