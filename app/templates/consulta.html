@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container">
+  <div class="form-container wide">
     <div class="logo-section">
       <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
       <h1>IVENCEU!</h1>
@@ -27,7 +27,6 @@
             <th>Nome</th>
             <th>CPF</th>
             <th>Empresa</th>
-            <th>Endereço</th>
             <th>Status do Documento</th>
             <th>Ações</th>
           </tr>
@@ -78,7 +77,6 @@
             <td>${emp.employee_name}</td>
             <td>${emp.cpf}</td>
             <td>${emp.company_name}</td>
-            <td>${emp.address || 'Não informado'}</td>
             <td ${statusStyle}><strong>${statusText}</strong></td>
             <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table">Ver Detalhes</button></td>
           `;

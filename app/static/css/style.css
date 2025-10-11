@@ -87,7 +87,9 @@ main {
 
 .table-container {
     overflow-x: auto;
+    overflow-y: visible;
     margin: 20px 0;
+    max-height: 500px;
 }
 
 .styled-table {
@@ -102,9 +104,14 @@ main {
 }
 
 .styled-table thead tr {
-    background-color: #4CAF50;
+    background-color: #4CAF50 !important;
     color: white;
     text-align: left;
+}
+
+.styled-table th {
+    background-color: #4CAF50 !important;
+    color: white !important;
 }
 
 .styled-table th,
@@ -265,7 +272,6 @@ th, td {
     padding: 8px;
 }
 th {
-    background-color: #f2f2f2;
     text-align: center;
 }
 .collum_status{
