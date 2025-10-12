@@ -71,7 +71,7 @@ def delete_employee_by_id(employee_id):
     """
     Deleta um funcionário por ID
     """
-    success, error = delete_employee(employee_id)
+    _, error = delete_employee(employee_id)
     
     if error:
         return jsonify({'message': error}), 404

@@ -195,6 +195,6 @@ def delete_employee(employee_id):
         
         return True, None
         
-    except Exception as e:
+    except ValueError as e:
         db.session.rollback()
         return False, f"Erro ao deletar funcionário: {str(e)}"
