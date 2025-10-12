@@ -8,14 +8,17 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container">
-    <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+  <div class="page-container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu">
       <h1>IVENCEU!</h1>
       <p>Controle de Vencimentos de Documentos de SST</p>
     </div>
     
-    <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
+    <!-- Content Section -->
+    <div class="content-section">
+      <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
       <button onclick="goToCadastro()" style="padding: 15px; font-size: 1rem;">
         📝 Cadastrar Funcionário
       </button>
@@ -25,6 +28,7 @@
       <button onclick="logout()" style="background: #dc3545; padding: 15px; font-size: 1rem; margin-top: 15px;">
         🚪 Sair
       </button>
+      </div>
     </div>
   </div>
 
@@ -34,21 +38,6 @@
   </div>
 
   <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-  <script>
-    checkAuth();
-
-    function goToCadastro() {
-      window.location.href = "/cadastro";
-    }
-
-    function goToConsulta() {
-      window.location.href = "/consulta";
-    }
-    
-    function logout() {
-      localStorage.removeItem("token");
-      window.location.href = "/";
-    }
-  </script>
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>

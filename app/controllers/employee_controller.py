@@ -15,13 +15,14 @@ def create_employee():
     cpf = data.get('cpf')
     employee_name = data.get('employee_name')
     company_name = data.get('company_name')
+    address = data.get('address')
     documents = data.get('documents', [])
 
     if not all([cpf, company_name, employee_name]):
         return jsonify({'message': 'Missing required fields'}), 400
 
     employee, error = create_employee_with_documents(
-        cpf, employee_name, company_name, documents
+        cpf, employee_name, company_name, documents, address
     )
 
     if error:

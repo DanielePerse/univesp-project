@@ -33,33 +33,7 @@
       <a href="/" style="color: #4CAF50; text-decoration: none;">Voltar para o login</a>
     </div>
   </div>
-  <script>
-    const form = document.getElementById('register-form');
-    const msg = document.getElementById('register-msg');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      try {
-        const response = await fetch("/auth/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await response.json();
-        if (response.ok) {
-          msg.style.color = 'green';
-          msg.textContent = "Usuário cadastrado com sucesso! Faça login.";
-        } else {
-          msg.style.color = 'red';
-          msg.textContent = data.message || "Erro ao cadastrar usuário.";
-        }
-      } catch (err) {
-        msg.style.color = 'red';
-        msg.textContent = "Erro na conexão com o servidor.";
-      }
-    });
-  </script>
+  <script src="{{ url_for('static', filename='js/cadastro_usuario.js') }}"></script>
   
   <!-- Marca d'água -->
   <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">

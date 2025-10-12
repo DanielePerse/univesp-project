@@ -8,38 +8,37 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container">
-    <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+  <div class="page-container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu">
       <h1>IVENCEU!</h1>
       <p>Consultar Funcionários</p>
     </div>
 
-    <div class="search-section" style="margin-bottom: 20px;">
-      <input type="text" placeholder="Digite o nome da EMPRESA, nome do FUNCIONÁRIO ou STATUS do documento" style="width: 70%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-      <button style="width: 25%; padding: 10px; margin-left: 10px;" class="button_form">Buscar</button>
-    </div>
+    <!-- Content Section -->
+    <div class="content-section">
+      <div class="table-container">
+        <table id="employee-table" class="styled-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Empresa</th>
+              <th>Endereço</th>
+              <th>Status do Documento</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="employee-body">
+            <!-- Funcionários serão inseridos aqui -->
+          </tbody>
+        </table>
+      </div>
 
-    <div class="table-container">
-      <table id="employee-table" class="styled-table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Empresa</th>
-            <!--<th>Endereço</th>-->
-            <th>Status do Documento</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="employee-body">
-          <!-- Funcionários serão inseridos aqui -->
-        </tbody>
-      </table>
-    </div>
-
-    <div class="form-actions" style="margin-top: 20px;">
-      <button onclick="voltarHome()" class="button_form">Voltar para Home</button>
+      <div class="form-actions" style="margin-top: 20px;">
+        <button onclick="voltarHome()" class="button_form">Voltar para Home</button>
+      </div>
     </div>
   </div>
 
@@ -48,77 +47,7 @@
     Desenvolvido por Grupo PI II
   </div>
 
-  <script>
-    const token = localStorage.getItem('token');
-
-    async function fetchEmployees() {
-      try {
-        const response = await fetch('/employee/list', {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          alert(data.message || "Erro ao buscar funcionários.");
-          return;
-        }
-
-        const tbody = document.getElementById('employee-body');
-        tbody.innerHTML = '';
-
-        data.forEach(emp => {
-          const row = document.createElement('tr');
-          
-          // Define cor do texto baseado no status
-          let statusStyle = '';
-          let statusText = '';
-          
-          switch(emp.status) {
-            case 'expired':
-              statusStyle = 'style="color: #dc3545; font-weight: bold;"'; // Vermelho
-              statusText = 'Vencido';
-              break;
-            case 'expiring':
-              statusStyle = 'style="color: #ffc107; font-weight: bold;"'; // Amarelo
-              statusText = 'A Vencer';
-              break;
-            case 'valid':
-              statusStyle = 'style="color: #28a745; font-weight: bold;"'; // Verde
-              statusText = 'Vigente';
-              break;
-            default:
-              statusStyle = '';
-              statusText = 'Indefinido';
-          }
-
-          row.innerHTML = `
-            <td>${emp.employee_name}</td>
-            <td>${emp.cpf}</td>
-            <td>${emp.company_name}</td>
-            <td><span ${statusStyle}>${statusText}</span></td>
-            <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table">Ver Detalhes</button></td>
-          `;
-
-          tbody.appendChild(row);
-        });
-      } catch (err) {
-        alert("Erro ao conectar com o servidor.");
-      }
-    }
-
-    function consultarFuncionario(id) {
-      localStorage.setItem("employee_id", id);
-      window.location.href = "/detalhes";
-    }
-
-    function voltarHome() {
-      window.location.href = "/home";
-    }
-
-    fetchEmployees();
-  </script>
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/consulta.js') }}"></script>
 </body>
 </html>

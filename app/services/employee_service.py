@@ -12,12 +12,13 @@ def check_cpf_exists(cpf):
 
 
 def create_employee_with_documents(cpf, employee_name, company_name,
-                                   documents):
+                                   documents, address=None):
     employee = Employee(
         id=str(uuid.uuid4()),
         cpf=cpf,
         company_name=company_name,
         employee_name=employee_name,
+        address=address,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
@@ -75,6 +76,7 @@ def list_employees_with_document_status():
             'employee_name': emp.employee_name,
             'company_name': emp.company_name,
             'cpf': emp.cpf,
+            'address': emp.address,
             'status': status
         })
 
@@ -94,6 +96,7 @@ def get_employee_detail(employee_id):
         'employee_name': employee.employee_name,
         'company_name': employee.company_name,
         'cpf': employee.cpf,
+        'address': employee.address,
         'documents': [
             {
                 'id': doc.id,
@@ -114,6 +117,7 @@ def update_employee(employee_id, data):
     # Atualiza os dados do empregado
     employee.employee_name = data.get('employee_name', employee.employee_name)
     employee.company_name = data.get('company_name', employee.company_name)
+    employee.address = data.get('address', employee.address)
     employee.updated_at = datetime.utcnow()
 
     # Atualiza ou adiciona documentos
@@ -179,6 +183,7 @@ def update_employee(employee_id, data):
 def delete_employee(employee_id):
     """
     Deleta um funcionário e todos os seus documentos associados
+    (cascata automática configurada no modelo)
     """
     try:
         employee = Employee.query.get(employee_id)
@@ -186,10 +191,7 @@ def delete_employee(employee_id):
         if not employee:
             return False, "Funcionário não encontrado"
         
-        # Deletar todos os documentos associados primeiro
-        Document.query.filter_by(employee_id=employee_id).delete()
-        
-        # Deletar o funcionário
+        # Deletar funcionário (documentos removidos automaticamente)
         db.session.delete(employee)
         db.session.commit()
         

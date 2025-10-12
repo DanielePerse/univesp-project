@@ -58,6 +58,54 @@ main {
     font-size: 1rem;
 }
 
+/* Layout com header separado */
+.page-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header-section {
+    background-color: #f5f5f5;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.header-section img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+.header-section h1 {
+    color: #4CAF50;
+    margin: 10px 0 5px 0;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.header-section p {
+    color: #666;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.content-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Esconder botão de deletar funcionário - para reativar remova o display: none */
+.delete-employee-btn {
+    display: none !important;
+}
+
 .form-group {
     margin-bottom: 1rem;
 }

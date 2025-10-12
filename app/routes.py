@@ -41,6 +41,7 @@ def detalhes():
 
 @bp.route('/detalhes/<employee_id>')
 def detalhes_funcionario(employee_id):
+    # employee_id usado para roteamento dinâmico
     return render_template('detalhes.html')
 
 
@@ -65,6 +66,7 @@ def register_employee():
 @token_required
 def list_employees_route():
     return list_employees()
+
 
 @bp.route('/employee/check_register/<cpf>', methods=['GET'])
 @token_required

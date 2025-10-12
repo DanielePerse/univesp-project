@@ -9,7 +9,10 @@ class Employee(db.Model):
     cpf = db.Column(db.String(14), unique=True, nullable=False)
     employee_name = db.Column(db.String(255), nullable=False)
     company_name = db.Column(db.String(255), nullable=False)
+    address = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    documents = db.relationship('Document', backref='employee', lazy=True)
+    documents = db.relationship(
+        'Document', backref='employee', lazy=True, cascade='all, delete-orphan'
+    )
