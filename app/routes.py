@@ -4,7 +4,8 @@ from app.controllers.employee_controller import (
     list_employees,
     check_employee_cpf,
     get_employee_detail_by_id,
-    update_employee_data
+    update_employee_data,
+    delete_employee_by_id
 )
 from app.controllers.auth_controller import register, login
 from app.utils.auth import token_required
@@ -69,6 +70,11 @@ def registerDetail(id):
 @token_required
 def registerUpdate(id):
     return update_employee_data(id)
+
+@bp.route('/employee/<id>', methods=['DELETE'])
+@token_required
+def registerDelete(id):
+    return delete_employee_by_id(id)
 
 @bp.route('/auth/register', methods=['POST'])
 def registerUser():

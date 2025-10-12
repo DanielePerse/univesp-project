@@ -4,7 +4,8 @@ from app.services.employee_service import (
     list_employees_with_document_status,
     check_cpf_exists,
     get_employee_detail,
-    update_employee
+    update_employee,
+    delete_employee
 )
 
 def create_employee():
@@ -54,3 +55,15 @@ def update_employee_data(id):
         return jsonify({'message': error}), 404
 
     return jsonify({'message': 'Employee updated successfully'}, updated), 200
+
+
+def delete_employee_by_id(id):
+    """
+    Deleta um funcionário por ID
+    """
+    success, error = delete_employee(id)
+    
+    if error:
+        return jsonify({'message': error}), 404
+    
+    return jsonify({'message': 'Employee deleted successfully'}), 200

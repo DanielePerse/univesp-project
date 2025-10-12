@@ -137,3 +137,26 @@ def update_employee(id, data):
     }
 
     return employee_data, None
+
+def delete_employee(employee_id):
+    """
+    Deleta um funcionário e todos os seus documentos associados
+    """
+    try:
+        employee = Employee.query.get(employee_id)
+        
+        if not employee:
+            return False, "Funcionário não encontrado"
+        
+        # Deletar todos os documentos associados primeiro
+        Document.query.filter_by(employee_id=employee_id).delete()
+        
+        # Deletar o funcionário
+        db.session.delete(employee)
+        db.session.commit()
+        
+        return True, None
+        
+    except Exception as e:
+        db.session.rollback()
+        return False, f"Erro ao deletar funcionário: {str(e)}"

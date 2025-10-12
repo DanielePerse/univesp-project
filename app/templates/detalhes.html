@@ -49,6 +49,7 @@
       <div class="form-actions" style="margin-top: 30px;">
         <button type="submit" class="button_form">Salvar Alterações</button>
         <button type="button" class="button_form" style="background: #dc3545;" onclick="voltarParaConsulta()">Cancelar</button>
+        <button type="button" class="button_form" style="background: #ffc107; color: #000;" onclick="confirmarDelecao()">🗑️ Deletar Funcionário</button>
       </div>
     </form>
   </div>
@@ -59,6 +60,29 @@
     <div class="modal-content">
       <p>Funcionário atualizado com sucesso!</p>
       <button onclick="voltarParaConsulta()">Voltar para listagem</button>
+    </div>
+  </div>
+
+  <!-- Modal de confirmação de deleção -->
+  <div id="delete-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 style="color: #dc3545; margin-bottom: 20px;">⚠️ Confirmar Deleção</h3>
+      <p style="margin-bottom: 20px;">Tem certeza que deseja deletar este funcionário? Esta ação não pode ser desfeita.</p>
+      
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label for="delete-email">Email:</label>
+        <input type="email" id="delete-email" placeholder="Seu email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px;">
+      </div>
+      
+      <div class="form-group" style="margin-bottom: 20px;">
+        <label for="delete-password">Senha:</label>
+        <input type="password" id="delete-password" placeholder="Sua senha" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-top: 5px;">
+      </div>
+      
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button onclick="cancelarDelecao()" class="button_form" style="background: #6c757d;">Cancelar</button>
+        <button onclick="executarDelecao()" class="button_form" style="background: #dc3545;">Deletar Funcionário</button>
+      </div>
     </div>
   </div>
 
@@ -101,7 +125,6 @@
         document.getElementById("cpf").value = data.cpf;
         document.getElementById("employee_name").value = data.employee_name;
         document.getElementById("company_name").value = data.company_name;
-        document.getElementById("address").value = data.address || '';
 
         data.documents.forEach(doc => createDocumentInput(doc));
       } catch (err) {
@@ -119,7 +142,6 @@
       const cpf = document.getElementById("cpf").value;
       const employee_name = document.getElementById("employee_name").value;
       const company_name = document.getElementById("company_name").value;
-      const address = document.getElementById("address").value;
 
       const documents = Array.from(document.querySelectorAll(".document-entry")).map(entry => ({
         id: entry.querySelector(".document-id").value || undefined,
@@ -131,7 +153,6 @@
         cpf,
         employee_name,
         company_name,
-        address,
         documents
       };
 
@@ -159,6 +180,64 @@
 
     function voltarParaConsulta() {
       window.location.href = "/consulta";
+    }
+
+    // Funções de deleção
+    function confirmarDelecao() {
+      document.getElementById("delete-modal").classList.remove("hidden");
+      document.getElementById("delete-email").focus();
+    }
+
+    function cancelarDelecao() {
+      document.getElementById("delete-modal").classList.add("hidden");
+      document.getElementById("delete-email").value = "";
+      document.getElementById("delete-password").value = "";
+    }
+
+    async function executarDelecao() {
+      const email = document.getElementById("delete-email").value;
+      const password = document.getElementById("delete-password").value;
+      
+      if (!email || !password) {
+        alert("Por favor, preencha email e senha para confirmar a deleção.");
+        return;
+      }
+
+      try {
+        // Primeiro, verificar as credenciais do usuário
+        const authResponse = await fetch("/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (!authResponse.ok) {
+          alert("Email ou senha incorretos. Tente novamente.");
+          document.getElementById("delete-password").value = "";
+          return;
+        }
+
+        // Se as credenciais estiverem corretas, proceder com a deleção
+        const deleteResponse = await fetch(`/employee/${employeeId}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const deleteData = await deleteResponse.json();
+
+        if (deleteResponse.ok) {
+          alert("Funcionário deletado com sucesso!");
+          window.location.href = "/consulta";
+        } else {
+          alert(deleteData.message || "Erro ao deletar funcionário.");
+        }
+      } catch (err) {
+        alert("Erro ao conectar com o servidor.");
+      }
     }
 
     carregarDados();

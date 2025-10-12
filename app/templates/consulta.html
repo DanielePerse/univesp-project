@@ -27,7 +27,7 @@
             <th>Nome</th>
             <th>CPF</th>
             <th>Empresa</th>
-            <th>Endereço</th>
+            <!--<th>Endereço</th>-->
             <th>Status do Documento</th>
             <th>Ações</th>
           </tr>
@@ -78,7 +78,6 @@
             <td>${emp.employee_name}</td>
             <td>${emp.cpf}</td>
             <td>${emp.company_name}</td>
-            <td>${emp.address || 'Não informado'}</td>
             <td ${statusStyle}><strong>${statusText}</strong></td>
             <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table">Ver Detalhes</button></td>
           `;
