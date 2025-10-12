@@ -5,11 +5,14 @@ from app.models.employee import Employee
 from app.models.document import Document
 from sqlalchemy.orm import joinedload
 
+
 def check_cpf_exists(cpf):
     employee = Employee.query.filter_by(cpf=cpf).first()
     return employee is not None
 
-def create_employee_with_documents(cpf, employee_name, company_name, documents, address=None):
+
+def create_employee_with_documents(cpf, employee_name, company_name,
+                                   documents, address=None):
     employee = Employee(
         id=str(uuid.uuid4()),
         cpf=cpf,
@@ -36,6 +39,7 @@ def create_employee_with_documents(cpf, employee_name, company_name, documents, 
 
     db.session.commit()
     return employee, None
+
 
 def list_employees_with_document_status():
     employees = Employee.query.options(joinedload(Employee.documents)).all()
@@ -71,8 +75,11 @@ def list_employees_with_document_status():
 
     return result
 
-def get_employee_detail(id):
-    employee = Employee.query.options(joinedload(Employee.documents)).filter_by(id=id).first()
+
+def get_employee_detail(employee_id):
+    employee = Employee.query.options(
+        joinedload(Employee.documents)
+    ).filter_by(id=employee_id).first()
 
     if not employee:
         return None, 'Employee not found'
@@ -94,8 +101,9 @@ def get_employee_detail(id):
 
     return result, None
 
-def update_employee(id, data):
-    employee = Employee.query.get(id)
+
+def update_employee(employee_id, data):
+    employee = Employee.query.get(employee_id)
     if not employee:
         return None, 'Employee not found'
 
