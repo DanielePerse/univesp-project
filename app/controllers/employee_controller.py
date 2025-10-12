@@ -7,6 +7,7 @@ from app.services.employee_service import (
     update_employee
 )
 
+
 def create_employee():
     data = request.get_json()
 
@@ -17,22 +18,26 @@ def create_employee():
     address = data.get('address')
 
     if not all([cpf, company_name, employee_name]):
-        return jsonify({'message': 'Missing required fields'}, 400)
-    
-    # Validar estrutura do endereço se fornecido
-    if address and not _validate_address(address):
-        return jsonify({'message': 'Invalid address format'}, 400)
-    
-    employee, error = create_employee_with_documents(cpf, employee_name, company_name, documents, address)
+        return jsonify({'message': 'Missing required fields'}), 400
+
+    employee, error = create_employee_with_documents(
+        cpf, employee_name, company_name, documents, address
+    )
 
     if error:
         return jsonify({'message': error}), 400
-    
+
+    return jsonify({
+        'message': 'Employee created successfully',
+        'employeeId': employee.id
+    }), 201
     return jsonify({'message': 'Employee created successfully', 'employeeId': employee.id}), 201
+
 
 def list_employees():
     employees = list_employees_with_document_status()
     return jsonify(employees), 200
+
 
 def check_employee_cpf(cpf):
     if not cpf:
@@ -42,23 +47,28 @@ def check_employee_cpf(cpf):
         return jsonify({'message': 'Employee already registered'}), 409
     else:
         return jsonify({'message': 'CPF is available'}), 200
-    
-def get_employee_detail_by_id(id):
-    employee_data, error = get_employee_detail(id)
+
+
+def get_employee_detail_by_id(employee_id):
+    employee_data, error = get_employee_detail(employee_id)
 
     if error:
         return jsonify({'message': error}), 404
 
     return jsonify(employee_data), 200
 
-def update_employee_data(id):
+
+def update_employee_data(employee_id):
     data = request.get_json()
-    updated, error = update_employee(id, data)
+    updated, error = update_employee(employee_id, data)
 
     if error:
         return jsonify({'message': error}), 404
 
-    return jsonify({'message': 'Employee updated successfully'}, updated), 200
+    return jsonify({
+        'message': 'Employee updated successfully'
+    }, updated), 200
+
 
 def _validate_address(address):
     """Valida a estrutura do endereço JSON"""
