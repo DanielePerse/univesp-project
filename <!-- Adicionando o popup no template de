@@ -1,0 +1,27 @@
+<!-- Adicionando o popup no template de cadastro -->
+<!-- Modal para verificação de CPF -->
+<div id="cpfModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>🔍 Verificar CPF</h2>
+        <form id="verificarCpfForm">
+            <input type="text" id="cpfVerificar" placeholder="Digite o CPF" maxlength="14">
+            <button type="submit">Verificar</button>
+        </form>
+        <div id="resultadoCpf"></div>
+    </div>
+</div>
+
+<!-- Link para abrir o popup -->
+<a href="#" id="verificarCpfLink">🔍 Verificar se CPF já está cadastrado</a>
+
+<script>
+// JavaScript para o popup
+document.getElementById('verificarCpfLink').onclick = function() {
+    document.getElementById('cpfModal').style.display = 'block';
+}
+
+document.querySelector('.close').onclick = function() {
+    document.getElementById('cpfModal').style.display = 'none';
+}
+</script>

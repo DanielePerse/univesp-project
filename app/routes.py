@@ -33,8 +33,8 @@ def consulta():
 def detalhes():
     return render_template('detalhes.html')
 
-@bp.route('/detalhes/<id>')
-def detalhes_funcionario(id):
+@bp.route('/detalhes/<employee_id>')
+def detalhes_funcionario(employee_id):
     return render_template('detalhes.html')
 
 @bp.route('/verifica_cpf')
@@ -61,20 +61,20 @@ def list():
 def checkRegister(cpf):
     return check_employee_cpf(cpf)
 
-@bp.route('/employee/<id>', methods=['GET'])
+@bp.route('/employee/<employee_id>', methods=['GET'])
 @token_required
-def registerDetail(id):
-    return get_employee_detail_by_id(id)
+def registerDetail(employee_id):
+    return get_employee_detail_by_id(employee_id)
 
-@bp.route('/employee/<id>', methods=['PUT'])
+@bp.route('/employee/<employee_id>', methods=['PUT'])
 @token_required
-def registerUpdate(id):
-    return update_employee_data(id)
+def registerUpdate(employee_id):
+    return update_employee_data(employee_id)
 
-@bp.route('/employee/<id>', methods=['DELETE'])
+@bp.route('/employee/<employee_id>', methods=['DELETE'])
 @token_required
-def registerDelete(id):
-    return delete_employee_by_id(id)
+def registerDelete(employee_id):
+    return delete_employee_by_id(employee_id)
 
 @bp.route('/auth/register', methods=['POST'])
 def registerUser():

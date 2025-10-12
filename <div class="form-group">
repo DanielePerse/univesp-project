@@ -1,0 +1,101 @@
+<div class="form-group">
+    <label for="cpf">CPF:</label>
+    <div class="input-group">
+        <input type="text" id="cpf" name="cpf" required maxlength="14" oninput="formatarCPF(this)">
+        <button type="button" id="toggle-verify-btn" onclick="toggleCpfVerification()">Verificar</button>
+    </div>
+    <!-- Painel de Verificação (Toggle) -->
+    <div id="cpf-verification-panel" class="verification-panel">
+        <p id="cpf-result-message">Digite um CPF e clique em "Verificar".</p>
+    </div>
+</div>
+
+<!-- Adicionando CSS para o painel toggle -->
+<style>
+    .input-group {
+        display: flex;
+    }
+    .input-group input {
+        flex-grow: 1;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .input-group button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: 0;
+    }
+    .verification-panel {
+        display: none; /* Começa escondido */
+        padding: 15px;
+        margin-top: -1px; /* Cola no input */
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        background-color: #f9f9f9;
+        transition: all 0.3s ease;
+    }
+    .verification-panel.show {
+        display: block; /* Mostra o painel */
+    }
+    #cpf-result-message {
+        margin: 0;
+        font-weight: bold;
+    }
+</style>
+
+<script>
+function formatarCPF(input) {
+    let valor = input.value.replace(/\D/g, '');
+    valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+    valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+    valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    input.value = valor;
+}
+
+function toggleCpfVerification() {
+    const panel = document.getElementById('cpf-verification-panel');
+    const cpf = document.getElementById('cpf').value;
+    const messageEl = document.getElementById('cpf-result-message');
+
+    // Se o painel já está visível, esconde e para.
+    if (panel.classList.contains('show')) {
+        panel.classList.remove('show');
+        return;
+    }
+
+    // Se o CPF não foi digitado, mostra uma mensagem e abre o painel.
+    if (cpf.length !== 14) {
+        messageEl.textContent = 'Por favor, digite um CPF válido.';
+        messageEl.style.color = 'orange';
+        panel.classList.add('show');
+        return;
+    }
+
+    // Mostra o painel e faz a verificação
+    panel.classList.add('show');
+    messageEl.textContent = 'Verificando...';
+    messageEl.style.color = 'grey';
+
+    fetch('/verificar_cpf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cpf: cpf })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.existe) {
+            messageEl.textContent = '❌ ' + data.message;
+            messageEl.style.color = 'red';
+        } else {
+            messageEl.textContent = '✓ ' + data.message;
+            messageEl.style.color = 'green';
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        messageEl.textContent = 'Erro ao verificar.';
+        messageEl.style.color = 'orange';
+    });
+}
+</script>

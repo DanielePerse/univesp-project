@@ -71,14 +71,34 @@
 
         data.forEach(emp => {
           const row = document.createElement('tr');
-          const statusStyle = emp.status === 'expired' ? 'style="color: red;"' : '';
-          const statusText = emp.status === 'expired' ? 'Vencido' : 'Vigente';
+          
+          // Define cor do texto baseado no status
+          let statusStyle = '';
+          let statusText = '';
+          
+          switch(emp.status) {
+            case 'expired':
+              statusStyle = 'style="color: #dc3545; font-weight: bold;"'; // Vermelho
+              statusText = 'Vencido';
+              break;
+            case 'expiring':
+              statusStyle = 'style="color: #ffc107; font-weight: bold;"'; // Amarelo
+              statusText = 'A Vencer';
+              break;
+            case 'valid':
+              statusStyle = 'style="color: #28a745; font-weight: bold;"'; // Verde
+              statusText = 'Vigente';
+              break;
+            default:
+              statusStyle = '';
+              statusText = 'Indefinido';
+          }
 
           row.innerHTML = `
             <td>${emp.employee_name}</td>
             <td>${emp.cpf}</td>
             <td>${emp.company_name}</td>
-            <td ${statusStyle}><strong>${statusText}</strong></td>
+            <td><span ${statusStyle}>${statusText}</span></td>
             <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table">Ver Detalhes</button></td>
           `;
 
