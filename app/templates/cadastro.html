@@ -39,7 +39,7 @@
 
       <div class="form-group">
         <label for="endereco">Endereço</label>
-        <textarea id="endereco" class="input_register" placeholder="Digite o endereço completo" rows="3"></textarea>
+        <textarea id="endereco" class="input_register" placeholder="Digite o endereço completo" rows="3" style="resize: vertical; min-height: 80px;"></textarea>
       </div>
 
       <div id="documents-container">
@@ -71,6 +71,7 @@
     Desenvolvido por Grupo PI II
   </div>
 
+<<<<<<< HEAD
   <script>
     const form = document.getElementById('cadastro-form');
     const addDocumentBtn = document.getElementById('add-document');
@@ -138,57 +139,7 @@
       window.location.href = "/home";
     }
 
-    // Funcionalidade de verificar CPF
-    document.getElementById('verificar-cpf-link').addEventListener('click', async (e) => {
-      e.preventDefault();
-      const cpfInput = document.getElementById('cpf');
-      const cpfValue = cpfInput.value.trim();
-      const statusDiv = document.getElementById('cpf-status');
-      
-      if (!cpfValue) {
-        alert('Por favor, digite um CPF para verificar.');
-        cpfInput.focus();
-        return;
-      }
-      
-      // Mostra loading
-      statusDiv.style.display = 'block';
-      statusDiv.style.color = '#666';
-      statusDiv.textContent = '🔄 Verificando CPF...';
-      
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`/employee/check_register/${encodeURIComponent(cpfValue)}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        if (response.status === 200) {
-          // CPF disponível (não cadastrado)
-          statusDiv.style.color = '#28a745'; // verde
-          statusDiv.textContent = '✅ CPF ainda não possui cadastro';
-        } else if (response.status === 409) {
-          // CPF já cadastrado
-          statusDiv.style.color = '#dc3545'; // vermelho
-          statusDiv.textContent = '❌ CPF já possui cadastro';
-        } else {
-          statusDiv.style.color = '#dc3545';
-          statusDiv.textContent = '❌ Erro ao verificar CPF';
-        }
-      } catch (error) {
-        statusDiv.style.color = '#dc3545';
-        statusDiv.textContent = '❌ Erro ao conectar com o servidor';
-      }
-    });
-    
-    // Limpa o status quando o CPF é alterado
-    document.getElementById('cpf').addEventListener('input', () => {
-      const statusDiv = document.getElementById('cpf-status');
-      statusDiv.style.display = 'none';
-    });
-
-  </script>
+  <!-- JavaScript externo -->
+  <script src="{{ url_for('static', filename='js/cadastro.js') }}"></script>
 </body>
 </html>
