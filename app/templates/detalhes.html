@@ -56,103 +56,12 @@
     </div>
   </div>
 
+  <!-- JavaScript externo -->
   <script>
-    const token = localStorage.getItem("token");
-    const employeeId = "{{ employee_id }}";
-    const documentsContainer = document.getElementById("documents-container");
-
-    function createDocumentInput(doc = {}) {
-      const div = document.createElement("div");
-      div.classList.add("document-entry");
-      div.style.display = "flex";
-      div.style.gap = "10px";
-      div.style.marginBottom = "15px";
-
-      div.innerHTML = `
-        <input type="hidden" class="document-id" value="${doc.id || ''}" />
-        <input type="text" class="document-name input_register" placeholder="Nome do Documento" value="${doc.name || ''}" required style="flex: 1;" />
-        <input type="date" class="document-expiration input_register" value="${doc.expiration_date || ''}" required style="width: 150px;" />
-      `;
-
-      documentsContainer.appendChild(div);
-    }
-
-    async function carregarDados() {
-      try {
-        const response = await fetch(`http://localhost:5000/employee/${employeeId}`, {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-
-        const data = await response.json();
-        if (!response.ok) {
-          alert(data.message || "Erro ao buscar dados do funcionário.");
-          return;
-        }
-
-        document.getElementById("cpf").value = data.cpf;
-        document.getElementById("employee_name").value = data.employee_name;
-        document.getElementById("company_name").value = data.company_name;
-
-        data.documents.forEach(doc => createDocumentInput(doc));
-      } catch (err) {
-        alert("Erro ao conectar com o servidor.");
-      }
-    }
-
-    document.getElementById("add-document").addEventListener("click", () => {
-      createDocumentInput();
-    });
-
-    document.getElementById("edit-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const cpf = document.getElementById("cpf").value;
-      const employee_name = document.getElementById("employee_name").value;
-      const company_name = document.getElementById("company_name").value;
-
-      const documents = Array.from(document.querySelectorAll(".document-entry")).map(entry => ({
-        id: entry.querySelector(".document-id").value || undefined,
-        name: entry.querySelector(".document-name").value,
-        expiration_date: entry.querySelector(".document-expiration").value
-      }));
-
-      const payload = {
-        cpf,
-        employee_name,
-        company_name,
-        documents
-      };
-
-      try {
-        const response = await fetch(`http://localhost:5000/employee/${employeeId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          document.getElementById("modal").classList.remove("hidden");
-        } else {
-          alert(data.message || "Erro ao atualizar funcionário.");
-        }
-      } catch (err) {
-        alert("Erro ao conectar com o servidor.");
-      }
-    });
-
-    function voltarParaConsulta() {
-      window.location.href = "/consulta";
-    }
-
-    carregarDados();
+    // Disponibiliza o employee_id para o JavaScript externo
+    document.body.setAttribute('data-employee-id', '{{ employee_id }}');
   </script>
+  <script src="{{ url_for('static', filename='js/detalhes.js') }}"></script>
 
   <!-- Marca d'água -->
   <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">

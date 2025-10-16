@@ -216,6 +216,15 @@ input[type="date"]{
     margin-top: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input_register[type="textarea"], 
+textarea.input_register {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
 }
 
 button {
