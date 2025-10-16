@@ -9,13 +9,14 @@ def check_cpf_exists(cpf):
     employee = Employee.query.filter_by(cpf=cpf).first()
     return employee is not None
 
-def create_employee_with_documents(cpf, employee_name, company_name, documents, address=None):
+def create_employee_with_documents(cpf, employee_name, company_name, documents, address=None, endereco=None):
     employee = Employee(
         id=str(uuid.uuid4()),
         cpf=cpf,
         company_name=company_name,
         employee_name=employee_name,
         address=address,
+        endereco=endereco,  # Novo campo endereco
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )

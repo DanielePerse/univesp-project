@@ -11,6 +11,7 @@ class Employee(db.Model):
     employee_name = db.Column(db.String(255), nullable=False)
     company_name = db.Column(db.String(255), nullable=False)
     address = db.Column(JSON, nullable=True)
+    endereco = db.Column(db.String(500), nullable=True)  # Novo campo endereco
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

@@ -15,6 +15,7 @@ def create_employee():
     company_name = data.get('company_name')
     documents = data.get('documents', [])
     address = data.get('address')
+    endereco = data.get('endereco')  # Novo campo endereco
 
     if not all([cpf, company_name, employee_name]):
         return jsonify({'message': 'Missing required fields'}, 400)
@@ -23,7 +24,7 @@ def create_employee():
     if address and not _validate_address(address):
         return jsonify({'message': 'Invalid address format'}, 400)
     
-    employee, error = create_employee_with_documents(cpf, employee_name, company_name, documents, address)
+    employee, error = create_employee_with_documents(cpf, employee_name, company_name, documents, address, endereco)
 
     if error:
         return jsonify({'message': error}), 400
