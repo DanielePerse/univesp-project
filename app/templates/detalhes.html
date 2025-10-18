@@ -19,7 +19,7 @@
     </div>
   </header>
 
-  <main id="main-content" role="main" class="form-container wide" aria-labelledby="detalhes-title">
+  <main id="main-content" role="main" class="form-container" aria-labelledby="detalhes-title">
     <h2 id="detalhes-title" class="sr-only">Informações Detalhadas do Funcionário</h2>
     
     <!-- Área para anúncios de screen reader -->
@@ -289,42 +289,57 @@
       <!-- Ações do Formulário -->
       <section class="form-actions" role="group" aria-labelledby="form-actions-title">
         <h3 id="form-actions-title" class="sr-only">Ações do formulário</h3>
-        
-        <div class="action-buttons">
-          <button 
-            type="submit" 
-            id="save-button"
-            class="button_form button-primary"
-            aria-describedby="save-help"
-          >
-            <span class="button-text">💾 Salvar Alterações</span>
-            <span class="loading-spinner sr-only" aria-hidden="true"></span>
-          </button>
-          
-          <button 
-            type="button" 
-            class="button_form button-danger" 
-            onclick="confirmCancel()"
-            aria-describedby="cancel-help"
-          >
-            ❌ Cancelar
-          </button>
-          
-          <button 
-            type="button" 
-            id="delete-button"
-            class="button_form button-danger" 
-            onclick="confirmDelete()"
-            aria-describedby="delete-help"
-          >
-            🗑️ Excluir Funcionário
-          </button>
-        </div>
-        
-        <div class="action-help-texts">
-          <div id="save-help" class="help-text">Salva todas as alterações feitas nos dados do funcionário</div>
-          <div id="cancel-help" class="help-text">Cancela as alterações e retorna à listagem</div>
-          <div id="delete-help" class="help-text">Remove permanentemente o funcionário do sistema</div>
+        <div class="action-buttons" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: flex-start; margin-top: 16px;">
+          <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px; width: 100%;">
+            <button 
+              type="submit" 
+              id="save-button"
+              class="button_form button-primary"
+              aria-describedby="save-help"
+              style="width: 100%;"
+            >
+              <span class="button-text">💾 Salvar Alterações</span>
+              <span class="loading-spinner sr-only" aria-hidden="true"></span>
+            </button>
+            <div id="save-help" class="button-explanation" style="width: 100%; text-align: center; word-break: break-word; margin-top: 4px;">Salva todas as alterações feitas nos dados do funcionário</div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px; width: 100%;">
+            <button 
+              type="button" 
+              class="button_form button-danger" 
+              onclick="confirmCancel()"
+              aria-describedby="cancel-help"
+              style="width: 100%;"
+            >
+              ❌ Cancelar
+            </button>
+            <div id="cancel-help" class="button-explanation" style="width: 100%; text-align: center; word-break: break-word; margin-top: 4px;">Cancela as alterações e retorna à listagem</div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px; width: 100%;">
+            <button 
+              type="button" 
+              id="delete-button"
+              class="button_form button-danger" 
+              onclick="confirmDelete()"
+              aria-describedby="delete-help"
+              style="width: 100%;"
+            >
+              🗑️ Excluir Funcionário
+            </button>
+            <div id="delete-help" class="button-explanation" style="width: 100%; text-align: center; word-break: break-word; margin-top: 4px;">Remove permanentemente o funcionário do sistema</div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px; width: 100%;">
+            <button 
+              type="button"
+              onclick="window.location.href='/home'"
+              class="button_form button-secondary"
+              aria-describedby="back-home-help"
+              style="width: 100%;"
+            >
+              <span aria-hidden="true">🏠</span> Voltar para Home
+            </button>
+            <div id="back-home-help" class="button-explanation" style="width: 100%; text-align: center; word-break: break-word; margin-top: 4px;">Retorna à página inicial do sistema</div>
+          </div>
         </div>
       </section>
     </form>

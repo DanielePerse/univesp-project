@@ -19,7 +19,7 @@
     </div>
   </header>
 
-  <main id="main-content" role="main" class="form-container wide" aria-labelledby="consulta-title">
+  <main id="main-content" role="main" class="form-container" aria-labelledby="consulta-title">
     <h2 id="consulta-title" class="sr-only">Lista de Funcionários Cadastrados</h2>
     
     <!-- Área para anúncios de screen reader -->
@@ -99,25 +99,28 @@
       <h3 id="table-controls-title" class="sr-only">Controles da Tabela</h3>
       
       <div class="table-actions">
-        <button 
-          type="button" 
-          id="refresh-data" 
-          class="button-secondary"
-          aria-describedby="refresh-help"
-        >
-          <span aria-hidden="true">🔄</span> Atualizar dados
-        </button>
-        <div id="refresh-help" class="help-text sr-only">Recarrega a lista de funcionários do servidor</div>
-        
-        <button 
-          type="button" 
-          id="export-data" 
-          class="button-secondary"
-          aria-describedby="export-help"
-        >
-          <span aria-hidden="true">📊</span> Exportar lista
-        </button>
-        <div id="export-help" class="help-text sr-only">Exporta a lista filtrada de funcionários</div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <button 
+            type="button" 
+            id="refresh-data" 
+            class="button-secondary"
+            aria-describedby="refresh-help"
+          >
+            <span aria-hidden="true">🔄</span> Atualizar dados
+          </button>
+          <div id="refresh-help" class="button-explanation" style="text-align: center; margin-bottom: 8px;">Recarrega a lista de funcionários do servidor</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <button 
+            type="button" 
+            id="export-data" 
+            class="button-secondary"
+            aria-describedby="export-help"
+          >
+            <span aria-hidden="true">📊</span> Exportar lista
+          </button>
+          <div id="export-help" class="button-explanation" style="text-align: center; margin-bottom: 8px;">Exporta a lista filtrada de funcionários</div>
+        </div>
       </div>
     </section>
 
@@ -190,17 +193,20 @@
     </section>
 
     <!-- Ações do Formulário -->
-    <section class="form-actions" role="group" aria-labelledby="form-actions-title">
+    <section class="form-actions" role="group" aria-labelledby="form-actions-title" style="display: flex; flex-direction: column; align-items: center;">
       <h3 id="form-actions-title" class="sr-only">Ações da página</h3>
-      <button 
-        type="button"
-        onclick="voltarHome()" 
-        class="button_form button-secondary"
-        aria-describedby="back-home-help"
-      >
-        <span aria-hidden="true">🏠</span> Voltar para Home
-      </button>
-      <div id="back-home-help" class="help-text sr-only">Retorna à página inicial do sistema</div>
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <button 
+          type="button"
+          onclick="voltarHome()" 
+          class="button_form button-secondary"
+          aria-describedby="back-home-help"
+          style="margin-bottom: 8px;"
+        >
+          <span aria-hidden="true">🏠</span> Voltar para Home
+        </button>
+        <div id="back-home-help" class="button-explanation" style="text-align: center;">Retorna à página inicial do sistema</div>
+      </div>
     </section>
   </main>
 
@@ -209,6 +215,8 @@
     Desenvolvido por Grupo PI II
   </div>
 
+</div>
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
   <script src="{{ url_for('static', filename='js/consulta.js') }}"></script>
 </body>
 </html>

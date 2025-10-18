@@ -9,67 +9,67 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
+
   <!-- Skip to main content link -->
   <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
-  <main id="main-content" class="form-container" role="main" aria-labelledby="main-title">
-    <header class="logo-section">
+  <header role="banner" class="form-header" aria-labelledby="main-title">
+    <div class="logo-section">
       <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" width="60" height="60" style="margin-bottom: 10px;">
       <h1 id="main-title">IVENCEU!</h1>
       <p>Controle de Vencimentos de Documentos de SST</p>
-    </header>
+    </div>
+  </header>
 
-    <form id="login-form" aria-labelledby="form-title" novalidate>
+  <main id="main-content" class="form-container" role="main" aria-labelledby="main-title">
+    <form id="login-form" aria-labelledby="form-title" novalidate style="max-width: 400px; margin: 0 auto;">
       <h2 id="form-title" class="sr-only">Formulário de Login</h2>
-      
       <div class="form-group">
-        <label for="email">
-          Email
-          <span aria-hidden="true">*</span>
-          <span class="sr-only">(obrigatório)</span>
+        <label for="email" class="form-label">
+          <span class="label-text">Email</span>
+          <span class="required" aria-label="campo obrigatório">*</span>
         </label>
         <input 
           type="email" 
           id="email" 
+          class="input_register"
           placeholder="Digite seu email" 
           required 
           aria-describedby="email-error"
           aria-invalid="false"
+          autocomplete="email"
         />
         <div id="email-error" class="error-message" role="alert" aria-live="polite"></div>
       </div>
-      
       <div class="form-group">
-        <label for="password">
-          Senha
-          <span aria-hidden="true">*</span>
-          <span class="sr-only">(obrigatório)</span>
+        <label for="password" class="form-label">
+          <span class="label-text">Senha</span>
+          <span class="required" aria-label="campo obrigatório">*</span>
         </label>
         <input 
           type="password" 
           id="password" 
+          class="input_register"
           placeholder="Digite sua senha" 
           required 
           aria-describedby="password-error"
           aria-invalid="false"
+          autocomplete="current-password"
         />
         <div id="password-error" class="error-message" role="alert" aria-live="polite"></div>
       </div>
-      
-      <div style="text-align: center;">
+      <div class="form-actions" style="margin-top: 24px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
         <button type="submit" class="button_form" aria-describedby="loading-status">
           <span>Entrar</span>
         </button>
+        <div id="loading-status" class="sr-only" role="status" aria-live="polite"></div>
+        <div id="error-msg" class="error-msg"></div>
       </div>
-      
-      <div id="loading-status" class="sr-only" role="status" aria-live="polite"></div>
     </form>
-    <div id="error-msg" class="error-msg"></div>
-    
     <div class="form-actions" style="margin-top: 20px; text-align: center;">
       <p style="color: #666; font-size: 14px; margin: 0; display: inline;">Ainda não tem cadastro? </p>
       <a href="/cadastro_usuario" style="color: #2196F3; text-decoration: none;">clique aqui</a>
     </div>
-  </div>
+  </main>
 
   <!-- Marca d'água -->
   <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">

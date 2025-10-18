@@ -77,13 +77,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Limpar erros anteriores
         clearFieldError('email');
         clearFieldError('password');
+        document.getElementById('error-msg').textContent = '';
 
         const email = emailField.value.trim();
         const password = passwordField.value;
 
         // Validação básica
         let hasErrors = false;
-        
         if (!email) {
             showFieldError('email', 'Email é obrigatório');
             hasErrors = true;
@@ -91,12 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
             showFieldError('email', 'Email deve ter um formato válido');
             hasErrors = true;
         }
-        
         if (!password) {
             showFieldError('password', 'Senha é obrigatória');
             hasErrors = true;
         }
-        
         if (hasErrors) {
             // Focar no primeiro campo com erro
             const firstError = form.querySelector('[aria-invalid="true"]');
@@ -116,9 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({ email, password })
             });
-
             const data = await response.json();
-
             if (response.ok) {
                 localStorage.setItem("token", data.token);
                 announceToScreenReader('Login realizado com sucesso! Redirecionando...', 'assertive');
@@ -135,7 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         } catch (err) {
-            errorMsg.textContent = "Erro na conexão com o servidor.";
+            setLoadingState(false);
+            document.getElementById('error-msg').textContent = "Erro na conexão com o servidor.";
         }
     });
 });

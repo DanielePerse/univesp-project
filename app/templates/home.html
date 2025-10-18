@@ -12,48 +12,48 @@
   <!-- Skip to main content link -->
   <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
-  <main id="main-content" class="form-container" role="main" aria-labelledby="main-title">
-    <header class="logo-section">
+  <header role="banner" class="form-header" aria-labelledby="main-title">
+    <div class="logo-section">
       <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" width="60" height="60" style="margin-bottom: 10px;">
       <h1 id="main-title">IVENCEU!</h1>
       <p>Controle de Vencimentos de Documentos de SST</p>
-    </header>
-    
+    </div>
+  </header>
+
+  <main id="main-content" class="form-container" role="main" aria-labelledby="main-title">
     <nav role="navigation" aria-label="Menu principal">
       <h2 class="sr-only">Opções do Sistema</h2>
       <div class="menu-options" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
         <button 
           onclick="goToCadastro()" 
           class="menu-button"
-          style="padding: 15px; font-size: 1rem;"
           aria-describedby="cadastro-desc"
         >
           <span aria-hidden="true">📝</span> 
           <span>Cadastrar Funcionário</span>
         </button>
-        <div id="cadastro-desc" class="sr-only">Acessar formulário de cadastro de novo funcionário</div>
-        
+        <div id="cadastro-desc" class="menu-explanation">Acessar formulário de cadastro de novo funcionário</div>
+
         <button 
           onclick="goToConsulta()" 
           class="menu-button"
-          style="padding: 15px; font-size: 1rem;"
           aria-describedby="consulta-desc"
         >
           <span aria-hidden="true">🔍</span> 
           <span>Consultar Funcionários</span>
         </button>
-        <div id="consulta-desc" class="sr-only">Acessar listagem e busca de funcionários cadastrados</div>
-        
+        <div id="consulta-desc" class="menu-explanation">Acessar listagem e busca de funcionários cadastrados</div>
+
         <button 
           onclick="logout()" 
           class="menu-button logout-button"
-          style="background: #dc3545; padding: 15px; font-size: 1rem; margin-top: 15px;"
+          style="background: #dc3545; margin-top: 15px;"
           aria-describedby="logout-desc"
         >
           <span aria-hidden="true">🚪</span> 
           <span>Sair</span>
         </button>
-        <div id="logout-desc" class="sr-only">Fazer logout e retornar à tela de login</div>
+        <div id="logout-desc" class="menu-explanation">Fazer logout e retornar à tela de login</div>
       </div>
     </nav>
   </main>

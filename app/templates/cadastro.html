@@ -294,25 +294,29 @@
 
       <div class="form-actions" role="group" aria-labelledby="form-actions-title">
         <h3 id="form-actions-title" class="sr-only">Ações do formulário</h3>
-        <button 
-          type="submit" 
-          id="submit-button"
-          class="button_form button-primary"
-          aria-describedby="submit-help"
-        >
-          <span class="button-text">Cadastrar Funcionário</span>
-          <span class="loading-spinner sr-only" aria-hidden="true"></span>
-        </button>
-        <button 
-          type="button" 
-          class="button_form button-secondary" 
-          onclick="goBack()"
-          aria-describedby="back-help"
-        >
-          Voltar para Home
-        </button>
-        <div id="submit-help" class="help-text">Salva todas as informações do funcionário no sistema</div>
-        <div id="back-help" class="help-text">Retorna à página inicial sem salvar</div>
+        <div class="action-block">
+          <button 
+            type="submit" 
+            id="submit-button"
+            class="button_form button-primary"
+            aria-describedby="submit-help"
+          >
+            <span class="button-text">Cadastrar Funcionário</span>
+            <span class="loading-spinner sr-only" aria-hidden="true"></span>
+          </button>
+          <div id="submit-help" class="button-explanation">Salva todas as informações do funcionário no sistema</div>
+        </div>
+        <div class="action-block">
+          <button 
+            type="button" 
+            class="button_form button-secondary" 
+            onclick="goBack()"
+            aria-describedby="back-help"
+          >
+            Voltar para Home
+          </button>
+          <div id="back-help" class="button-explanation">Retorna à página inicial sem salvar</div>
+        </div>
       </div>
     </form>
   </main>
@@ -332,7 +336,7 @@
       <div class="modal-actions">
         <button 
           type="button" 
-          class="button_form button-primary" 
+          class="button_form button-secondary" 
           onclick="goBack()"
           autofocus
         >

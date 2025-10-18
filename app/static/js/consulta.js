@@ -268,36 +268,34 @@ function renderTable() {
 // Função para buscar funcionários do servidor
 async function fetchEmployees() {
     const token = localStorage.getItem('token');
-    
+    const start = performance.now();
     toggleLoading(true);
-    
     try {
+        console.log('[Consulta] Iniciando fetch de funcionários...');
         const response = await fetch('/employee/list', {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
         });
-
+        const fetchEnd = performance.now();
+        console.log(`[Consulta] Tempo de resposta do backend: ${(fetchEnd - start).toFixed(1)} ms`);
         const data = await response.json();
-
         if (!response.ok) {
             throw new Error(data.message || "Erro ao buscar funcionários.");
         }
-
+        const processEnd = performance.now();
         allEmployees = data;
         filteredEmployees = [...allEmployees];
-        
         updateStats();
         renderTable();
-        
+        const renderEnd = performance.now();
+        console.log(`[Consulta] Tempo total até renderização: ${(renderEnd - start).toFixed(1)} ms`);
+        console.log(`[Consulta] Tempo de processamento frontend: ${(renderEnd - fetchEnd).toFixed(1)} ms`);
         announceToScreenReader(`${allEmployees.length} funcionário(s) carregado(s) com sucesso.`, 'polite');
-        
     } catch (err) {
         const errorMessage = err.message || "Erro ao conectar com o servidor.";
         announceToScreenReader(`Erro: ${errorMessage}`, 'assertive');
         console.error('Erro ao carregar funcionários:', err);
-        
-        // Mostrar mensagem de erro na interface
         const tbody = document.getElementById('employee-body');
         tbody.innerHTML = `
             <tr>

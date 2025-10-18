@@ -19,8 +19,16 @@
     </div>
   </header>
 
-  <main id="main-content" role="main" class="form-container" aria-labelledby="register-title">
-    <h2 id="register-title" class="sr-only">Formulário de Cadastro de Usuário</h2>
+    <header role="banner" class="form-header" aria-labelledby="page-title">
+      <div class="logo-section">
+        <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo da empresa iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+        <h1 id="page-title">IVENCEU!</h1>
+        <p>Cadastro de Novo Usuário</p>
+      </div>
+    </header>
+
+    <main id="main-content" role="main" class="form-container" aria-labelledby="register-title">
+      <h2 id="register-title" class="sr-only">Formulário de Cadastro de Usuário</h2>
     
     <!-- Área para anúncios de screen reader -->
     <div id="status-announcements" aria-live="polite" aria-atomic="true" class="sr-only"></div>
@@ -191,7 +199,7 @@
           <span class="button-text">✅ Criar Conta</span>
           <span class="loading-spinner sr-only" aria-hidden="true"></span>
         </button>
-        <div id="submit-help" class="help-text">Cria sua nova conta no sistema iVenceu!</div>
+        <div id="submit-help" class="button-explanation">Cria sua nova conta no sistema iVenceu!</div>
       </div>
     </form>
     
@@ -297,6 +305,7 @@
     </div>
   </div>
 
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
   <script src="{{ url_for('static', filename='js/cadastro_usuario.js') }}"></script>
   
   <!-- Marca d'água -->
