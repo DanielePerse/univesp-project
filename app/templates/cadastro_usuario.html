@@ -1,38 +1,302 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro de Usuário - iVenceu!</title>
+  <meta name="description" content="Crie sua conta no sistema iVenceu! para gerenciar funcionários e documentos">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container">
+  <!-- Link para pular para conteúdo principal -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+  <header role="banner" class="form-header" aria-labelledby="page-title">
     <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
-      <h1>IVENCEU!</h1>
-      <p>Cadastro de Usuário</p>
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo da empresa iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+      <h1 id="page-title">IVENCEU!</h1>
+      <p>Cadastro de Novo Usuário</p>
     </div>
+  </header>
+
+  <main id="main-content" role="main" class="form-container" aria-labelledby="register-title">
+    <h2 id="register-title" class="sr-only">Formulário de Cadastro de Usuário</h2>
     
-    <form id="register-form">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Digite seu email" required class="input_register" />
+    <!-- Área para anúncios de screen reader -->
+    <div id="status-announcements" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+    <div id="error-announcements" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+    
+    <form id="register-form" role="form" aria-labelledby="register-title" novalidate>
+      <fieldset>
+        <legend class="sr-only">Informações de Acesso</legend>
+        
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <span class="label-text">Email</span>
+            <span class="required" aria-label="campo obrigatório">*</span>
+          </label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email"
+            placeholder="Digite seu endereço de email" 
+            required 
+            class="input_register"
+            aria-describedby="email-help email-error"
+            aria-invalid="false"
+            autocomplete="email"
+          />
+          <div id="email-help" class="help-text">
+            Use um email válido que você tenha acesso. Este será seu login no sistema.
+          </div>
+          <div id="email-error" class="error-message" role="alert" aria-live="assertive"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password" class="form-label">
+            <span class="label-text">Senha</span>
+            <span class="required" aria-label="campo obrigatório">*</span>
+          </label>
+          <div class="password-input-container">
+            <input 
+              type="password" 
+              id="password" 
+              name="password"
+              placeholder="Digite uma senha segura" 
+              required 
+              class="input_register"
+              aria-describedby="password-help password-requirements password-error"
+              aria-invalid="false"
+              autocomplete="new-password"
+            />
+            <button 
+              type="button" 
+              id="toggle-password" 
+              class="password-toggle-btn"
+              aria-label="Mostrar senha"
+              title="Clique para mostrar/ocultar a senha"
+            >
+              👁️
+            </button>
+          </div>
+          <div id="password-help" class="help-text">
+            Crie uma senha forte para proteger sua conta
+          </div>
+          
+          <!-- Requisitos de senha -->
+          <div id="password-requirements" class="password-requirements" aria-live="polite">
+            <p class="requirements-title">Requisitos da senha:</p>
+            <ul class="requirements-list" role="list">
+              <li id="req-length" class="requirement" role="listitem">
+                <span class="req-icon" aria-hidden="true">❌</span>
+                <span class="req-text">Mínimo de 8 caracteres</span>
+              </li>
+              <li id="req-uppercase" class="requirement" role="listitem">
+                <span class="req-icon" aria-hidden="true">❌</span>
+                <span class="req-text">Uma letra maiúscula (A-Z)</span>
+              </li>
+              <li id="req-lowercase" class="requirement" role="listitem">
+                <span class="req-icon" aria-hidden="true">❌</span>
+                <span class="req-text">Uma letra minúscula (a-z)</span>
+              </li>
+              <li id="req-number" class="requirement" role="listitem">
+                <span class="req-icon" aria-hidden="true">❌</span>
+                <span class="req-text">Um número (0-9)</span>
+              </li>
+              <li id="req-special" class="requirement" role="listitem">
+                <span class="req-icon" aria-hidden="true">❌</span>
+                <span class="req-text">Um caractere especial (!@#$%^&*)</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div id="password-error" class="error-message" role="alert" aria-live="assertive"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirm-password" class="form-label">
+            <span class="label-text">Confirmar Senha</span>
+            <span class="required" aria-label="campo obrigatório">*</span>
+          </label>
+          <div class="password-input-container">
+            <input 
+              type="password" 
+              id="confirm-password" 
+              name="confirm-password"
+              placeholder="Digite a senha novamente" 
+              required 
+              class="input_register"
+              aria-describedby="confirm-password-help confirm-password-error"
+              aria-invalid="false"
+              autocomplete="new-password"
+            />
+            <button 
+              type="button" 
+              id="toggle-confirm-password" 
+              class="password-toggle-btn"
+              aria-label="Mostrar confirmação de senha"
+              title="Clique para mostrar/ocultar a confirmação de senha"
+            >
+              👁️
+            </button>
+          </div>
+          <div id="confirm-password-help" class="help-text">
+            Digite a mesma senha para confirmação
+          </div>
+          <div id="confirm-password-error" class="error-message" role="alert" aria-live="assertive"></div>
+        </div>
+      </fieldset>
+      
+      <!-- Termos e Condições -->
+      <fieldset>
+        <legend class="sr-only">Termos de Uso</legend>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input 
+              type="checkbox" 
+              id="terms" 
+              name="terms"
+              required 
+              class="checkbox-input"
+              aria-describedby="terms-help terms-error"
+              aria-invalid="false"
+            />
+            <label for="terms" class="checkbox-label">
+              <span class="checkbox-custom" aria-hidden="true"></span>
+              <span class="checkbox-text">
+                Li e aceito os 
+                <a href="#" onclick="showTermsModal()" class="terms-link">
+                  Termos de Uso e Política de Privacidade
+                </a>
+                <span class="required" aria-label="campo obrigatório">*</span>
+              </span>
+            </label>
+            <div id="terms-help" class="help-text">
+              É obrigatório aceitar os termos para criar sua conta
+            </div>
+            <div id="terms-error" class="error-message" role="alert" aria-live="assertive"></div>
+          </div>
+        </div>
+      </fieldset>
+      
+      <!-- Botão de Cadastro -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          id="submit-button"
+          class="button_form button-primary"
+          aria-describedby="submit-help"
+        >
+          <span class="button-text">✅ Criar Conta</span>
+          <span class="loading-spinner sr-only" aria-hidden="true"></span>
+        </button>
+        <div id="submit-help" class="help-text">Cria sua nova conta no sistema iVenceu!</div>
       </div>
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <input type="password" id="password" placeholder="Digite sua senha" required class="input_register" />
-      </div>
-      <button type="submit" class="button_form">Cadastrar</button>
     </form>
     
-    <div id="register-msg" class="error-msg"></div>
+    <!-- Mensagens de Feedback -->
+    <div id="register-msg" class="feedback-container" role="status" aria-live="polite"></div>
     
-    <div class="form-actions" style="margin-top: 20px;">
-      <a href="/" style="color: #4CAF50; text-decoration: none;">Voltar para o login</a>
+    <!-- Links de Navegação -->
+    <nav class="form-navigation" role="navigation" aria-label="Navegação do formulário">
+      <a 
+        href="/" 
+        class="nav-link"
+        aria-describedby="login-link-help"
+      >
+        🔙 Voltar para o Login
+      </a>
+      <div id="login-link-help" class="help-text sr-only">
+        Retorna à página de login se você já possui uma conta
+      </div>
+    </nav>
+  </main>
+  <!-- Modal de Sucesso -->
+  <div 
+    id="success-modal" 
+    class="modal hidden" 
+    role="dialog" 
+    aria-labelledby="success-modal-title"
+    aria-describedby="success-modal-description"
+    aria-modal="true"
+  >
+    <div class="modal-content">
+      <h2 id="success-modal-title">🎉 Conta Criada com Sucesso!</h2>
+      <p id="success-modal-description">
+        Sua conta foi criada com sucesso! Você já pode fazer login no sistema com seu email e senha.
+      </p>
+      <div class="modal-actions">
+        <button 
+          type="button" 
+          class="button_form button-primary" 
+          onclick="goToLogin()"
+          autofocus
+        >
+          Ir para Login
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- Modal de Termos de Uso -->
+  <div 
+    id="terms-modal" 
+    class="modal hidden" 
+    role="dialog" 
+    aria-labelledby="terms-modal-title"
+    aria-describedby="terms-modal-description"
+    aria-modal="true"
+  >
+    <div class="modal-content modal-large">
+      <h2 id="terms-modal-title">📋 Termos de Uso e Política de Privacidade</h2>
+      <div id="terms-modal-description" class="terms-content">
+        <h3>Termos de Uso - Sistema iVenceu!</h3>
+        <p>
+          Ao usar o sistema iVenceu!, você concorda com os seguintes termos:
+        </p>
+        <ul>
+          <li>Utilizar o sistema apenas para fins profissionais legítimos</li>
+          <li>Manter a confidencialidade dos dados dos funcionários</li>
+          <li>Não compartilhar suas credenciais de acesso</li>
+          <li>Reportar qualquer problema de segurança imediatamente</li>
+          <li>Respeitar as leis de proteção de dados aplicáveis</li>
+        </ul>
+        
+        <h3>Política de Privacidade</h3>
+        <p>
+          Seus dados pessoais são protegidos e utilizados exclusivamente para:
+        </p>
+        <ul>
+          <li>Autenticação e autorização no sistema</li>
+          <li>Auditoria de operações realizadas</li>
+          <li>Comunicações relacionadas ao sistema</li>
+        </ul>
+        <p>
+          Não compartilhamos seus dados com terceiros sem sua autorização expressa.
+        </p>
+      </div>
+      <div class="modal-actions">
+        <button 
+          type="button" 
+          id="accept-terms" 
+          class="button_form button-primary"
+          onclick="acceptTerms()"
+        >
+          Aceitar e Continuar
+        </button>
+        <button 
+          type="button" 
+          id="close-terms" 
+          class="button_form button-secondary"
+          onclick="closeTermsModal()"
+        >
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script src="{{ url_for('static', filename='js/cadastro_usuario.js') }}"></script>
   
   <!-- Marca d'água -->

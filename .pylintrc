@@ -1,0 +1,48 @@
+[MASTER]
+init-hook='import sys; sys.path.append("/home/vecchio/Clone/univesp-project")'
+
+[MESSAGES CONTROL]
+# Disable import-error since we're using a virtual environment
+# Disable missing-docstring for now since we're focusing on functionality
+disable=import-error,
+        missing-module-docstring,
+        missing-class-docstring,
+        too-few-public-methods,
+        unused-argument,
+        invalid-name,
+        no-member
+
+[IMPORTS]
+# List of modules that can be imported at any level, not just the top level
+allow-any-import-level=
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=10
+
+# Maximum number of locals for function / method body
+max-locals=20
+
+# Maximum number of return / yield for function / method body
+max-returns=6
+
+# Maximum number of branch for function / method body
+max-branches=20
+
+# Maximum number of statements in function / method body
+max-statements=50
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=120
+
+[BASIC]
+# Good variable names which should always be accepted, separated by a comma
+good-names=i,j,k,ex,Run,_,id,pk,db,bp
+
+[TYPECHECK]
+# List of class names for which member attributes should not be checked
+ignored-classes=SQLObject,Flask,Blueprint
+
+# List of module names for which member attributes should not be checked
+ignored-modules=flask_sqlalchemy,flask,sqlalchemy

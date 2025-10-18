@@ -1,32 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>iVenceu!</title>
+  <meta name="description" content="Sistema iVenceu - Controle de vencimentos de documentos de SST">
+  <title>iVenceu! - Login</title>
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container">
-    <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
-      <h1>IVENCEU!</h1>
+  <!-- Skip to main content link -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+  <main id="main-content" class="form-container" role="main" aria-labelledby="main-title">
+    <header class="logo-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" width="60" height="60" style="margin-bottom: 10px;">
+      <h1 id="main-title">IVENCEU!</h1>
       <p>Controle de Vencimentos de Documentos de SST</p>
-    </div>
+    </header>
 
-    <form id="login-form">
+    <form id="login-form" aria-labelledby="form-title" novalidate>
+      <h2 id="form-title" class="sr-only">Formulário de Login</h2>
+      
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Digite seu email" required />
+        <label for="email">
+          Email
+          <span aria-hidden="true">*</span>
+          <span class="sr-only">(obrigatório)</span>
+        </label>
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="Digite seu email" 
+          required 
+          aria-describedby="email-error"
+          aria-invalid="false"
+        />
+        <div id="email-error" class="error-message" role="alert" aria-live="polite"></div>
       </div>
+      
       <div class="form-group">
-        <label for="password">Senha</label>
-        <input type="password" id="password" placeholder="Digite sua senha" required />
+        <label for="password">
+          Senha
+          <span aria-hidden="true">*</span>
+          <span class="sr-only">(obrigatório)</span>
+        </label>
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="Digite sua senha" 
+          required 
+          aria-describedby="password-error"
+          aria-invalid="false"
+        />
+        <div id="password-error" class="error-message" role="alert" aria-live="polite"></div>
       </div>
+      
       <div style="text-align: center;">
-        <button type="submit" class="button_form">Entrar</button>
+        <button type="submit" class="button_form" aria-describedby="loading-status">
+          <span>Entrar</span>
+        </button>
       </div>
+      
+      <div id="loading-status" class="sr-only" role="status" aria-live="polite"></div>
     </form>
     <div id="error-msg" class="error-msg"></div>
     

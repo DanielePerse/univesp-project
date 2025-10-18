@@ -1,9 +1,21 @@
 from flask import request, jsonify
-from app.models.user import User
-from app import db
 import jwt
 from datetime import datetime, timedelta
-from config import Config
+
+# Imports relativos para resolver problemas de importação
+try:
+    from ..models.user import User
+    from .. import db
+    from ...config import Config
+except ImportError:
+    # Fallback para imports absolutos
+    import sys
+    import os
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    sys.path.append(base_dir)
+    from app.models.user import User
+    from app import db
+    from config import Config
 
 
 def register():

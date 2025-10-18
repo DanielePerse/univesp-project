@@ -1,7 +1,6 @@
 from functools import wraps
-from flask import request, jsonify
+from flask import request, jsonify, current_app
 import jwt
-from config import Config
 from uuid import UUID
 
 
@@ -33,11 +32,15 @@ def token_required(f):
             return jsonify({'message': 'Token is missing'}), 401
 
         try:
-            data = jwt.decode(token, Config.SECRET_KEY, algorithms=['HS256'])
+            secret = current_app.config['SECRET_KEY']
+            data = jwt.decode(
+                token,
+                secret,
+                algorithms=['HS256'],
+            )
             request.user_id = UUID(data['user_id'])
         except (jwt.InvalidTokenError, ValueError, KeyError):
             return jsonify({'message': 'Token is invalid or expired'}), 401
-
         return f(*args, **kwargs)
 
     return decorated

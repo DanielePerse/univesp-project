@@ -1,41 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>iVenceu! - Consulta de Funcionários</title>
+  <meta name="description" content="Consulte, filtre e gerencie funcionários cadastrados no sistema iVenceu!">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container wide">
+  <!-- Link para pular para conteúdo principal -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+  <header role="banner" class="form-header" aria-labelledby="page-title">
     <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
-      <h1>IVENCEU!</h1>
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo da empresa iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
+      <h1 id="page-title">IVENCEU!</h1>
       <p>Consultar Funcionários</p>
     </div>
+  </header>
 
-    <div class="table-container">
-      <table id="employee-table" class="styled-table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Empresa</th>
-            <th>Status do Documento</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="employee-body">
-          <!-- Funcionários serão inseridos aqui -->
-        </tbody>
-      </table>
+  <main id="main-content" role="main" class="form-container wide" aria-labelledby="consulta-title">
+    <h2 id="consulta-title" class="sr-only">Lista de Funcionários Cadastrados</h2>
+    
+    <!-- Área para anúncios de screen reader -->
+    <div id="status-announcements" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+    <div id="error-announcements" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+
+    <!-- Seção de Filtros -->
+    <section aria-labelledby="filters-title" class="filters-section">
+      <h3 id="filters-title" class="sr-only">Filtros de Pesquisa</h3>
+      
+      <div class="search-controls">
+        <div class="form-group">
+          <label for="search-input" class="form-label">
+            <span class="label-text">Buscar funcionário</span>
+          </label>
+          <div class="search-input-container">
+            <input 
+              type="search" 
+              id="search-input" 
+              name="search"
+              class="input_register search-input" 
+              placeholder="Digite nome, CPF ou empresa..."
+              aria-describedby="search-help"
+              autocomplete="off"
+            />
+            <button 
+              type="button" 
+              id="clear-search" 
+              class="button-clear-search"
+              aria-label="Limpar busca"
+              title="Limpar campo de busca"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div id="search-help" class="help-text">Digite para filtrar funcionários por nome, CPF ou empresa</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="status-filter" class="form-label">
+            <span class="label-text">Filtrar por status</span>
+          </label>
+          <select 
+            id="status-filter" 
+            name="status-filter"
+            class="input_register"
+            aria-describedby="status-filter-help"
+          >
+            <option value="">Todos os status</option>
+            <option value="valid">Documentos válidos</option>
+            <option value="expiring">Próximos ao vencimento</option>
+            <option value="expired">Documentos vencidos</option>
+          </select>
+          <div id="status-filter-help" class="help-text">Filtrar funcionários pelo status dos documentos</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estatísticas da Consulta -->
+    <section aria-labelledby="stats-title" class="stats-section">
+      <h3 id="stats-title" class="sr-only">Estatísticas dos Funcionários</h3>
+      
+      <div class="stats-container" role="group" aria-labelledby="stats-title">
+        <div class="stat-item" role="status" aria-live="polite">
+          <span class="stat-number" id="total-count">0</span>
+          <span class="stat-label">Total de funcionários</span>
+        </div>
+        <div class="stat-item" role="status" aria-live="polite">
+          <span class="stat-number" id="filtered-count">0</span>
+          <span class="stat-label">Exibindo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controles de Acessibilidade para Tabela -->
+    <section aria-labelledby="table-controls-title" class="table-controls">
+      <h3 id="table-controls-title" class="sr-only">Controles da Tabela</h3>
+      
+      <div class="table-actions">
+        <button 
+          type="button" 
+          id="refresh-data" 
+          class="button-secondary"
+          aria-describedby="refresh-help"
+        >
+          <span aria-hidden="true">🔄</span> Atualizar dados
+        </button>
+        <div id="refresh-help" class="help-text sr-only">Recarrega a lista de funcionários do servidor</div>
+        
+        <button 
+          type="button" 
+          id="export-data" 
+          class="button-secondary"
+          aria-describedby="export-help"
+        >
+          <span aria-hidden="true">📊</span> Exportar lista
+        </button>
+        <div id="export-help" class="help-text sr-only">Exporta a lista filtrada de funcionários</div>
+      </div>
+    </section>
+
+    <!-- Área de Loading -->
+    <div id="loading-indicator" class="loading-container hidden" aria-live="polite">
+      <div class="loading-spinner-large"></div>
+      <p>Carregando funcionários...</p>
     </div>
 
-    <div class="form-actions" style="margin-top: 20px;">
-      <button onclick="voltarHome()" class="button_form">Voltar para Home</button>
-    </div>
-  </div>
+    <!-- Container da Tabela -->
+    <section aria-labelledby="table-title" class="table-section">
+      <h3 id="table-title" class="sr-only">Lista de Funcionários</h3>
+      
+      <div class="table-container" role="region" aria-labelledby="table-title" tabindex="0">
+        <table 
+          id="employee-table" 
+          class="styled-table"
+          role="table"
+          aria-describedby="table-description"
+        >
+          <caption id="table-description" class="sr-only">
+            Tabela com informações dos funcionários cadastrados. Use as setas para navegar e Enter para ver detalhes.
+          </caption>
+          
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" scope="col" aria-sort="none" tabindex="0">
+                <button type="button" class="sort-button" data-column="name">
+                  Nome
+                  <span class="sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th role="columnheader" scope="col" aria-sort="none" tabindex="0">
+                <button type="button" class="sort-button" data-column="cpf">
+                  CPF
+                  <span class="sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th role="columnheader" scope="col" aria-sort="none" tabindex="0">
+                <button type="button" class="sort-button" data-column="company">
+                  Empresa
+                  <span class="sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th role="columnheader" scope="col" aria-sort="none" tabindex="0">
+                <button type="button" class="sort-button" data-column="status">
+                  Status dos Documentos
+                  <span class="sort-indicator" aria-hidden="true"></span>
+                </button>
+              </th>
+              <th role="columnheader" scope="col">
+                Ações
+              </th>
+            </tr>
+          </thead>
+          
+          <tbody id="employee-body" role="rowgroup">
+            <!-- Funcionários serão inseridos aqui -->
+          </tbody>
+        </table>
+        
+        <!-- Mensagem quando não há resultados -->
+        <div id="no-results" class="no-results hidden" role="status">
+          <p>Nenhum funcionário encontrado com os filtros aplicados.</p>
+          <button type="button" id="clear-filters" class="button-secondary">
+            Limpar todos os filtros
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ações do Formulário -->
+    <section class="form-actions" role="group" aria-labelledby="form-actions-title">
+      <h3 id="form-actions-title" class="sr-only">Ações da página</h3>
+      <button 
+        type="button"
+        onclick="voltarHome()" 
+        class="button_form button-secondary"
+        aria-describedby="back-home-help"
+      >
+        <span aria-hidden="true">🏠</span> Voltar para Home
+      </button>
+      <div id="back-home-help" class="help-text sr-only">Retorna à página inicial do sistema</div>
+    </section>
+  </main>
 
   <!-- Marca d'água -->
   <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">

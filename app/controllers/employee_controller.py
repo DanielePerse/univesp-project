@@ -1,11 +1,27 @@
 from flask import request, jsonify
-from app.services.employee_service import (
-    create_employee_with_documents,
-    list_employees_with_document_status,
-    check_cpf_exists,
-    get_employee_detail,
-    update_employee
-)
+
+# Imports relativos para resolver problemas de importação
+try:
+    from ..services.employee_service import (
+        create_employee_with_documents,
+        list_employees_with_document_status,
+        check_cpf_exists,
+        get_employee_detail,
+        update_employee
+    )
+except ImportError:
+    # Fallback para imports absolutos
+    import sys
+    import os
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    sys.path.append(base_dir)
+    from app.services.employee_service import (
+        create_employee_with_documents,
+        list_employees_with_document_status,
+        check_cpf_exists,
+        get_employee_detail,
+        update_employee
+    )
 
 
 def create_employee():
@@ -22,7 +38,6 @@ def create_employee():
     company_name = data.get('company_name')
     documents = data.get('documents', [])
     address = data.get('address')
-    endereco = data.get('endereco')  # Campo endereco adicionado
 
     if not all([cpf, company_name, employee_name]):
         return jsonify({'message': 'Missing required fields'}, 400)
@@ -32,7 +47,7 @@ def create_employee():
         return jsonify({'message': 'Invalid address format'}, 400)
     
     employee, error = create_employee_with_documents(
-        cpf, employee_name, company_name, documents, address, endereco
+        cpf, employee_name, company_name, documents, address
     )
 
     if error:
@@ -74,17 +89,17 @@ def check_employee_cpf(cpf):
         return jsonify({'message': 'CPF is available'}), 200
     
 
-def get_employee_detail_by_id(id):
+def get_employee_detail_by_id(employee_id):
     """
     Obtém detalhes de um funcionário específico pelo ID.
     
     Args:
-        id (str): ID do funcionário
+        employee_id (str): ID do funcionário
         
     Returns:
         JSON: Dados completos do funcionário ou mensagem de erro
     """
-    employee_data, error = get_employee_detail(id)
+    employee_data, error = get_employee_detail(employee_id)
 
     if error:
         return jsonify({'message': error}), 404
@@ -92,18 +107,18 @@ def get_employee_detail_by_id(id):
     return jsonify(employee_data), 200
 
 
-def update_employee_data(id):
+def update_employee_data(employee_id):
     """
     Atualiza os dados de um funcionário existente.
     
     Args:
-        id (str): ID do funcionário a ser atualizado
+        employee_id (str): ID do funcionário a ser atualizado
         
     Returns:
         JSON: Dados atualizados do funcionário ou mensagem de erro
     """
     data = request.get_json()
-    updated, error = update_employee(id, data)
+    updated, error = update_employee(employee_id, data)
 
     if error:
         return jsonify({'message': error}), 404
@@ -135,7 +150,7 @@ def _validate_address(address):
             return False
     
     # Verifica se os valores são strings (quando fornecidos)
-    for key, value in address.items():
+    for value in address.values():
         if value is not None and not isinstance(value, str):
             return False
     

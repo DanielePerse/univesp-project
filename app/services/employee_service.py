@@ -1,9 +1,21 @@
 from datetime import datetime, timedelta
 import uuid
-from app import db
-from app.models.employee import Employee
-from app.models.document import Document
 from sqlalchemy.orm import joinedload
+
+# Imports relativos para resolver problemas de importação
+try:
+    from .. import db
+    from ..models.employee import Employee
+    from ..models.document import Document
+except ImportError:
+    # Fallback para imports absolutos
+    import sys
+    import os
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    sys.path.append(base_dir)
+    from app import db
+    from app.models.employee import Employee
+    from app.models.document import Document
 
 
 def check_cpf_exists(cpf):
@@ -21,7 +33,7 @@ def check_cpf_exists(cpf):
 
 
 def create_employee_with_documents(
-    cpf, employee_name, company_name, documents, address=None, endereco=None
+    cpf, employee_name, company_name, documents, address=None
 ):
     """
     Cria um novo funcionário com seus documentos associados.
@@ -32,7 +44,6 @@ def create_employee_with_documents(
         company_name (str): Nome da empresa
         documents (list): Lista de documentos do funcionário
         address (dict, optional): Endereço estruturado
-        endereco (str, optional): Endereço em texto simples
         
     Returns:
         tuple: (Employee, error_message) - Employee criado ou None,
@@ -114,12 +125,12 @@ def list_employees_with_document_status():
     return result
 
 
-def get_employee_detail(id):
+def get_employee_detail(employee_id):
     """
     Obtém detalhes completos de um funcionário pelo ID.
     
     Args:
-        id (str): ID do funcionário
+        employee_id (str): ID do funcionário
         
     Returns:
         tuple: (employee_data, error_message) - dados do funcionário ou None,
@@ -127,7 +138,7 @@ def get_employee_detail(id):
     """
     employee = Employee.query.options(
         joinedload(Employee.documents)
-    ).filter_by(id=id).first()
+    ).filter_by(id=employee_id).first()
 
     if not employee:
         return None, 'Employee not found'
@@ -150,19 +161,19 @@ def get_employee_detail(id):
     return result, None
 
 
-def update_employee(id, data):
+def update_employee(employee_id, data):
     """
     Atualiza dados de um funcionário existente.
     
     Args:
-        id (str): ID do funcionário
+        employee_id (str): ID do funcionário
         data (dict): Dados atualizados do funcionário
         
     Returns:
         tuple: (employee_data, error_message) - dados atualizados ou None,
                mensagem de erro ou None
     """
-    employee = Employee.query.get(id)
+    employee = Employee.query.get(employee_id)
     if not employee:
         return None, 'Employee not found'
 

@@ -1,13 +1,29 @@
+
 from flask import Blueprint, render_template
-from app.controllers.employee_controller import (
-    create_employee,
-    list_employees,
-    check_employee_cpf,
-    get_employee_detail_by_id,
-    update_employee_data
-)
-from app.controllers.auth_controller import register, login
-from app.utils.auth import token_required
+try:
+    from .controllers.employee_controller import (
+        create_employee,
+        list_employees,
+        check_employee_cpf,
+        get_employee_detail_by_id,
+        update_employee_data
+    )
+    from .controllers.auth_controller import register, login
+    from .utils.auth import token_required
+except ImportError:
+    import sys
+    import os
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    sys.path.append(base_dir)
+    from app.controllers.employee_controller import (
+        create_employee,
+        list_employees,
+        check_employee_cpf,
+        get_employee_detail_by_id,
+        update_employee_data
+    )
+    from app.controllers.auth_controller import register, login
+    from app.utils.auth import token_required
 
 bp = Blueprint('routes', __name__)
 
@@ -37,10 +53,10 @@ def consulta():
     return render_template('consulta.html')
 
 
-@bp.route('/detalhes/<id>')
-def detalhes_funcionario(id):
+@bp.route('/detalhes/<employee_id>')
+def detalhes_funcionario(employee_id):
     """Renderiza a página de detalhes de um funcionário específico."""
-    return render_template('detalhes.html', employee_id=id)
+    return render_template('detalhes.html', employee_id=employee_id)
 
 
 @bp.route('/verifica_cpf')
@@ -65,7 +81,7 @@ def register_employee():
 
 @bp.route('/employee/list', methods=['GET'])
 @token_required
-def list():
+def list_all_employees():
     """Endpoint para listar todos os funcionários."""
     return list_employees()
 
@@ -77,18 +93,18 @@ def checkRegister(cpf):
     return check_employee_cpf(cpf)
 
 
-@bp.route('/employee/<id>', methods=['GET'])
+@bp.route('/employee/<employee_id>', methods=['GET'])
 @token_required
-def registerDetail(id):
+def registerDetail(employee_id):
     """Endpoint para obter detalhes de um funcionário específico."""
-    return get_employee_detail_by_id(id)
+    return get_employee_detail_by_id(employee_id)
 
 
-@bp.route('/employee/<id>', methods=['PUT'])
+@bp.route('/employee/<employee_id>', methods=['PUT'])
 @token_required
-def registerUpdate(id):
+def registerUpdate(employee_id):
     """Endpoint para atualizar dados de um funcionário."""
-    return update_employee_data(id)
+    return update_employee_data(employee_id)
 
 
 @bp.route('/auth/register', methods=['POST'])

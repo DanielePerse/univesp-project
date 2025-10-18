@@ -1,32 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>iVenceu!</title>
+  <meta name="description" content="Página inicial do sistema iVenceu - Acesso às funcionalidades de controle de documentos SST">
+  <title>iVenceu! - Página Inicial</title>
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/faveicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container">
-    <div class="logo-section">
-      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
-      <h1>IVENCEU!</h1>
+  <!-- Skip to main content link -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <main id="main-content" class="form-container" role="main" aria-labelledby="main-title">
+    <header class="logo-section">
+      <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" width="60" height="60" style="margin-bottom: 10px;">
+      <h1 id="main-title">IVENCEU!</h1>
       <p>Controle de Vencimentos de Documentos de SST</p>
-    </div>
+    </header>
     
-    <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
-      <button onclick="goToCadastro()" style="padding: 15px; font-size: 1rem;">
-        📝 Cadastrar Funcionário
-      </button>
-      <button onclick="goToConsulta()" style="padding: 15px; font-size: 1rem;">
-        🔍 Consultar Funcionários
-      </button>
-      <button onclick="logout()" style="background: #dc3545; padding: 15px; font-size: 1rem; margin-top: 15px;">
-        🚪 Sair
-      </button>
-    </div>
-  </div>
+    <nav role="navigation" aria-label="Menu principal">
+      <h2 class="sr-only">Opções do Sistema</h2>
+      <div class="menu-options" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
+        <button 
+          onclick="goToCadastro()" 
+          class="menu-button"
+          style="padding: 15px; font-size: 1rem;"
+          aria-describedby="cadastro-desc"
+        >
+          <span aria-hidden="true">📝</span> 
+          <span>Cadastrar Funcionário</span>
+        </button>
+        <div id="cadastro-desc" class="sr-only">Acessar formulário de cadastro de novo funcionário</div>
+        
+        <button 
+          onclick="goToConsulta()" 
+          class="menu-button"
+          style="padding: 15px; font-size: 1rem;"
+          aria-describedby="consulta-desc"
+        >
+          <span aria-hidden="true">🔍</span> 
+          <span>Consultar Funcionários</span>
+        </button>
+        <div id="consulta-desc" class="sr-only">Acessar listagem e busca de funcionários cadastrados</div>
+        
+        <button 
+          onclick="logout()" 
+          class="menu-button logout-button"
+          style="background: #dc3545; padding: 15px; font-size: 1rem; margin-top: 15px;"
+          aria-describedby="logout-desc"
+        >
+          <span aria-hidden="true">🚪</span> 
+          <span>Sair</span>
+        </button>
+        <div id="logout-desc" class="sr-only">Fazer logout e retornar à tela de login</div>
+      </div>
+    </nav>
+  </main>
 
   <!-- Marca d'água -->
   <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
