@@ -34,21 +34,6 @@
   </div>
 
   <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-  <script>
-    checkAuth();
-
-    function goToCadastro() {
-      window.location.href = "/cadastro";
-    }
-
-    function goToConsulta() {
-      window.location.href = "/consulta";
-    }
-    
-    function logout() {
-      localStorage.removeItem("token");
-      window.location.href = "/";
-    }
-  </script>
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
 </body>
 </html>

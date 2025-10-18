@@ -17,7 +17,7 @@
     
     <form id="cadastro-form">
       <div class="form-group">
-        <label for="cpf">CPF</label>
+        <label for="cpf"><strong>CPF</strong></label>
         <input type="text" id="cpf" required placeholder="000.000.000-00" class="input_register" />
         <div style="margin-top: 5px;">
           <a href="#" id="verificar-cpf-link" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
@@ -28,15 +28,39 @@
       </div>
 
       <div class="form-group">
-        <label for="employee_name">Nome do funcionário</label>
+        <label for="employee_name"><strong>Nome do funcionário</strong></label>
         <input type="text" id="employee_name" required class="input_register" />
       </div>
 
       <div class="form-group">
-        <label for="company_name">Nome da empresa</label>
+        <label for="company_name"><strong>Nome da empresa</strong></label>
         <input type="text" id="company_name" required class="input_register" />
       </div>
 
+      <!-- Seção de Endereço -->
+      <div class="form-group">
+        <label><strong>Endereço:</strong></label>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+          <input type="text" id="zip_code" placeholder="00000-000" class="input_register" style="width: 150px;" maxlength="9" />
+          <a href="#" id="buscar-cep-btn" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
+            🔍 Buscar
+          </a>
+          <div id="cep-status" style="font-size: 12px; font-weight: 500; display: none;"></div>
+        </div>
+        
+        <input type="text" id="street" placeholder="Rua/Logradouro" class="input_register" style="margin-bottom: 10px;" readonly />
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <input type="text" id="number" placeholder="Número" class="input_register" style="width: 100px;" />
+          <input type="text" id="complement" placeholder="Complemento (opcional)" class="input_register" style="flex: 1;" />
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="neighborhood" placeholder="Bairro" class="input_register" style="flex: 1;" readonly />
+          <input type="text" id="city" placeholder="Cidade" class="input_register" style="flex: 1;" readonly />
+        </div>
+      </div>
 
       <div id="documents-container">
         <p><strong>Cadastro de documentos:</strong></p>
@@ -58,7 +82,7 @@
   <div id="modal" class="modal hidden">
     <div class="modal-content">
       <p>Funcionário cadastrado com sucesso!</p>
-      <button id="voltar-btn">Voltar para Home</button>
+      <button type="button" class="button_form" onclick="goBack()">Voltar para Home</button>
     </div>
   </div>
 
@@ -67,122 +91,7 @@
     Desenvolvido por Grupo PI II
   </div>
 
-  <script>
-    const form = document.getElementById('cadastro-form');
-    const addDocumentBtn = document.getElementById('add-document');
-    const documentsContainer = document.getElementById('documents-container');
-    const modal = document.getElementById('modal');
-
-    addDocumentBtn.addEventListener('click', () => {
-      const div = document.createElement('div');
-      div.classList.add('document-entry');
-      div.style.marginBottom = "15px";
-      div.style.display = "flex";
-      div.style.gap = "10px";
-      div.innerHTML = `
-        <input type="text" class="document-name input_register" required placeholder="Nome do Documento" style="flex: 1;" />
-        <input type="date" class="document-expiration input_register" required style="width: 150px;" />
-      `;
-      documentsContainer.appendChild(div);
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const cpf = document.getElementById('cpf').value;
-      const employee_name = document.getElementById('employee_name').value;
-      const company_name = document.getElementById('company_name').value;
-      const token = localStorage.getItem('token');
-
-      const documents = Array.from(document.querySelectorAll('.document-entry')).map(entry => {
-        const name = entry.querySelector('.document-name').value;
-        const expiration_date = entry.querySelector('.document-expiration').value;
-        return { name, expiration_date };
-      });
-
-      const payload = {
-        cpf,
-        employee_name,
-        company_name,
-        documents
-      };
-
-      try {
-        const response = await fetch('/employee/register_employee', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          modal.classList.remove("hidden");
-        } else {
-          const data = await response.json();
-          alert(data.message || "Erro ao cadastrar.");
-        }
-      } catch (err) {
-        alert("Erro ao conectar com o servidor.");
-      }
-    });
-
-    function goBack() {
-      window.location.href = "/home";
-    }
-
-    // Funcionalidade de verificar CPF
-    document.getElementById('verificar-cpf-link').addEventListener('click', async (e) => {
-      e.preventDefault();
-      const cpfInput = document.getElementById('cpf');
-      const cpfValue = cpfInput.value.trim();
-      const statusDiv = document.getElementById('cpf-status');
-      
-      if (!cpfValue) {
-        alert('Por favor, digite um CPF para verificar.');
-        cpfInput.focus();
-        return;
-      }
-      
-      // Mostra loading
-      statusDiv.style.display = 'block';
-      statusDiv.style.color = '#666';
-      statusDiv.textContent = '🔄 Verificando CPF...';
-      
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`/employee/check_register/${encodeURIComponent(cpfValue)}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        if (response.status === 200) {
-          // CPF disponível (não cadastrado)
-          statusDiv.style.color = '#28a745'; // verde
-          statusDiv.textContent = '✅ CPF ainda não possui cadastro';
-        } else if (response.status === 409) {
-          // CPF já cadastrado
-          statusDiv.style.color = '#dc3545'; // vermelho
-          statusDiv.textContent = '❌ CPF já possui cadastro';
-        } else {
-          statusDiv.style.color = '#dc3545';
-          statusDiv.textContent = '❌ Erro ao verificar CPF';
-        }
-      } catch (error) {
-        statusDiv.style.color = '#dc3545';
-        statusDiv.textContent = '❌ Erro ao conectar com o servidor';
-      }
-    });
-    
-    // Limpa o status quando o CPF é alterado
-    document.getElementById('cpf').addEventListener('input', () => {
-      const statusDiv = document.getElementById('cpf-status');
-      statusDiv.style.display = 'none';
-    });
-
-  </script>
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/cadastro.js') }}"></script>
 </body>
 </html>
