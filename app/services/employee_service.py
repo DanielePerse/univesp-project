@@ -38,7 +38,7 @@ def create_employee_with_documents(cpf, employee_name, company_name, documents, 
     return employee, None
 
 def list_employees_with_document_status():
-    employees = Employee.query.options(joinedload(Employee.documents)).all()
+    employees = Employee.query.options(joinedload(Employee.documents)).order_by(Employee.employee_name.asc()).all()
     result = []
     
     today = datetime.utcnow().date()
