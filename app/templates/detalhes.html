@@ -36,6 +36,31 @@
         </div>
       </div>
 
+      <!-- Seção de Endereço -->
+      <div class="form-group" style="margin-bottom: 30px;">
+        <label><strong>Endereço:</strong></label>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+          <input type="text" id="zip_code" placeholder="00000-000" class="input_register" style="width: 150px;" maxlength="9" />
+          <a href="#" id="buscar-cep-btn" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
+            🔍 Buscar
+          </a>
+          <div id="cep-status" style="font-size: 12px; font-weight: 500; display: none;"></div>
+        </div>
+        
+        <input type="text" id="street" placeholder="Rua/Logradouro" class="input_register" style="margin-bottom: 10px;" readonly />
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <input type="text" id="number" placeholder="Número" class="input_register" style="width: 100px;" />
+          <input type="text" id="complement" placeholder="Complemento (opcional)" class="input_register" style="flex: 1;" />
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="neighborhood" placeholder="Bairro" class="input_register" style="flex: 1;" readonly />
+          <input type="text" id="city" placeholder="Cidade" class="input_register" style="flex: 1;" readonly />
+        </div>
+      </div>
+
       <div id="documents-container">
         <!-- Campos de documentos serão inseridos dinamicamente aqui -->
       </div>
@@ -61,6 +86,90 @@
     const employeeId = "{{ employee_id }}";
     const documentsContainer = document.getElementById("documents-container");
 
+    // Funcionalidade de busca de CEP
+    const buscarCepBtn = document.getElementById('buscar-cep-btn');
+    const cepInput = document.getElementById('zip_code');
+    const cepStatus = document.getElementById('cep-status');
+
+    // Função para limpar campos de endereço
+    function limparCamposEndereco() {
+      document.getElementById('street').value = '';
+      document.getElementById('neighborhood').value = '';
+      document.getElementById('city').value = '';
+    }
+
+    // Função para aplicar máscara de CEP
+    function aplicarMascaraCep(valor) {
+      return valor.replace(/\D/g, '').replace(/(\d{5})(\d)/, '$1-$2');
+    }
+
+    // Aplicar máscara no CEP enquanto digita
+    cepInput.addEventListener('input', (e) => {
+      e.target.value = aplicarMascaraCep(e.target.value);
+      // Limpa status e campos quando CEP é alterado
+      cepStatus.style.display = 'none';
+      limparCamposEndereco();
+    });
+
+    // Função para buscar CEP na API ViaCEP
+    async function buscarCep() {
+      const cep = cepInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+      
+      // Validação básica do CEP
+      if (cep.length !== 8) {
+        cepStatus.style.display = 'block';
+        cepStatus.style.color = '#dc3545';
+        cepStatus.textContent = '❌ CEP deve ter 8 dígitos';
+        return;
+      }
+
+      // Mostra loading
+      cepStatus.style.display = 'block';
+      cepStatus.style.color = '#666';
+      cepStatus.textContent = '🔄 Buscando endereço...';
+
+      try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (data.erro) {
+          // CEP não encontrado
+          cepStatus.style.color = '#dc3545';
+          cepStatus.textContent = '❌ CEP não encontrado';
+          limparCamposEndereco();
+        } else {
+          // CEP encontrado - preenche os campos
+          document.getElementById('street').value = data.logradouro || '';
+          document.getElementById('neighborhood').value = data.bairro || '';
+          document.getElementById('city').value = data.localidade || '';
+          
+          cepStatus.style.color = '#28a745';
+          cepStatus.textContent = '✅ Endereço encontrado';
+          
+          // Foca no campo número para o usuário continuar
+          document.getElementById('number').focus();
+        }
+      } catch (error) {
+        cepStatus.style.color = '#dc3545';
+        cepStatus.textContent = '❌ Erro ao buscar CEP';
+        limparCamposEndereco();
+      }
+    }
+
+    // Event listener para o link de buscar CEP
+    buscarCepBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      buscarCep();
+    });
+
+    // Permite buscar CEP pressionando Enter no campo
+    cepInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        buscarCep();
+      }
+    });
+
     function createDocumentInput(doc = {}) {
       const div = document.createElement("div");
       div.classList.add("document-entry");
@@ -79,7 +188,7 @@
 
     async function carregarDados() {
       try {
-        const response = await fetch(`http://localhost:5000/employee/${employeeId}`, {
+        const response = await fetch(`/employee/${employeeId}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -94,6 +203,27 @@
         document.getElementById("cpf").value = data.cpf;
         document.getElementById("employee_name").value = data.employee_name;
         document.getElementById("company_name").value = data.company_name;
+
+        // Carrega dados de endereço se existirem
+        if (data.address) {
+          // Se o endereço vier como string JSON, faz o parse
+          let addressObj = data.address;
+          if (typeof data.address === 'string') {
+            try {
+              addressObj = JSON.parse(data.address);
+            } catch (e) {
+              console.error("Erro ao fazer parse do endereço:", e);
+              addressObj = {};
+            }
+          }
+          
+          document.getElementById("zip_code").value = addressObj.zip_code ? aplicarMascaraCep(addressObj.zip_code) : '';
+          document.getElementById("street").value = addressObj.street || '';
+          document.getElementById("number").value = addressObj.number || '';
+          document.getElementById("complement").value = addressObj.complement || '';
+          document.getElementById("neighborhood").value = addressObj.neighborhood || '';
+          document.getElementById("city").value = addressObj.city || '';
+        }
 
         data.documents.forEach(doc => createDocumentInput(doc));
       } catch (err) {
@@ -118,15 +248,37 @@
         expiration_date: entry.querySelector(".document-expiration").value
       }));
 
+      // Coleta dados de endereço
+      const addressData = {};
+      
+      // Só adiciona campos que não estão vazios
+      const street = document.getElementById('street').value.trim();
+      const number = document.getElementById('number').value.trim();
+      const neighborhood = document.getElementById('neighborhood').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const complement = document.getElementById('complement').value.trim();
+      const zip_code = document.getElementById('zip_code').value.replace(/\D/g, '');
+
+      if (street) addressData.street = street;
+      if (number) addressData.number = number;
+      if (neighborhood) addressData.neighborhood = neighborhood;
+      if (city) addressData.city = city;
+      if (complement) addressData.complement = complement;
+      if (zip_code) addressData.zip_code = zip_code;
+
+      // Só inclui endereço se houver pelo menos um campo preenchido
+      const hasAddress = Object.keys(addressData).length > 0;
+
       const payload = {
         cpf,
         employee_name,
         company_name,
-        documents
+        documents,
+        ...(hasAddress && { address: addressData })
       };
 
       try {
-        const response = await fetch(`http://localhost:5000/employee/${employeeId}`, {
+        const response = await fetch(`/employee/${employeeId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

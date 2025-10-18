@@ -87,9 +87,10 @@ main {
 
 .table-container {
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: auto;
     margin: 20px 0;
-    max-height: 500px;
+    max-height: 70vh;
+    min-height: 400px;
 }
 
 .styled-table {
