@@ -7,7 +7,14 @@ from app.services.employee_service import (
     update_employee
 )
 
+
 def create_employee():
+    """
+    Cria um novo funcionário com seus documentos.
+    
+    Returns:
+        JSON: Dados do funcionário criado ou mensagem de erro
+    """
     data = request.get_json()
 
     cpf = data.get('cpf')
@@ -15,6 +22,7 @@ def create_employee():
     company_name = data.get('company_name')
     documents = data.get('documents', [])
     address = data.get('address')
+    endereco = data.get('endereco')  # Campo endereco adicionado
 
     if not all([cpf, company_name, employee_name]):
         return jsonify({'message': 'Missing required fields'}, 400)
@@ -23,18 +31,40 @@ def create_employee():
     if address and not _validate_address(address):
         return jsonify({'message': 'Invalid address format'}, 400)
     
-    employee, error = create_employee_with_documents(cpf, employee_name, company_name, documents, address)
+    employee, error = create_employee_with_documents(
+        cpf, employee_name, company_name, documents, address, endereco
+    )
 
     if error:
         return jsonify({'message': error}), 400
     
-    return jsonify({'message': 'Employee created successfully', 'employeeId': employee.id}), 201
+    return jsonify({
+        'message': 'Employee created successfully',
+        'employeeId': employee.id
+    }), 201
+
 
 def list_employees():
+    """
+    Lista todos os funcionários com status de documentos.
+    
+    Returns:
+        JSON: Lista de funcionários com informações de status
+    """
     employees = list_employees_with_document_status()
     return jsonify(employees), 200
 
+
 def check_employee_cpf(cpf):
+    """
+    Verifica se um CPF já está cadastrado no sistema.
+    
+    Args:
+        cpf (str): CPF a ser verificado
+        
+    Returns:
+        JSON: Status da verificação (disponível ou já cadastrado)
+    """
     if not cpf:
         return jsonify({'message': 'CPF is required'}), 400
 
@@ -43,7 +73,17 @@ def check_employee_cpf(cpf):
     else:
         return jsonify({'message': 'CPF is available'}), 200
     
+
 def get_employee_detail_by_id(id):
+    """
+    Obtém detalhes de um funcionário específico pelo ID.
+    
+    Args:
+        id (str): ID do funcionário
+        
+    Returns:
+        JSON: Dados completos do funcionário ou mensagem de erro
+    """
     employee_data, error = get_employee_detail(id)
 
     if error:
@@ -51,7 +91,17 @@ def get_employee_detail_by_id(id):
 
     return jsonify(employee_data), 200
 
+
 def update_employee_data(id):
+    """
+    Atualiza os dados de um funcionário existente.
+    
+    Args:
+        id (str): ID do funcionário a ser atualizado
+        
+    Returns:
+        JSON: Dados atualizados do funcionário ou mensagem de erro
+    """
     data = request.get_json()
     updated, error = update_employee(id, data)
 
@@ -60,13 +110,24 @@ def update_employee_data(id):
 
     return jsonify({'message': 'Employee updated successfully'}, updated), 200
 
+
 def _validate_address(address):
-    """Valida a estrutura do endereço JSON"""
+    """
+    Valida a estrutura do endereço JSON.
+    
+    Args:
+        address (dict): Dicionário com dados do endereço
+        
+    Returns:
+        bool: True se o endereço é válido, False caso contrário
+    """
     if not isinstance(address, dict):
         return False
     
     # Campos opcionais do endereço em inglês
-    valid_fields = {'street', 'number', 'neighborhood', 'city', 'complement', 'zip_code'}
+    valid_fields = {
+        'street', 'number', 'neighborhood', 'city', 'complement', 'zip_code'
+    }
     
     # Verifica se todos os campos fornecidos são válidos
     for field in address.keys():

@@ -5,7 +5,14 @@ import jwt
 from datetime import datetime, timedelta
 from config import Config
 
+
 def register():
+    """
+    Registra um novo usuário no sistema.
+    
+    Returns:
+        JSON: Mensagem de sucesso ou erro com status HTTP correspondente
+    """
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
@@ -23,6 +30,12 @@ def register():
 
 
 def login():
+    """
+    Autentica um usuário e retorna um token JWT.
+    
+    Returns:
+        JSON: Token de autenticação ou mensagem de erro com status HTTP
+    """
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')

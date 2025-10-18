@@ -1,3 +1,7 @@
+"""
+Ponto de entrada principal da aplicação Flask.
+"""
+
 from app import create_app
 
 app = create_app()
