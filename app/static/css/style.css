@@ -66,6 +66,32 @@ main {
     font-weight: bold;
 }
 
+/* Proporções específicas para a tela de cadastro (usa .form-container.wide) */
+.form-container.wide #cpf {
+    max-width: 240px;
+}
+
+.form-container.wide #zip_code {
+    width: 160px;
+}
+
+.form-container.wide #number {
+    width: 120px;
+}
+
+.form-container.wide #complement {
+    flex: 1;
+}
+
+.form-container.wide .document-expiration {
+    width: 190px;
+}
+
+/* Rua/Logradouro ocupa a largura total da linha no cadastro */
+.form-container.wide #street {
+    width: 100%;
+}
+
 .logo-section p {
     color: #666;
     margin: 0;
@@ -114,7 +140,6 @@ main {
     font-size: 14px;
     background-color: white;
     border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -122,6 +147,17 @@ main {
     background-color: #4CAF50 !important;
     color: white;
     text-align: left;
+}
+
+/* Cabeçalho fixo ao rolar na tabela de consulta */
+.table-container {
+    position: relative;
+}
+.styled-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #4CAF50; /* reforça fundo ao ficar sticky */
+    z-index: 2;
 }
 
 .styled-table th {
@@ -155,6 +191,12 @@ main {
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
+}
+
+/* Centraliza a coluna de Ações (última coluna) */
+.styled-table td:last-child,
+.styled-table th:last-child {
+    text-align: center;
 }
 
 .button-table:hover {

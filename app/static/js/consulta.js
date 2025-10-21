@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${emp.cpf}</td>
                     <td>${emp.company_name}</td>
                     <td ${statusStyle}><strong>${statusText}</strong></td>
-                    <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table">Ver Detalhes</button></td>
+                    <td><button onclick="consultarFuncionario('${emp.id}')" class="button-table" aria-label="Ver detalhes do funcionário ${emp.employee_name}" title="Ver detalhes de ${emp.employee_name}">Ver Detalhes</button></td>
                 `;
 
                 tbody.appendChild(row);
