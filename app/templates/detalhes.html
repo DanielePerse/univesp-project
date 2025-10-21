@@ -75,9 +75,9 @@
     </form>
   </div>
 
-  <div id="modal" class="modal hidden">
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-describedby="detalhes-modal-desc" tabindex="-1">
     <div class="modal-content">
-      <p>Funcionário atualizado com sucesso!</p>
+      <p id="detalhes-modal-desc">Funcionário atualizado com sucesso!</p>
       <button onclick="voltarParaConsulta()">Voltar para listagem</button>
     </div>
   </div>

@@ -62,6 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 modal.classList.remove("hidden");
+                setupAccessibleModal(modal, {
+                    onClose: () => {
+                        modal.classList.add('hidden');
+                        closeAccessibleModal(modal);
+                    }
+                });
             } else {
                 const data = await response.json();
                 alert(data.message || "Erro ao cadastrar.");

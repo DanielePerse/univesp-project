@@ -113,7 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (response.ok) {
-                document.getElementById("modal").classList.remove("hidden");
+                const modal = document.getElementById("modal");
+                modal.classList.remove("hidden");
+                setupAccessibleModal(modal, {
+                    onClose: () => {
+                        modal.classList.add('hidden');
+                        closeAccessibleModal(modal);
+                    }
+                });
             } else {
                 alert(data.message || "Erro ao atualizar funcionário.");
             }
