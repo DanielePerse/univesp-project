@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
+  <main id="main-content" role="main" class="page-boxed">
   <div class="form-container">
     <div class="logo-section">
       <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
@@ -35,11 +36,11 @@
       <a href="/cadastro_usuario" style="color: #2196F3; text-decoration: none;">clique aqui</a>
     </div>
   </div>
+  </main>
 
-  <!-- Marca d'água -->
-  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+  <footer role="contentinfo" style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
     Desenvolvido por Grupo PI II
-  </div>
+  </footer>
 
   <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 </body>
