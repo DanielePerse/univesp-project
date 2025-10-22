@@ -185,6 +185,59 @@ button:focus-visible,
     justify-content: center;
 }
 
+/* Fase 5: melhorar visibilidade do rodapé (nome do grupo) */
+footer[role="contentinfo"] {
+    color: rgba(0, 0, 0, 0.3) !important;
+    font-weight: 500 !important;
+    font-size: 14px !important; /* aumentar legibilidade */
+    line-height: 1.4;
+}
+
+/* Fase 5: ajustar larguras para campos muito extensos mantendo responsividade */
+#employee_name,
+#company_name,
+#street,
+#neighborhood,
+#complement,
+#city {
+    max-width: 572px; /* alinhado ao término do campo de data (360 + 10 + 180) */
+    width: 100%;
+}
+
+/* Campos pequenos com largura adequada */
+#cpf { max-width: 220px; }
+#zip_code { max-width: 160px; }
+#number { max-width: 140px; }
+
+/* Caixa do formulário: padrão para páginas amplas */
+.form-container.wide {
+    max-width: 860px;
+}
+
+/* Cadastro: container mais compacto sem afetar outras páginas */
+.form-container.wide.cadastro {
+    max-width: 590px;
+}
+
+/* Documento: reduzir largura do nome e manter data compacta */
+.document-entry { flex-wrap: wrap; }
+.document-name {
+    max-width: 360px;
+    width: 100%;
+    flex: 0 1 360px !important; /* sobrepõe inline se houver */
+}
+.document-expiration {
+    width: 180px;
+    flex: 0 0 180px !important;
+}
+
+/* Complemento: não ocupar toda a linha; alinhar à largura de empresa */
+#complement {
+    max-width: 423px;
+    width: 100%;
+    flex: 0 1 423px !important;
+}
+
 .main_search{
     max-width: 1000px;
     margin: 50px auto;

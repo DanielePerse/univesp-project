@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container wide" role="main" id="main-content">
+  <div class="form-container wide cadastro" role="main" id="main-content">
     <div class="logo-section">
       <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
       <h1>IVENCEU!</h1>
@@ -53,12 +53,14 @@
         
         <div style="display: flex; gap: 10px; margin-bottom: 10px;">
           <input type="text" id="number" placeholder="Número" class="input_register" autocomplete="address-line2" />
-          <input type="text" id="complement" placeholder="Complemento (opcional)" class="input_register" style="flex: 1;" autocomplete="address-line2" />
+          <input type="text" id="complement" placeholder="Complemento (opcional)" class="input_register" autocomplete="address-line2" />
         </div>
         
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
           <input type="text" id="neighborhood" placeholder="Bairro" class="input_register" style="flex: 1;" readonly autocomplete="address-line2" />
-          <input type="text" id="city" placeholder="Cidade" class="input_register" style="flex: 1;" readonly autocomplete="address-level2" />
+        </div>
+        <div>
+          <input type="text" id="city" placeholder="Cidade" class="input_register" readonly autocomplete="address-level2" />
         </div>
       </div>
 
