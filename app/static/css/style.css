@@ -102,11 +102,70 @@ main {
     margin-bottom: 1rem;
 }
 
+/* Fase 4: Melhoria de contraste (WCAG AA) para botões */
+.button_form,
+.button-table {
+    background-color: #2E7D32; /* verde mais escuro para melhor contraste */
+    color: #fff;
+}
+.button_form:hover,
+.button-table:hover {
+    background-color: #1B5E20;
+}
+.button-table { font-size: 14px; }
+
+/* Links com melhor contraste e hover visível */
+.form-container a {
+    color: #1565C0;
+}
+.form-container a:hover,
+.form-container a:focus-visible {
+    color: #0D47A1;
+    text-decoration: underline;
+}
+
+/* Fase 4: foco visível e estados de erro */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+.button_form:focus-visible,
+.button-table:focus-visible {
+    outline: 3px solid rgba(33, 150, 243, 0.6);
+    outline-offset: 2px;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 1px rgba(220, 53, 69, 0.2);
+}
+
+.error-text {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
     color: #333;
     font-weight: 500;
+}
+
+/* Ajustes para os campos de documentos no cadastro */
+.document-entry {
+    display: flex;
+    gap: 12px; /* mais espaço entre Nome e Data */
+    align-items: flex-start;
+}
+.document-entry .field-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* espaço entre input e mensagem de erro */
+}
+.document-entry .input_register {
+    margin-bottom: 2px; /* leve respiro antes da mensagem */
 }
 
 .form-actions {

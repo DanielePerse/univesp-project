@@ -53,6 +53,23 @@ function aplicarMascaraCep(valor) {
   return valor.replace(/\D/g, '').replace(/(\d{5})(\d)/, '$1-$2');
 }
 
+// Máscara de CPF (111.111.111-11)
+function aplicarMascaraCpf(valor) {
+  const v = (valor || '').replace(/\D/g, '').slice(0, 11);
+  return v
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
+function configurarMascaraCpf(inputId) {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+  el.addEventListener('input', (e) => {
+    e.target.value = aplicarMascaraCpf(e.target.value);
+  });
+}
+
 // Função para limpar campos de endereço
 function limparCamposEndereco() {
   document.getElementById('street').value = '';
