@@ -43,7 +43,7 @@
         
         <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
           <input type="text" id="zip_code" placeholder="00000-000" class="input_register" style="width: 150px;" maxlength="9" inputmode="numeric" autocomplete="postal-code" aria-describedby="cep-status" />
-          <a href="#" id="buscar-cep-btn" role="button" tabindex="0" aria-controls="street number complement neighborhood city cep-status" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
+          <a href="#" id="buscar-cep-btn" role="button" tabindex="0" aria-controls="street number complement neighborhood city cep-status" style="text-decoration: none; font-size: 12px; font-weight: 500;">
             🔍 Buscar
           </a>
           <div id="cep-status" role="status" aria-live="polite" style="font-size: 12px; font-weight: 500; display: none;"></div>
@@ -70,7 +70,7 @@
 
       <div class="form-actions" style="margin-top: 30px;">
         <button type="submit" class="button_form">Salvar Alterações</button>
-        <button type="button" class="button_form" style="background: #dc3545;" onclick="voltarParaConsulta()">Cancelar</button>
+        <button type="button" class="button_form button-danger" onclick="voltarParaConsulta()">Cancelar</button>
       </div>
     </form>
   </div>

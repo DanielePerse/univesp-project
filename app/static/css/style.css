@@ -114,6 +114,16 @@ main {
 }
 .button-table { font-size: 14px; }
 
+/* Botão de perigo (Cancelar) com contraste AA */
+.button-danger {
+    background-color: #C62828 !important; /* vermelho AA */
+    color: #fff !important;
+}
+.button-danger:hover,
+.button-danger:focus-visible {
+    background-color: #B71C1C !important;
+}
+
 /* Links com melhor contraste e hover visível */
 .form-container a {
     color: #1565C0;
