@@ -81,6 +81,38 @@ def create_app():
             else:
                 app.logger.info(f'✅ Todas as tabelas já existem: {required_tables}')
                 
+                # Verificar se a tabela employees tem a coluna address
+                try:
+                    inspector = inspect(db.engine)
+                    employees_columns = [col['name'] for col in inspector.get_columns('employees')]
+                    app.logger.info(f'Colunas da tabela employees: {employees_columns}')
+                    
+                    if 'address' not in employees_columns:
+                        app.logger.warning('Coluna address não encontrada na tabela employees. Adicionando...')
+                        
+                        # Adicionar coluna address manualmente
+                        from sqlalchemy import text
+                        try:
+                            db.session.execute(text('ALTER TABLE employees ADD COLUMN address JSON'))
+                            db.session.commit()
+                            app.logger.info('✅ Coluna address adicionada com sucesso!')
+                        except Exception as e:
+                            db.session.rollback()
+                            app.logger.error(f'Erro ao adicionar coluna address: {str(e)}')
+                            
+                            # Tentar executar migrations como fallback
+                            try:
+                                from flask_migrate import upgrade
+                                upgrade()
+                                app.logger.info('✅ Migrations executadas para adicionar coluna!')
+                            except Exception as migrate_error:
+                                app.logger.error(f'Erro nas migrations: {migrate_error}')
+                    else:
+                        app.logger.info('✅ Coluna address já existe na tabela employees!')
+                        
+                except Exception as e:
+                    app.logger.error(f'Erro ao verificar colunas da tabela employees: {str(e)}')
+                
         except Exception as e:
             app.logger.error(f'Erro ao conectar com banco de dados: {str(e)}')
 
