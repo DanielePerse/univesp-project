@@ -19,16 +19,16 @@ header {
 }
 
 main {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .form-container {
-    max-width: 500px;
+    max-width: 720px;
     margin: 50px auto;
     padding: 2rem;
     background-color: white;
@@ -37,7 +37,21 @@ main {
 }
 
 .form-container.wide {
-    max-width: 800px;
+    max-width: 1100px;
+}
+
+/* Layout clássico em caixa apenas para páginas com classe .page-boxed */
+.page-boxed {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 1rem; /* espaço para destacar a caixa interna */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+}
+
+.page-boxed .form-container {
+    margin: 0; /* evitar dupla margem; mantém padding e sombra padrão da caixa interna */
 }
 
 .logo-section {
@@ -52,6 +66,32 @@ main {
     font-weight: bold;
 }
 
+/* Proporções específicas para a tela de cadastro (usa .form-container.wide) */
+.form-container.wide #cpf {
+    max-width: 240px;
+}
+
+.form-container.wide #zip_code {
+    width: 160px;
+}
+
+.form-container.wide #number {
+    width: 120px;
+}
+
+.form-container.wide #complement {
+    flex: 1;
+}
+
+.form-container.wide .document-expiration {
+    width: 190px;
+}
+
+/* Rua/Logradouro ocupa a largura total da linha no cadastro */
+.form-container.wide #street {
+    width: 100%;
+}
+
 .logo-section p {
     color: #666;
     margin: 0;
@@ -62,6 +102,60 @@ main {
     margin-bottom: 1rem;
 }
 
+/* Melhoria de contraste (WCAG AA) para botões */
+.button_form,
+.button-table {
+    background-color: #2E7D32; /* verde mais escuro para melhor contraste */
+    color: #fff;
+}
+.button_form:hover,
+.button-table:hover {
+    background-color: #1B5E20;
+}
+.button-table { font-size: 14px; }
+
+/* Botão de perigo (Cancelar) com contraste AA */
+.button-danger {
+    background-color: #C62828 !important; /* vermelho AA */
+    color: #fff !important;
+}
+.button-danger:hover,
+.button-danger:focus-visible {
+    background-color: #B71C1C !important;
+}
+
+/* Links com melhor contraste e hover visível */
+.form-container a {
+    color: #1565C0;
+}
+.form-container a:hover,
+.form-container a:focus-visible {
+    color: #0D47A1;
+    text-decoration: underline;
+}
+
+/* foco visível e estados de erro */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+.button_form:focus-visible,
+.button-table:focus-visible {
+    outline: 3px solid rgba(33, 150, 243, 0.6);
+    outline-offset: 2px;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 1px rgba(220, 53, 69, 0.2);
+}
+
+.error-text {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
@@ -69,11 +163,79 @@ main {
     font-weight: 500;
 }
 
+/* Ajustes para os campos de documentos no cadastro */
+.document-entry {
+    display: flex;
+    gap: 12px; /* mais espaço entre Nome e Data */
+    align-items: flex-start;
+}
+.document-entry .field-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; /* espaço entre input e mensagem de erro */
+}
+.document-entry .input_register {
+    margin-bottom: 2px; /* leve respiro antes da mensagem */
+}
+
 .form-actions {
     margin-top: 20px;
     display: flex;
     gap: 10px;
     justify-content: center;
+}
+
+/* melhorar visibilidade do rodapé (nome do grupo) */
+footer[role="contentinfo"] {
+    color: rgba(0, 0, 0, 0.3) !important;
+    font-weight: 500 !important;
+    font-size: 14px !important; /* aumentar legibilidade */
+    line-height: 1.4;
+}
+
+/* ajustar larguras para campos muito extensos mantendo responsividade */
+#employee_name,
+#company_name,
+#street,
+#neighborhood,
+#complement,
+#city {
+    max-width: 572px; /* alinhado ao término do campo de data (360 + 10 + 180) */
+    width: 100%;
+}
+
+/* Campos pequenos com largura adequada */
+#cpf { max-width: 220px; }
+#zip_code { max-width: 160px; }
+#number { max-width: 140px; }
+
+/* Caixa do formulário: padrão para páginas amplas */
+.form-container.wide {
+    max-width: 860px;
+}
+
+/* Cadastro: container mais compacto sem afetar outras páginas */
+.form-container.wide.cadastro {
+    max-width: 590px;
+}
+
+/* Documento: reduzir largura do nome e manter data compacta */
+.document-entry { flex-wrap: wrap; }
+.document-name {
+    max-width: 360px;
+    width: 100%;
+    flex: 0 1 360px !important; /* sobrepõe inline se houver */
+}
+.document-expiration {
+    width: 180px;
+    flex: 0 0 180px !important;
+}
+
+/* Complemento: não ocupar toda a linha; alinhar à largura de empresa */
+#complement {
+    max-width: 423px;
+    width: 100%;
+    flex: 0 1 423px !important;
 }
 
 .main_search{
@@ -100,7 +262,6 @@ main {
     font-size: 14px;
     background-color: white;
     border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -108,6 +269,17 @@ main {
     background-color: #4CAF50 !important;
     color: white;
     text-align: left;
+}
+
+/* Cabeçalho fixo ao rolar na tabela de consulta */
+.table-container {
+    position: relative;
+}
+.styled-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #4CAF50; /* reforça fundo ao ficar sticky */
+    z-index: 2;
 }
 
 .styled-table th {
@@ -141,6 +313,12 @@ main {
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
+}
+
+/* Centraliza a coluna de Ações (última coluna) */
+.styled-table td:last-child,
+.styled-table th:last-child {
+    text-align: center;
 }
 
 .button-table:hover {

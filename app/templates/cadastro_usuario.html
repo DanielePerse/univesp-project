@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
+  <main id="main-content" role="main" class="page-boxed">
   <div class="form-container">
     <div class="logo-section">
       <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
@@ -15,29 +16,29 @@
       <p>Cadastro de Usuário</p>
     </div>
     
-    <form id="register-form">
+    <form id="register-form" novalidate>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Digite seu email" required class="input_register" />
+        <input type="email" id="email" placeholder="Digite seu email" required class="input_register" autocomplete="email" />
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
-        <input type="password" id="password" placeholder="Digite sua senha" required class="input_register" />
+        <input type="password" id="password" placeholder="Digite sua senha" required class="input_register" autocomplete="new-password" />
       </div>
       <button type="submit" class="button_form">Cadastrar</button>
     </form>
     
-    <div id="register-msg" class="error-msg"></div>
+    <div id="register-msg" class="error-msg" role="alert" aria-live="assertive"></div>
     
     <div class="form-actions" style="margin-top: 20px;">
-      <a href="/" style="color: #4CAF50; text-decoration: none;">Voltar para o login</a>
+      <a href="/" aria-label="Voltar para a tela de login">Voltar para o login</a>
     </div>
   </div>
+  </main>
   <script src="{{ url_for('static', filename='js/cadastro_usuario.js') }}"></script>
   
-  <!-- Marca d'água -->
-  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+  <footer role="contentinfo" style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
     Desenvolvido por Grupo PI II
-  </div>
+  </footer>
 </body>
 </html>

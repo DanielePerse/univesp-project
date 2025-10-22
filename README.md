@@ -81,12 +81,27 @@ python run.py
 ## 🎯 Funcionalidades
 
 - ✅ **Login/Autenticação** - Sistema de usuários com JWT
-- ✅ **Cadastro de Funcionários** - CPF, nome, empresa
+- ✅ **Cadastro de Funcionários** - CPF, nome, empresa e endereço completo
+- ✅ **Integração com API ViaCEP** - Busca automática de endereços por CEP
 - ✅ **Gestão de Documentos** - Nome, data de vencimento
-- ✅ **Consulta e Listagem** - Visualização de todos os funcionários
-- ✅ **Edição/Atualização** - Modificar dados e documentos
+- ✅ **Consulta e Listagem** - Visualização ordenada alfabeticamente
+- ✅ **Edição/Atualização** - Modificar dados, documentos e endereços
 - ✅ **Validação de CPF** - Verificação antes do cadastro
 - ✅ **Status de Vencimento** - Controle visual de documentos vencidos
+- ✅ **Acessibilidade** - Validação por campo (mensagens inline), foco visível, contraste de cores e navegação por teclado
+- ✅ **Scripts JavaScript** - Interatividade modular (máscara de CPF/CEP, ViaCEP, validações e modais)
+- ✅ **Testes** - Suporte a execução com `unittest`
+
+## ♿ Acessibilidade
+
+### O que foi implementado
+- **Formulários acessíveis**: `aria-invalid`, `aria-describedby`, mensagens inline por campo e foco no primeiro erro (`login`, `cadastro_usuario`, `cadastro`, `detalhes`).
+- **Modais acessíveis**: `role="dialog"`, `aria-modal`, foco gerenciado, trap de foco com Tab/Shift+Tab e fechamento por `Esc` (`cadastro`, `detalhes`).
+- **Navegação por teclado**: elementos com `role="button"` respondem a `Enter`/`Space`.
+- **Feedbacks dinâmicos**: áreas com `role="status"`/`aria-live` para CEP/CPF e mensagens gerais.
+- **Máscaras**: CPF com máscara imediata no cadastro/edição; CEP com máscara e busca ViaCEP.
+- **Contraste e foco visível**: reforço de `:focus-visible`, cores de botões e links ajustadas (WCAG AA).
+- **Tabela acessível**: cabeçalho com `scope="col"` e cabeçalho fixo ao rolar em `consulta`.
 
 ## 🛠️ Stack Tecnológico
 
@@ -99,7 +114,11 @@ python run.py
 
 ### Frontend
 - **HTML5/CSS3** - Interface web responsiva
-- **JavaScript** - Interatividade do frontend
+- **JavaScript ES6+** - Interatividade e funcionalidades dinâmicas
+- **Arquitetura modular** - Scripts organizados por funcionalidade
+
+### APIs Externas
+- **ViaCEP** - Webservice CEP e IBGE gratuito para busca de endereços
 
 ### Banco de Dados
 - **PostgreSQL 13** - Banco principal
@@ -122,9 +141,22 @@ Password: postgres
 
 ### Estrutura das Tabelas
 - **`users`** - Usuários do sistema (email, senha hash)
-- **`employees`** - Funcionários (CPF, nome, empresa)
+- **`employees`** - Funcionários (CPF, nome, empresa, endereço JSON)
 - **`documents`** - Documentos SST (nome, data vencimento, funcionário)
 - **`alembic_version`** - Controle de migrations
+
+## 📍 Integração ViaCEP
+O sistema integra com a **API ViaCEP** para busca automática de endereços:
+
+### Páginas com ViaCEP
+- **Cadastro de funcionários** - `/cadastro`
+- **Edição de funcionários** - `/detalhes/{id}`
+
+### API Utilizada
+- **Endpoint**: `https://viacep.com.br/ws/{cep}/json/`
+- **Método**: GET
+- **Gratuita**: Sem necessidade de API Key
+- **Documentação**: [viacep.com.br](https://viacep.com.br/)
 
 ## 🧪 Testes e Desenvolvimento
 

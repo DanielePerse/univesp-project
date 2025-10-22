@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,33 +8,33 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <div class="form-container">
+  <div class="form-container wide cadastro" role="main" id="main-content">
     <div class="logo-section">
       <img src="{{ url_for('static', filename='image/logo.png') }}" alt="Logo iVenceu" style="width: 60px; height: 60px; margin-bottom: 10px;">
       <h1>IVENCEU!</h1>
       <p>Cadastro de Funcionário</p>
     </div>
     
-    <form id="cadastro-form">
+    <form id="cadastro-form" novalidate>
       <div class="form-group">
         <label for="cpf"><strong>CPF</strong></label>
-        <input type="text" id="cpf" required placeholder="000.000.000-00" class="input_register" />
+        <input type="text" id="cpf" required placeholder="000.000.000-00" class="input_register" inputmode="numeric" aria-describedby="cpf-status" autocomplete="off" />
         <div style="margin-top: 5px;">
-          <a href="#" id="verificar-cpf-link" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
+          <a href="#" id="verificar-cpf-link" role="button" tabindex="0" aria-controls="cpf-status" style="text-decoration: none; font-size: 12px; font-weight: 500;">
             🔍 Verificar se CPF já está cadastrado
           </a>
-          <div id="cpf-status" style="margin-top: 5px; font-size: 12px; font-weight: 500; display: none;"></div>
+          <div id="cpf-status" role="status" aria-live="polite" style="margin-top: 5px; font-size: 12px; font-weight: 500; display: none;"></div>
         </div>
       </div>
 
       <div class="form-group">
         <label for="employee_name"><strong>Nome do funcionário</strong></label>
-        <input type="text" id="employee_name" required class="input_register" />
+        <input type="text" id="employee_name" required class="input_register" autocomplete="name" />
       </div>
 
       <div class="form-group">
         <label for="company_name"><strong>Nome da empresa</strong></label>
-        <input type="text" id="company_name" required class="input_register" />
+        <input type="text" id="company_name" required class="input_register" autocomplete="organization" />
       </div>
 
       <!-- Seção de Endereço -->
@@ -42,31 +42,33 @@
         <label><strong>Endereço:</strong></label>
         
         <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
-          <input type="text" id="zip_code" placeholder="00000-000" class="input_register" style="width: 150px;" maxlength="9" />
-          <a href="#" id="buscar-cep-btn" style="color: #4CAF50; text-decoration: none; font-size: 12px; font-weight: 500;">
+          <input type="text" id="zip_code" placeholder="00000-000" class="input_register" maxlength="9" inputmode="numeric" autocomplete="postal-code" aria-describedby="cep-status" />
+          <a href="#" id="buscar-cep-btn" role="button" tabindex="0" aria-controls="street neighborhood city cep-status" style="text-decoration: none; font-size: 12px; font-weight: 500;">
             🔍 Buscar
           </a>
-          <div id="cep-status" style="font-size: 12px; font-weight: 500; display: none;"></div>
+          <div id="cep-status" role="status" aria-live="polite" style="font-size: 12px; font-weight: 500; display: none;"></div>
         </div>
         
-        <input type="text" id="street" placeholder="Rua/Logradouro" class="input_register" style="margin-bottom: 10px;" readonly />
+        <input type="text" id="street" placeholder="Rua/Logradouro" class="input_register" style="margin-bottom: 10px;" readonly autocomplete="address-line1" />
         
         <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-          <input type="text" id="number" placeholder="Número" class="input_register" style="width: 100px;" />
-          <input type="text" id="complement" placeholder="Complemento (opcional)" class="input_register" style="flex: 1;" />
+          <input type="text" id="number" placeholder="Número" class="input_register" autocomplete="address-line2" />
+          <input type="text" id="complement" placeholder="Complemento (opcional)" class="input_register" autocomplete="address-line2" />
         </div>
         
-        <div style="display: flex; gap: 10px;">
-          <input type="text" id="neighborhood" placeholder="Bairro" class="input_register" style="flex: 1;" readonly />
-          <input type="text" id="city" placeholder="Cidade" class="input_register" style="flex: 1;" readonly />
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <input type="text" id="neighborhood" placeholder="Bairro" class="input_register" style="flex: 1;" readonly autocomplete="address-line2" />
+        </div>
+        <div>
+          <input type="text" id="city" placeholder="Cidade" class="input_register" readonly autocomplete="address-level2" />
         </div>
       </div>
 
       <div id="documents-container">
         <p><strong>Cadastro de documentos:</strong></p>
         <div class="document-entry" style="margin-bottom: 15px; display: flex; gap: 10px;">
-          <input type="text" class="document-name input_register" required placeholder="Nome do Documento" style="flex: 1;" />
-          <input type="date" class="document-expiration input_register" required style="width: 150px;" />
+          <input type="text" class="document-name input_register" required placeholder="Nome do Documento" style="flex: 1;" autocomplete="off" />
+          <input type="date" class="document-expiration input_register" required autocomplete="off" />
         </div>
       </div>
 
@@ -75,21 +77,19 @@
       <div class="form-actions" style="margin-top: 20px; display: flex; gap: 10px;">
         <button type="submit" class="button_form">Cadastrar</button>
         <button type="button" class="button_form" onclick="goBack()" style="margin-left: 10px;">Voltar para Home</button>
-      </form>
-    </section>
-  </main>
+      </div>
+    </form>
 
-  <div id="modal" class="modal hidden">
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-describedby="cadastro-modal-desc" tabindex="-1">
     <div class="modal-content">
-      <p>Funcionário cadastrado com sucesso!</p>
+      <p id="cadastro-modal-desc">Funcionário cadastrado com sucesso!</p>
       <button type="button" class="button_form" onclick="goBack()">Voltar para Home</button>
     </div>
   </div>
 
-  <!-- Marca d'água -->
-  <div style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
+  <footer role="contentinfo" style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
     Desenvolvido por Grupo PI II
-  </div>
+  </footer>
 
   <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
   <script src="{{ url_for('static', filename='js/cadastro.js') }}"></script>
