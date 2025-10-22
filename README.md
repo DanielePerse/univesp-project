@@ -90,7 +90,7 @@ python run.py
 - ✅ **Status de Vencimento** - Controle visual de documentos vencidos
 - ✅ **Acessibilidade** - Validação por campo (mensagens inline), foco visível, contraste de cores e navegação por teclado
 - ✅ **Scripts JavaScript** - Interatividade modular (máscara de CPF/CEP, ViaCEP, validações e modais)
-- ✅ **Testes** - Suporte a execução com `unittest` via `python -m unittest discover tests -v`
+- ✅ **Testes** - Suporte a execução com `unittest`
 
 ## ♿ Acessibilidade
 

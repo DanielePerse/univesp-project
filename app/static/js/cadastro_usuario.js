@@ -1,5 +1,3 @@
-// cadastro_usuario.js - Script para página de cadastro de usuário
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('register-form');
     const msg = document.getElementById('register-msg');

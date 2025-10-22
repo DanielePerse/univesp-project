@@ -1,5 +1,3 @@
-// consulta.js - Script para página de consulta de funcionários
-
 document.addEventListener('DOMContentLoaded', function() {
     const token = localStorage.getItem('token');
 
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
             data.forEach(emp => {
                 const row = document.createElement('tr');
                 
-                // Define cor e texto baseado no status
                 let statusStyle = '';
                 let statusText = '';
                 
@@ -61,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Funções globais
     window.consultarFuncionario = function(id) {
         window.location.href = `/detalhes/${id}`;
     };
@@ -70,6 +66,5 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = "/home";
     };
 
-    // Carrega os funcionários ao inicializar
     fetchEmployees();
 });

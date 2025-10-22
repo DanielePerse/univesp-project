@@ -1,22 +1,16 @@
-// utils.js
-
-// Função para obter token salvo localmente
 function getToken() {
   return localStorage.getItem("token");
 }
 
-// Função para verificar autenticação
 function checkAuth() {
   const token = getToken();
   if (!token) {
-    // Se não há token, redireciona para login
     window.location.href = "/";
     return false;
   }
   return true;
 }
 
-// Função para configurar headers da requisição com Authorization
 function authHeaders() {
   const token = getToken();
   return {
@@ -25,7 +19,6 @@ function authHeaders() {
   };
 }
 
-// Função para exibir modais simples de confirmação
 function showModal(message, redirectTo = null) {
   const modal = document.createElement("div");
   modal.className = "modal";
@@ -46,14 +39,11 @@ function closeModal(redirectTo) {
   }
 }
 
-// ===== FUNÇÕES DA API VIACEP =====
-
-// Função para aplicar máscara de CEP
+// ===== API VIACEP =====
 function aplicarMascaraCep(valor) {
   return valor.replace(/\D/g, '').replace(/(\d{5})(\d)/, '$1-$2');
 }
 
-// Máscara de CPF (111.111.111-11)
 function aplicarMascaraCpf(valor) {
   const v = (valor || '').replace(/\D/g, '').slice(0, 11);
   return v
@@ -70,18 +60,14 @@ function configurarMascaraCpf(inputId) {
   });
 }
 
-// Função para limpar campos de endereço
 function limparCamposEndereco() {
   document.getElementById('street').value = '';
   document.getElementById('neighborhood').value = '';
   document.getElementById('city').value = '';
 }
 
-// Função para buscar CEP na API ViaCEP
 async function buscarCep(cepInput, cepStatus) {
-  const cep = cepInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-  
-  // Validação básica do CEP
+  const cep = cepInput.value.replace(/\D/g, '');
   if (cep.length !== 8) {
     cepStatus.style.display = 'block';
     cepStatus.style.color = '#dc3545';
@@ -89,7 +75,6 @@ async function buscarCep(cepInput, cepStatus) {
     return;
   }
 
-  // Mostra loading
   cepStatus.style.display = 'block';
   cepStatus.style.color = '#666';
   cepStatus.textContent = '🔄 Buscando endereço...';
@@ -99,12 +84,10 @@ async function buscarCep(cepInput, cepStatus) {
     const data = await response.json();
 
     if (data.erro) {
-      // CEP não encontrado
       cepStatus.style.color = '#dc3545';
       cepStatus.textContent = '❌ CEP não encontrado';
       limparCamposEndereco();
     } else {
-      // CEP encontrado - preenche os campos
       document.getElementById('street').value = data.logradouro || '';
       document.getElementById('neighborhood').value = data.bairro || '';
       document.getElementById('city').value = data.localidade || '';
@@ -112,7 +95,6 @@ async function buscarCep(cepInput, cepStatus) {
       cepStatus.style.color = '#28a745';
       cepStatus.textContent = '✅ Endereço encontrado';
       
-      // Foca no campo número para o usuário continuar
       const numberField = document.getElementById('number');
       if (numberField) numberField.focus();
     }
@@ -123,7 +105,6 @@ async function buscarCep(cepInput, cepStatus) {
   }
 }
 
-// Função para configurar eventos de CEP em uma página
 function configurarEventosCep() {
   const buscarCepBtn = document.getElementById('buscar-cep-btn');
   const cepInput = document.getElementById('zip_code');
@@ -134,21 +115,17 @@ function configurarEventosCep() {
     return;
   }
 
-  // Aplicar máscara no CEP enquanto digita
   cepInput.addEventListener('input', (e) => {
     e.target.value = aplicarMascaraCep(e.target.value);
-    // Limpa status e campos quando CEP é alterado
     cepStatus.style.display = 'none';
     limparCamposEndereco();
   });
 
-  // Event listener para o link de buscar CEP
   buscarCepBtn.addEventListener('click', (e) => {
     e.preventDefault();
     buscarCep(cepInput, cepStatus);
   });
 
-  // Permite buscar CEP pressionando Enter no campo
   cepInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -157,11 +134,9 @@ function configurarEventosCep() {
   });
 }
 
-// Função para coletar dados de endereço do formulário
 function coletarDadosEndereco() {
   const addressData = {};
   
-  // Só adiciona campos que não estão vazios
   const street = document.getElementById('street').value.trim();
   const number = document.getElementById('number').value.trim();
   const neighborhood = document.getElementById('neighborhood').value.trim();

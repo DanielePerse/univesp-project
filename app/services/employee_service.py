@@ -47,13 +47,10 @@ def list_employees_with_document_status():
     for emp in employees:
         documents = emp.documents
         
-        # Verifica se há documentos vencidos (prioridade alta)
         has_expired = any(doc.expiration_date < today for doc in documents)
         
-        # Verifica se há documentos que estão para vencer nos próximos 30 dias (prioridade média)
         has_expiring = any(today <= doc.expiration_date <= expiring_threshold for doc in documents)
         
-        # Define o status baseado na prioridade: expired > expiring > valid
         if has_expired:
             status = 'expired'
         elif has_expiring:
@@ -99,24 +96,20 @@ def update_employee(id, data):
     if not employee:
         return None, 'Employee not found'
 
-    # Atualiza os dados do empregado
     employee.employee_name = data.get('employee_name', employee.employee_name)
     employee.company_name = data.get('company_name', employee.company_name)
     if 'address' in data:
         employee.address = data.get('address')
     employee.updated_at = datetime.utcnow()
 
-    # Atualiza ou adiciona documentos
     documents_data = data.get('documents', [])
 
     for doc_data in documents_data:
         doc_id = doc_data.get('id')
 
         if doc_id:
-            # Buscar o documento existente
             document = Document.query.filter_by(id=doc_id, employee_id=employee.id).first()
             if document:
-                # Atualiza apenas os campos enviados
                 document.name = doc_data.get('name', document.name)
                 if 'expiration_date' in doc_data:
                     document.expiration_date = datetime.strptime(doc_data['expiration_date'], '%Y-%m-%d').date()
@@ -124,7 +117,6 @@ def update_employee(id, data):
             else:
                 return None, f'Document with ID {doc_id} not found for this employee'
         else:
-            # Cria um novo documento, validando os campos obrigatórios
             if 'name' in doc_data and 'expiration_date' in doc_data:
                 new_doc = Document(
                     id=str(uuid.uuid4()),

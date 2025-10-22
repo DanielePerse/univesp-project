@@ -1,5 +1,3 @@
-// detalhes.js - Script para página de detalhes do funcionário
-
 document.addEventListener('DOMContentLoaded', function() {
     const token = localStorage.getItem("token");
     const employeeId = window.employeeId; // Será definido no HTML
@@ -12,9 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const streetInput = document.getElementById('street');
     const numberInput = document.getElementById('number');
 
-    // Configurar eventos de CEP (função do utils.js)
     configurarEventosCep();
-    // Máscara de CPF
     configurarMascaraCpf('cpf');
 
     function createDocumentInput(doc = {}) {
@@ -124,12 +120,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Adicionar documento
     document.getElementById("add-document").addEventListener("click", () => {
         createDocumentInput();
     });
 
-    // Submit do formulário
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -143,11 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
             expiration_date: entry.querySelector(".document-expiration").value
         }));
 
-        // Coleta dados de endereço (função do utils.js)
         const addressData = coletarDadosEndereco();
         const hasAddress = Object.keys(addressData).length > 0;
 
-        // Validações
         const errors = [];
         const cpfDigits = onlyDigits(cpf);
         if (!cpfDigits || cpfDigits.length !== 11) errors.push({ input: cpfInput, msg: 'Informe um CPF válido com 11 dígitos.' });
@@ -209,11 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Função global
     window.voltarParaConsulta = function() {
         window.location.href = "/consulta";
     };
 
-    // Carrega os dados ao inicializar
     carregarDados();
 });

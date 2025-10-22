@@ -102,7 +102,7 @@ main {
     margin-bottom: 1rem;
 }
 
-/* Fase 4: Melhoria de contraste (WCAG AA) para botões */
+/* Melhoria de contraste (WCAG AA) para botões */
 .button_form,
 .button-table {
     background-color: #2E7D32; /* verde mais escuro para melhor contraste */
@@ -134,7 +134,7 @@ main {
     text-decoration: underline;
 }
 
-/* Fase 4: foco visível e estados de erro */
+/* foco visível e estados de erro */
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
@@ -185,7 +185,7 @@ button:focus-visible,
     justify-content: center;
 }
 
-/* Fase 5: melhorar visibilidade do rodapé (nome do grupo) */
+/* melhorar visibilidade do rodapé (nome do grupo) */
 footer[role="contentinfo"] {
     color: rgba(0, 0, 0, 0.3) !important;
     font-weight: 500 !important;
@@ -193,7 +193,7 @@ footer[role="contentinfo"] {
     line-height: 1.4;
 }
 
-/* Fase 5: ajustar larguras para campos muito extensos mantendo responsividade */
+/* ajustar larguras para campos muito extensos mantendo responsividade */
 #employee_name,
 #company_name,
 #street,

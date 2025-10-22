@@ -1,5 +1,3 @@
-// cadastro.js - Script para página de cadastro de funcionário
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('cadastro-form');
     const addDocumentBtn = document.getElementById('add-document');
@@ -12,9 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const streetInput = document.getElementById('street');
     const numberInput = document.getElementById('number');
 
-    // Configurar eventos de CEP (função do utils.js)
     configurarEventosCep();
-    // Máscara de CPF
     configurarMascaraCpf('cpf');
 
     addDocumentBtn.addEventListener('click', () => {
@@ -151,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Funcionalidade de verificar CPF
     document.getElementById('verificar-cpf-link').addEventListener('click', async (e) => {
         e.preventDefault();
         const cpfInput = document.getElementById('cpf');
@@ -164,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Mostra loading
         statusDiv.style.display = 'block';
         statusDiv.style.color = '#666';
         statusDiv.textContent = '🔄 Verificando CPF...';
@@ -179,11 +173,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             if (response.status === 200) {
-                // CPF disponível (não cadastrado)
                 statusDiv.style.color = '#28a745'; // verde
                 statusDiv.textContent = '✅ CPF ainda não possui cadastro';
             } else if (response.status === 409) {
-                // CPF já cadastrado
                 statusDiv.style.color = '#dc3545'; // vermelho
                 statusDiv.textContent = '❌ CPF já possui cadastro';
             } else {
@@ -196,13 +188,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Limpa o status quando o CPF é alterado
     document.getElementById('cpf').addEventListener('input', () => {
         const statusDiv = document.getElementById('cpf-status');
         statusDiv.style.display = 'none';
     });
 
-    // Função global para voltar
     window.goBack = function() {
         window.location.href = "/home";
     };

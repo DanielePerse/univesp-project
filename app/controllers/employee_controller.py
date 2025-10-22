@@ -19,7 +19,6 @@ def create_employee():
     if not all([cpf, company_name, employee_name]):
         return jsonify({'message': 'Missing required fields'}, 400)
     
-    # Validar estrutura do endereço se fornecido
     if address and not _validate_address(address):
         return jsonify({'message': 'Invalid address format'}, 400)
     
@@ -65,15 +64,12 @@ def _validate_address(address):
     if not isinstance(address, dict):
         return False
     
-    # Campos opcionais do endereço em inglês
     valid_fields = {'street', 'number', 'neighborhood', 'city', 'complement', 'zip_code'}
     
-    # Verifica se todos os campos fornecidos são válidos
     for field in address.keys():
         if field not in valid_fields:
             return False
     
-    # Verifica se os valores são strings (quando fornecidos)
     for key, value in address.items():
         if value is not None and not isinstance(value, str):
             return False

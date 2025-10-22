@@ -1,5 +1,3 @@
-// login.js - Script para página de login
-
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('login-form');
     const errorMsg = document.getElementById('error-msg');
@@ -41,27 +39,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function isValidEmail(value) {
-        // Regex simples para email
         return /.+@.+\..+/.test(value);
     }
 
-    // Limpa erros ao digitar
     emailInput.addEventListener('input', () => clearFieldError(emailInput));
     passwordInput.addEventListener('input', () => clearFieldError(passwordInput));
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Limpar mensagem geral
         errorMsg.textContent = '';
-        // Limpar estados dos campos
         clearFieldError(emailInput);
         clearFieldError(passwordInput);
 
         const email = emailInput.value.trim();
         const password = passwordInput.value;
 
-        // Validações acessíveis
         const errors = [];
         if (!email) {
             errors.push({ input: emailInput, msg: 'Informe seu email.' });
@@ -74,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (errors.length) {
-            // Aplica mensagens e foca o primeiro inválido
             errors.forEach(ei => setFieldError(ei.input, ei.msg));
             errors[0].input.focus();
             return;
