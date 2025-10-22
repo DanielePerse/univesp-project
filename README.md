@@ -82,12 +82,15 @@ python run.py
 
 - ✅ **Login/Autenticação** - Sistema de usuários com JWT
 - ✅ **Cadastro de Funcionários** - CPF, nome, empresa e endereço completo
-- ✅ **Integração ViaCEP** - Busca automática de endereços por CEP
+- ✅ **Integração com API ViaCEP** - Busca automática de endereços por CEP
 - ✅ **Gestão de Documentos** - Nome, data de vencimento
 - ✅ **Consulta e Listagem** - Visualização ordenada alfabeticamente
 - ✅ **Edição/Atualização** - Modificar dados, documentos e endereços
 - ✅ **Validação de CPF** - Verificação antes do cadastro
 - ✅ **Status de Vencimento** - Controle visual de documentos vencidos
+- ✅ **Acessibilidade** - Validação por campo (mensagens inline), foco visível, contraste de cores e navegação por teclado
+- ✅ **Scripts JavaScript** - Interatividade modular (máscara de CPF/CEP, ViaCEP, validações e modais)
+- ✅ **Testes** - Suporte a execução com `unittest` via `python -m unittest discover tests -v`
 
 ## ♿ Acessibilidade
 
@@ -99,16 +102,6 @@ python run.py
 - **Máscaras**: CPF com máscara imediata no cadastro/edição; CEP com máscara e busca ViaCEP.
 - **Contraste e foco visível**: reforço de `:focus-visible`, cores de botões e links ajustadas (WCAG AA).
 - **Tabela acessível**: cabeçalho com `scope="col"` e cabeçalho fixo ao rolar em `consulta`.
-
-### Como testar rapidamente
-- **Teclado**: use `Tab`/`Shift+Tab` para navegar; o foco deve ser sempre visível.
-- **Validação**: submeta formulários com campos vazios/fora do formato; mensagens aparecem abaixo do campo e o foco vai ao primeiro inválido.
-- **Modais**: após ações de sucesso, use `Tab` para circular dentro do modal; `Esc` deve fechar e restaurar o foco.
-- **Leitor de tela**: mensagens de CEP/CPF (status) e erros por campo são anunciados.
-
-### Limitações conscientes
-- Não foi implementado “skip link” por decisão de design neste momento.
-- Mensagens inline seguem o layout atual; se necessário, podemos refinar espaços/microcópias.
 
 ## 🛠️ Stack Tecnológico
 
@@ -153,15 +146,7 @@ Password: postgres
 - **`alembic_version`** - Controle de migrations
 
 ## 📍 Integração ViaCEP
-
 O sistema integra com a **API ViaCEP** para busca automática de endereços:
-
-### Funcionalidades
-- **Busca automática** - Digite o CEP e clique em "🔍 Buscar"
-- **Preenchimento automático** - Rua, bairro e cidade preenchidos automaticamente
-- **Validação** - Verifica se o CEP existe e tem 8 dígitos
-- **Feedback visual** - Indicadores de loading, sucesso e erro
-- **Máscara automática** - Formato 00000-000 aplicado automaticamente
 
 ### Páginas com ViaCEP
 - **Cadastro de funcionários** - `/cadastro`
