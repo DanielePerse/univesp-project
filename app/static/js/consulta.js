@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const token = localStorage.getItem('token');
+    let allEmployees = [];
 
     async function fetchEmployees() {
         try {
@@ -16,10 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const tbody = document.getElementById('employee-body');
-            tbody.innerHTML = '';
+            allEmployees = data;
+            displayEmployees(data);
+        } catch (err) {
+            alert("Erro ao conectar com o servidor.");
+        }
+    }
 
-            data.forEach(emp => {
+    function displayEmployees(employees) {
+        const tbody = document.getElementById('employee-body');
+        tbody.innerHTML = '';
+
+        employees.forEach(emp => {
                 const row = document.createElement('tr');
                 
                 let statusStyle = '';
@@ -53,9 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 tbody.appendChild(row);
             });
-        } catch (err) {
-            alert("Erro ao conectar com o servidor.");
-        }
+    }
+
+    function filterEmployees(searchTerm) {
+        const filteredEmployees = allEmployees.filter(emp => 
+            emp.employee_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        displayEmployees(filteredEmployees);
     }
 
     window.consultarFuncionario = function(id) {
@@ -65,6 +78,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.voltarHome = function() {
         window.location.href = "/home";
     };
+
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', function(e) {
+        filterEmployees(e.target.value);
+    });
 
     fetchEmployees();
 });
