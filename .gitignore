@@ -195,6 +195,4 @@ instance/
 *.swo
 .DS_Store
 
-# Migrations versions (manter estrutura, ignorar versões específicas)
-migrations/versions/*.py
-!migrations/versions/.gitkeep
+# Migrations versions agora são incluídas no controle de versão
