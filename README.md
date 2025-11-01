@@ -48,7 +48,7 @@ pip install -r requirements.txt
 #### 2. Configurar Banco PostgreSQL
 ```bash
 # Opção A: Usar apenas o banco do Docker
-docker-compose up db
+docker-compose up -d db
 
 # Opção B: PostgreSQL local (se instalado)
 # Criar banco: createdb univesp

@@ -194,7 +194,3 @@ instance/
 *.swp
 *.swo
 .DS_Store
-
-# Migrations versions (manter estrutura, ignorar versões específicas)
-migrations/versions/*.py
-!migrations/versions/.gitkeep
