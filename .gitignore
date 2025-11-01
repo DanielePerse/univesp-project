@@ -194,5 +194,3 @@ instance/
 *.swp
 *.swo
 .DS_Store
-
-# Migrations versions agora são incluídas no controle de versão
