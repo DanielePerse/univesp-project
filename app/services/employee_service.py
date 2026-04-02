@@ -13,7 +13,7 @@ def check_cpf_exists(cpf):
         print(f"Erro ao verificar CPF: {e}")
         raise e
 
-def create_employee_with_documents(cpf, employee_name, company_name, documents, address=None):
+def create_employee_with_documents(cpf, employee_name, company_name, documents, address=None, phone=None, emergency_phone=None):
     try:
         # Verificar se CPF já existe
         if check_cpf_exists(cpf):
@@ -25,6 +25,8 @@ def create_employee_with_documents(cpf, employee_name, company_name, documents, 
             company_name=company_name,
             employee_name=employee_name,
             address=address,
+            phone=phone,
+            emergency_phone=emergency_phone,
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow()
         )
@@ -86,6 +88,8 @@ def list_employees_with_document_status():
                     'employee_name': emp.employee_name,
                     'company_name': emp.company_name,
                     'cpf': emp.cpf,
+                    'phone': emp.phone,
+                    'emergency_phone': emp.emergency_phone,
                     'status': status
                 })
             except Exception as e:
@@ -111,6 +115,8 @@ def get_employee_detail(id):
             'company_name': employee.company_name,
             'cpf': employee.cpf,
             'address': employee.address,
+            'phone': employee.phone,
+            'emergency_phone': employee.emergency_phone,
             'documents': [
                 {
                     'id': doc.id,
@@ -136,6 +142,10 @@ def update_employee(id, data):
         employee.company_name = data.get('company_name', employee.company_name)
         if 'address' in data:
             employee.address = data.get('address')
+        if 'phone' in data:
+            employee.phone = data.get('phone')
+        if 'emergency_phone' in data:
+            employee.emergency_phone = data.get('emergency_phone')
         employee.updated_at = datetime.utcnow()
 
         documents_data = data.get('documents', [])

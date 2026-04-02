@@ -37,6 +37,16 @@
         <input type="text" id="company_name" required class="input_register" autocomplete="organization" />
       </div>
 
+      <div class="form-group">
+        <label for="phone"><strong>Telefone</strong></label>
+        <input type="tel" id="phone" placeholder="(11) 99999-9999" class="input_register" autocomplete="tel" />
+      </div>
+
+      <div class="form-group">
+        <label for="emergency_phone"><strong>Telefone de emergência</strong></label>
+        <input type="tel" id="emergency_phone" placeholder="(11) 99999-9999" class="input_register" autocomplete="tel" />
+      </div>
+
       <!-- Seção de Endereço -->
       <div class="form-group">
         <label><strong>Endereço:</strong></label>
@@ -88,7 +98,7 @@
   </div>
 
   <footer role="contentinfo" style="position: fixed; bottom: 10px; left: 10px; color: rgba(0, 0, 0, 0.3); font-size: 12px; font-weight: 300; z-index: 1000;">
-    Desenvolvido por Grupo PI II
+    Desenvolvido por Grupo PI III
   </footer>
 
   <script src="{{ url_for('static', filename='js/utils.js') }}"></script>

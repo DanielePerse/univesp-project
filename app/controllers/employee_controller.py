@@ -24,6 +24,8 @@ def create_employee():
         company_name = data.get('company_name')
         documents = data.get('documents', [])
         address = data.get('address')
+        phone = data.get('phone')
+        emergency_phone = data.get('emergency_phone')
 
         # Validar campos obrigatórios
         if not all([cpf, company_name, employee_name]):
@@ -34,7 +36,7 @@ def create_employee():
             return jsonify({'message': 'Formato de endereço inválido'}), 400
         
         # Criar funcionário
-        employee, error = create_employee_with_documents(cpf, employee_name, company_name, documents, address)
+        employee, error = create_employee_with_documents(cpf, employee_name, company_name, documents, address, phone, emergency_phone)
 
         if error:
             return jsonify({'message': error}), 400

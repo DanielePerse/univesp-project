@@ -6,12 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const cpfInput = document.getElementById('cpf');
     const employeeNameInput = document.getElementById('employee_name');
     const companyNameInput = document.getElementById('company_name');
+    const phoneInput = document.getElementById('phone');
+    const emergencyPhoneInput = document.getElementById('emergency_phone');
     const zipInput = document.getElementById('zip_code');
     const streetInput = document.getElementById('street');
     const numberInput = document.getElementById('number');
 
     configurarEventosCep();
     configurarMascaraCpf('cpf');
+    configurarMascaraTelefone('phone');
+    configurarMascaraTelefone('emergency_phone');
 
     function createDocumentInput(doc = {}) {
         const div = document.createElement("div");
@@ -92,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("cpf").value = aplicarMascaraCpf(data.cpf || '');
             document.getElementById("employee_name").value = data.employee_name;
             document.getElementById("company_name").value = data.company_name;
+            document.getElementById("phone").value = aplicarMascaraTelefone(data.phone || '');
+            document.getElementById("emergency_phone").value = aplicarMascaraTelefone(data.emergency_phone || '');
 
             // Carrega dados de endereço se existirem
             if (data.address) {
@@ -130,6 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const cpf = cpfInput.value;
         const employee_name = employeeNameInput.value;
         const company_name = companyNameInput.value;
+        const phone = phoneInput.value;
+        const emergency_phone = emergencyPhoneInput.value;
 
         const documents = Array.from(document.querySelectorAll(".document-entry")).map(entry => ({
             id: entry.querySelector(".document-id").value || undefined,
@@ -169,6 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
             employee_name,
             company_name,
             documents,
+            ...(phone && { phone }),
+            ...(emergency_phone && { emergency_phone }),
             ...(hasAddress && { address: addressData })
         };
 
