@@ -60,6 +60,33 @@ function configurarMascaraCpf(inputId) {
   });
 }
 
+function aplicarMascaraTelefone(value) {
+  const digits = value.replace(/\D/g, '');
+  
+  // Limita o máximo de 11 dígitos (celular)
+  const limitedDigits = digits.substring(0, 11);
+  
+  if (limitedDigits.length <= 10) {
+    // Telefone fixo: (11) 1234-5678
+    return limitedDigits
+      .replace(/(\d{2})(\d)/, '($1) $2')
+      .replace(/(\d{4})(\d{1,4})$/, '$1-$2');
+  } else {
+    // Celular: (11) 99999-9999
+    return limitedDigits
+      .replace(/(\d{2})(\d)/, '($1) $2')
+      .replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+  }
+}
+
+function configurarMascaraTelefone(inputId) {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+  el.addEventListener('input', (e) => {
+    e.target.value = aplicarMascaraTelefone(e.target.value);
+  });
+}
+
 function limparCamposEndereco() {
   document.getElementById('street').value = '';
   document.getElementById('neighborhood').value = '';

@@ -11,6 +11,8 @@ class Employee(db.Model):
     employee_name = db.Column(db.String(255), nullable=False)
     company_name = db.Column(db.String(255), nullable=False)
     address = db.Column(JSON, nullable=True)
+    phone = db.Column(db.String(20), nullable=True)
+    emergency_phone = db.Column(db.String(20), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

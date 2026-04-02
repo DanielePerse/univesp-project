@@ -6,12 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const cpfInput = document.getElementById('cpf');
     const employeeNameInput = document.getElementById('employee_name');
     const companyNameInput = document.getElementById('company_name');
+    const phoneInput = document.getElementById('phone');
+    const emergencyPhoneInput = document.getElementById('emergency_phone');
     const zipInput = document.getElementById('zip_code');
     const streetInput = document.getElementById('street');
     const numberInput = document.getElementById('number');
 
     configurarEventosCep();
     configurarMascaraCpf('cpf');
+    configurarMascaraTelefone('phone');
+    configurarMascaraTelefone('emergency_phone');
 
     addDocumentBtn.addEventListener('click', () => {
         const div = document.createElement('div');
@@ -77,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const cpf = cpfInput.value;
         const employee_name = employeeNameInput.value;
         const company_name = companyNameInput.value;
+        const phone = phoneInput.value;
+        const emergency_phone = emergencyPhoneInput.value;
         const token = localStorage.getItem('token');
 
         const documents = Array.from(document.querySelectorAll('.document-entry')).map(entry => {
@@ -117,6 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
             employee_name,
             company_name,
             documents,
+            ...(phone && { phone }),
+            ...(emergency_phone && { emergency_phone }),
             ...(hasAddress && { address: addressData })
         };
 
