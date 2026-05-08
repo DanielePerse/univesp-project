@@ -99,7 +99,7 @@ class TestEmployeeServiceFunctions(unittest.TestCase):
                 return 'invalid_date'
         
         # Documento válido (futuro)
-        status = check_document_status('2025-12-31')
+        status = check_document_status('2028-12-31')
         self.assertEqual(status, 'valid')
         
         # Documento vencido (passado)
